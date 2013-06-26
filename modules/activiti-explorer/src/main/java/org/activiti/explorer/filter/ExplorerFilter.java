@@ -25,6 +25,7 @@ public class ExplorerFilter implements Filter {
     ignoreList.add("/explorer");
     ignoreList.add("/libs");
     ignoreList.add("/service");
+    ignoreList.add("/services");
     ignoreList.add("/diagram-viewer");
   }
 

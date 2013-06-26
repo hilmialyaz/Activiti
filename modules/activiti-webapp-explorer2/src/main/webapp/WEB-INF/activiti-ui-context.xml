@@ -39,6 +39,8 @@
         <bean class="org.activiti.explorer.ui.form.BooleanFormPropertyRenderer" />
         <bean class="org.activiti.explorer.ui.form.ProcessDefinitionFormPropertyRenderer" />
         <bean class="org.activiti.explorer.ui.form.MonthFormPropertyRenderer" />
+        <bean class="org.milleni.dunning.ui.customer.form.CustomerDetailFormPropertyRenderer" />
+        <bean class="org.milleni.dunning.ui.customer.form.TextAreaRenderer" />
       </list>
     </property>
   </bean>
@@ -57,6 +59,7 @@
   <bean name="deploymentFilterFactory" class="org.activiti.explorer.ui.management.deployment.DeploymentFilterFactory">
     <property name="componentFactories" ref="componentFactories" />
   </bean>
+  
   
   <!-- Session scoped UI beans -->
   

@@ -92,6 +92,11 @@ public class MainMenuBar extends HorizontalLayout {
     taskButton.addListener(new ShowTasksClickListener());
     menuItemButtons.put(ViewManager.MAIN_NAVIGATION_TASK, taskButton);
     
+    
+    Button customerButton = addMenuButton(ViewManager.MAIN_NAVIGATION_CUSTOMERS, i18nManager.getMessage(Messages.MAIN_MENU_CUSTOMERS), Images.MAIN_MENU_TASKS, false, 80);
+    customerButton.addListener(new ShowCustomerClickListener());
+    menuItemButtons.put(ViewManager.MAIN_NAVIGATION_CUSTOMERS, customerButton);
+    
     Button processButton = addMenuButton(ViewManager.MAIN_NAVIGATION_PROCESS, i18nManager.getMessage(Messages.MAIN_MENU_PROCESS), Images.MAIN_MENU_PROCESS, false, 80);
     processButton.addListener(new ShowProcessDefinitionsClickListener());
     menuItemButtons.put(ViewManager.MAIN_NAVIGATION_PROCESS, processButton);
@@ -193,6 +198,12 @@ public class MainMenuBar extends HorizontalLayout {
   private class ShowTasksClickListener implements ClickListener {
     public void buttonClick(ClickEvent event) {
       ExplorerApp.get().getViewManager().showInboxPage();
+    }
+  }
+  
+  private class ShowCustomerClickListener implements ClickListener {
+    public void buttonClick(ClickEvent event) {
+      ExplorerApp.get().getViewManager().showCustomerPage();
     }
   }
   

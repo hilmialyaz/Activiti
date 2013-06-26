@@ -102,8 +102,8 @@ public abstract class AbstractPage extends CustomComponent {
     } else {
       grid = new GridLayout(2, 3);
 
-      grid.setColumnExpandRatio(0, .25f);
-      grid.setColumnExpandRatio(1, .75f);
+      grid.setColumnExpandRatio(0, .21f);
+      grid.setColumnExpandRatio(1, .79f);
     }
     
     grid.addStyleName(Reindeer.SPLITPANEL_SMALL);

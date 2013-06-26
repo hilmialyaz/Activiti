@@ -51,6 +51,16 @@
 		</init-param>
 	</servlet>
 
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+	</servlet>
+	
+  <servlet-mapping>
+    <servlet-name>CXFServlet</servlet-name>
+    <url-pattern>/services/*</url-pattern>
+  </servlet-mapping>
+    
 	<servlet-mapping>
 		<servlet-name>Vaadin Application Servlet</servlet-name>
 		<url-pattern>/ui/*</url-pattern>

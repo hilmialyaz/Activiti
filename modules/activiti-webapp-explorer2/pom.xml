@@ -118,7 +118,8 @@
 			<id>compile-widgetset</id>
 			<build>
 				<plugins>
-					<!-- Compile custom GWT components or widget dependencies with the GWT compiler -->
+					<!-- Compile custom GWT components or widget dependencies with the GWT 
+						compiler -->
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>gwt-maven-plugin</artifactId>
@@ -132,7 +133,7 @@
 						<executions>
 							<execution>
 								<goals>
-						      <goal>resources</goal>
+									<goal>resources</goal>
 									<goal>compile</goal>
 								</goals>
 							</execution>
@@ -144,7 +145,7 @@
 						<version>1.0.2</version>
 						<executions>
 							<execution>
-							    <phase>prepare-package</phase>
+								<phase>prepare-package</phase>
 								<goals>
 									<goal>update-widgetset</goal>
 								</goals>
@@ -176,10 +177,10 @@
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-modeler</artifactId>
 			<exclusions>
-			 <exclusion>
-			     <groupId>xalan</groupId>
-			     <artifactId>xalan</artifactId>
-			 </exclusion>
+				<exclusion>
+					<groupId>xalan</groupId>
+					<artifactId>xalan</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -213,19 +214,89 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-        </dependency>
-		
+
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+		</dependency>
+
 		<!-- Vaadin addons -->
-		<!-- Must be defined both in activiti-explorer and activiti-webapp-explorer, as otherwise the gwt compiler won't find it -->
- 		<dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>dcharts-widget</artifactId>
-            <version>0.10.0</version>
-        </dependency>
+		<!-- Must be defined both in activiti-explorer and activiti-webapp-explorer, 
+			as otherwise the gwt compiler won't find it -->
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>dcharts-widget</artifactId>
+			<version>0.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.3.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.1.9.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-annotation-processor</artifactId>
+			<version>4.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>knowledge-api</artifactId>
+			<version>5.5.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+			<version>5.5.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+			<version>5.5.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>knowledge-internal-api</artifactId>
+			<version>5.5.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>org.milleni.dunning</artifactId>
+			<version>5.14-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3.0</version>
+		</dependency>
 
 	</dependencies>
 
@@ -238,6 +309,11 @@
 			<id>Alfresco thirdparty</id>
 			<url>https://maven.alfresco.com/nexus/content/repositories/thirdparty/</url>
 		</repository>
+		<repository>
+			<id>Alfresco</id>
+			<url>https://maven.alfresco.com/nexus/content/repositories/activiti/</url>
+		</repository>
+
 	</repositories>
 
 </project>

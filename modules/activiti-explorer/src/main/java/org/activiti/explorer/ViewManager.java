@@ -24,6 +24,7 @@ import com.vaadin.ui.Window;
 public interface ViewManager {
   
   static final String MAIN_NAVIGATION_TASK = "task";
+  static final String MAIN_NAVIGATION_CUSTOMERS = "customer";
   static final String MAIN_NAVIGATION_PROCESS = "process";
   static final String MAIN_NAVIGATION_MANAGE = "manage";
   static final String MAIN_NAVIGATION_REPORT = "report";
@@ -51,7 +52,11 @@ public interface ViewManager {
   
   void showTasksPage(String taskId);
   
+  void showCustomTaskSearchPage(String searchString);
+  
   void showInboxPage();
+  
+  void showCustomerPage();
   
   void showInboxPage(String taskId);
   

@@ -483,5 +483,11 @@ public interface Messages {
   String TIME_UNIT_JUST_NOW = "time.unit.just.now";
   
   String MONTH_PREFIX = "month.";
+  
+  
+  
+  
+  String MAIN_MENU_CUSTOMERS = "main.menu.customers";
+
 
 }

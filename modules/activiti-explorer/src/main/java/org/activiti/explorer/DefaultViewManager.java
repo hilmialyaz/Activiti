@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.milleni.dunning.ui.customer.CustomTaskSearchPage;
+import org.milleni.dunning.ui.customer.CustomerPage;
 import org.activiti.editor.ui.EditorProcessDefinitionPage;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -164,12 +166,20 @@ public class DefaultViewManager implements ViewManager, Serializable {
     switchView(new TasksPage(), ViewManager.MAIN_NAVIGATION_TASK, TaskMenuBar.ENTRY_TASKS);
   }
   
+  public void showCustomTaskSearchPage(String searchString){
+	  switchView(new CustomTaskSearchPage(searchString), ViewManager.MAIN_NAVIGATION_TASK, TaskMenuBar.ENTRY_TASKS);
+  }
+  
   public void showTasksPage(String taskId) {
     switchView(new TasksPage(taskId), ViewManager.MAIN_NAVIGATION_TASK, TaskMenuBar.ENTRY_TASKS);
   }
   
   public void showInboxPage() {
     switchView(new InboxPage(), ViewManager.MAIN_NAVIGATION_TASK, TaskMenuBar.ENTRY_INBOX);
+  }
+  
+  public void showCustomerPage() {
+	    switchView(new CustomerPage(), ViewManager.MAIN_NAVIGATION_CUSTOMERS, TaskMenuBar.ENTRY_INBOX);
   }
   
   public void showInboxPage(String taskId) {
@@ -250,8 +260,8 @@ public class DefaultViewManager implements ViewManager, Serializable {
   }
   
   @Override
-  public void showSavedReportPage(String reportId) {
-    switchView(new SavedReportsPage(reportId), ViewManager.MAIN_NAVIGATION_REPORT, ReportsMenuBar.ENTRY_SAVED_REPORTS);
+  public void showSavedReportPage(String modelId) {
+    switchView(new SavedReportsPage(modelId), ViewManager.MAIN_NAVIGATION_REPORT, ReportsMenuBar.ENTRY_SAVED_REPORTS);
   }
   
   // Management

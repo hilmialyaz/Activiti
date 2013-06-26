@@ -9,5 +9,6 @@
        
   <import resource="activiti-standalone-context.xml" />
   <import resource="activiti-ui-context.xml" />
+  <import resource="dunning-context.xml" />
   
 </beans>

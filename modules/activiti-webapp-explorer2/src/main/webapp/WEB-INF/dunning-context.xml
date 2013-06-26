@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+         http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+
+	<!-- import cxf webservices -->
+	<import resource="cxf.xml" />
+	<import resource="cxf-servlet.xml" />
+
+	<jpa:repositories base-package="org.milleni.dunning.datamodel.dao" />
+	<context:component-scan base-package="org.milleni.dunning.datamodel.util" />
+	<context:component-scan base-package="org.milleni.dunning.datamodel.service" />
+	<context:component-scan base-package="org.milleni.dunning.datamodel.rule" />
+	<context:component-scan base-package="org.milleni.dunning.ws.proxy" />
+
+
+
+	<bean id="dunningPropertyPlaceholder"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath*:dunning.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<jaxws:endpoint id="invoicePaymentWs" implementor="#invoicePaymentOperations"
+		address="/invoicePaymentOperations" />
+
+
+
+	<bean id="daoHelper" class="org.milleni.dunning.datamodel.util.DaoHelper"
+		factory-method="getInstance">
+	</bean>
+
+	<bean id="invoicePaymentOperations"
+		class="org.milleni.dunning.datamodel.ws.InvoicePaymentOperationsWsImpl"></bean>
+
+
+	<jaxws:client id="milInternal"
+		serviceClass="org.milleni.dunning.ws.client.milinternal.MillenicomInternalSoap"
+		address="http://192.168.2.52/SAPWebServicesProd/MillenicomInternal.asmx" />
+
+
+	<jaxws:client id="customerInfoWs"
+		serviceClass="org.milleni.dunning.ws.client.customerservice.CustomerInfoServiceSoap"
+		address="http://localhost:8328/CustomerInfoService.asmx" />
+
+
+
+	<jaxws:client id="coaService"
+		serviceClass="org.milleni.dunning.ws.client.coa.COASoap"
+		address="http://localhost:8030/OnlineTahsilat/MilleniComOnlineTahsilat.asmx" />
+
+	<jaxws:client id="smsWs"
+		serviceClass="org.milleni.dunning.ws.client.sms.SmsgwSoap" address="http://localhost/bizmonws/smsgw.asmx" />
+	
+	<jaxws:client id="customerStatusOperations"
+		serviceClass="org.milleni.dunning.ws.client.customerstatus.CustomerStatusOperationsSoap" address="http://localhost:8328/CustomerStatusOperations.asmx?wsdl" />
+		
+
+</beans>
