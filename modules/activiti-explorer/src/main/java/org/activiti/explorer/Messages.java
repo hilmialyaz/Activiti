@@ -488,6 +488,7 @@ public interface Messages {
   
   
   String MAIN_MENU_CUSTOMERS = "main.menu.customers";
-
+  String MAIN_MENU_DUNNING_PROCESS = "main.menu.dunningProcess";
+  String MAIN_MENU_DUNNING_PROCESS_DETAIL = "main.menu.dunningProcess.detail";
 
 }

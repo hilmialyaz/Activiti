@@ -13,9 +13,11 @@
 		<class>org.milleni.dunning.datamodel.model.DunningPolicySteps</class>
 		<class>org.milleni.dunning.datamodel.model.DunningPolicyStepsPK</class>
 		<class>org.milleni.dunning.datamodel.model.DunningProcessDetail</class>
+		<class>org.milleni.dunning.datamodel.model.DunningProcessDetailStatus</class>
 		<class>org.milleni.dunning.datamodel.model.DunningProcessDetailHist</class>
 		<class>org.milleni.dunning.datamodel.model.DunningProcessDetailLogs</class>
 		<class>org.milleni.dunning.datamodel.model.DunningProcessMaster</class>
+		<class>org.milleni.dunning.datamodel.model.DunningProcessMasterStatus</class>
 		<class>org.milleni.dunning.datamodel.model.DunningProcessMasterHist</class>
 		<class>org.milleni.dunning.datamodel.model.ProcessSteps</class>
 	</persistence-unit>

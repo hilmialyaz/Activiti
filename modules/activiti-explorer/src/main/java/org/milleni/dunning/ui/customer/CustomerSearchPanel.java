@@ -190,8 +190,6 @@ public class CustomerSearchPanel extends Panel {
 		
 		BeanItem<Customer> item = new BeanItem<Customer>(customer,new String[]{"customerId","customerName","customerType","customerGroup"});
 		//item.addItemProperty(i18nManager.getMessage(Constants.CUSTOMER_ID), new NestedMethodProperty(customer, "customerId"));
-		//item.addItemProperty(i18nManager.getMessage(Constants.CUSTOMER_NAME), new NestedMethodProperty(customer, "customerName"));
-		
 		customerSearchForm.setItemDataSource(item);
 		
 		formLayout.addComponent(customerSearchForm);

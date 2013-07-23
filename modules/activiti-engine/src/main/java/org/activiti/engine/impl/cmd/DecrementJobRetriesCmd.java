@@ -15,7 +15,10 @@ package org.activiti.engine.impl.cmd;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Date;
 
+import org.activiti.engine.impl.calendar.BusinessCalendar;
+import org.activiti.engine.impl.calendar.DueDateBusinessCalendar;
 import org.activiti.engine.impl.cfg.TransactionContext;
 import org.activiti.engine.impl.cfg.TransactionState;
 import org.activiti.engine.impl.context.Context;
@@ -47,11 +50,16 @@ public class DecrementJobRetriesCmd implements Command<Object> {
     job.setRetries(job.getRetries() - 1);
     job.setLockOwner(null);
     job.setLockExpirationTime(null);
-    
+    job.setDuedate(calculateRepeat());
     if(exception != null) {
       job.setExceptionMessage(exception.getMessage());
       job.setExceptionStacktrace(getExceptionStacktrace());
     }
+    
+    JobEntity job2 = Context
+    	      .getCommandContext()
+    	      .getJobEntityManager()
+    	      .findJobById(jobId);
     
     JobExecutor jobExecutor = Context.getProcessEngineConfiguration().getJobExecutor();
     MessageAddedNotification messageAddedNotification = new MessageAddedNotification(jobExecutor);
@@ -66,4 +74,11 @@ public class DecrementJobRetriesCmd implements Command<Object> {
     exception.printStackTrace(new PrintWriter(stringWriter));
     return stringWriter.toString();
   }
+  
+	private Date calculateRepeat() {
+		BusinessCalendar businessCalendar = Context.getProcessEngineConfiguration().getBusinessCalendarManager().getBusinessCalendar(DueDateBusinessCalendar.NAME);
+		return businessCalendar.resolveDuedate("PT3M");
+	}
 }
+
+

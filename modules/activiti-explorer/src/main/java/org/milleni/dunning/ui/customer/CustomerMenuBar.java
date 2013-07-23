@@ -53,6 +53,10 @@ public class CustomerMenuBar extends ToolBar {
   
   public static final String ENTRY_CUSTOMERS = "customers";
   
+  public static final String ENTRY_DUNNING_PROCESS = "dunningProcess";
+  
+  public static final String ENTRY_DUNNING_PROCESS_DETAIL = "dunningProcessDetail";
+  
   protected transient IdentityService identityService;
   protected ViewManager viewManager;
   protected I18nManager i18nManager;
@@ -66,11 +70,24 @@ public class CustomerMenuBar extends ToolBar {
   
   protected void initItems() {
     setWidth("100%");
-    ToolbarEntry inboxEntry = addToolbarEntry(ENTRY_CUSTOMERS, i18nManager.getMessage(Messages.MAIN_MENU_CUSTOMERS), new ToolbarCommand() {
+    ToolbarEntry customerPageEntry = addToolbarEntry(ENTRY_CUSTOMERS, i18nManager.getMessage(Messages.MAIN_MENU_CUSTOMERS), new ToolbarCommand() {
       public void toolBarItemSelected() {
-        viewManager.showInboxPage();
+        viewManager.showCustomerPage();        
       }
     });
+    
+    ToolbarEntry dunningProcessEntry = addToolbarEntry(ENTRY_DUNNING_PROCESS, i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS), new ToolbarCommand() {
+        public void toolBarItemSelected() {
+          viewManager.showDunningProcess();        
+        }
+      });
+    
+    
+    ToolbarEntry dunningProcessDetailEntry = addToolbarEntry(ENTRY_DUNNING_PROCESS_DETAIL, i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_DETAIL), new ToolbarCommand() {
+        public void toolBarItemSelected() {
+          viewManager.showDunningProcessDetail();       
+        }
+      });
   
   }
   

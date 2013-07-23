@@ -99,9 +99,8 @@ public class CustomCompletedInstancesPanel extends DetailPanel {
     //initDefinitions();
     //initInstances();
     processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-    processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
-     
     if(processInstance != null){
+    	 processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
         addTasks(processInstance);
         addVariables(processInstance);
         addProcessImage(processDefinition, processInstance);

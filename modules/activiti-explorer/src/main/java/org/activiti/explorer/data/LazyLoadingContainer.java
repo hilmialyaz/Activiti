@@ -121,14 +121,16 @@ public class LazyLoadingContainer implements Container.Indexed, Container.Sortab
     // We don't need an actual list of elements, 
     // since we map the ids in natural integer order (0,1,2,3, etc)
     // so we can just override the get() and save some memory
+	  
     return new AbstractList<Integer>() {
       public int size() {
-        return size();
+        return size;
       }
       public Integer get(int index) {
         return index;
       }
     };
+    
   }
   
   public Object firstItemId() {

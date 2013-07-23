@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.milleni.dunning.ui.customer.CustomTaskSearchPage;
-import org.milleni.dunning.ui.customer.CustomerPage;
 import org.activiti.editor.ui.EditorProcessDefinitionPage;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -54,6 +52,10 @@ import org.activiti.explorer.ui.task.QueuedPage;
 import org.activiti.explorer.ui.task.TaskMenuBar;
 import org.activiti.explorer.ui.task.TasksPage;
 import org.activiti.workflow.simple.definition.WorkflowDefinition;
+import org.milleni.dunning.ui.customer.CustomTaskSearchPage;
+import org.milleni.dunning.ui.customer.CustomerPage;
+import org.milleni.dunning.ui.dpdetail.DunningProcessDetailPage;
+import org.milleni.dunning.ui.dpmaster.DunningProcessPage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.ui.Window;
@@ -181,6 +183,16 @@ public class DefaultViewManager implements ViewManager, Serializable {
   public void showCustomerPage() {
 	    switchView(new CustomerPage(), ViewManager.MAIN_NAVIGATION_CUSTOMERS, TaskMenuBar.ENTRY_INBOX);
   }
+  
+  
+  public void showDunningProcess() {
+	    switchView(new DunningProcessPage(), ViewManager.MAIN_NAVIGATION_CUSTOMERS, TaskMenuBar.ENTRY_INBOX);
+  }
+  
+  public void showDunningProcessDetail() {
+	    switchView(new DunningProcessDetailPage(), ViewManager.MAIN_NAVIGATION_CUSTOMERS, TaskMenuBar.ENTRY_INBOX);
+  }
+  
   
   public void showInboxPage(String taskId) {
     switchView(new InboxPage(taskId), ViewManager.MAIN_NAVIGATION_TASK, TaskMenuBar.ENTRY_INBOX);

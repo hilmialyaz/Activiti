@@ -16,7 +16,7 @@
 		<property name="processEngine" ref="processEngine" />
 
 		<!-- Set following properties to false if certain demo data is not wanted -->
-		<property name="createDemoUsersAndGroups" value="false" /> 
+		<property name="createDemoUsersAndGroups" value="false" />
 		<property name="createDemoProcessDefinitions" value="false" />
 		<property name="createDemoModels" value="false" />
 		<property name="generateReportData" value="false" />
@@ -56,7 +56,7 @@
 		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
 			</props>
 		</property>
 		<property name="persistenceUnitName" value="activiti-jpa-pu" />
@@ -69,7 +69,7 @@
 
 	<bean id="jpaAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="databasePlatform" value="org.hibernate.dialect.OracleDialect" />
+		<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" />
 		<property name="showSql" value="true" />
 		<property name="generateDdl" value="true" />
 	</bean>
@@ -83,7 +83,25 @@
 		<property name="jpaHandleTransaction" value="true" />
 		<property name="jpaCloseEntityManager" value="true" />
 		<property name="jobExecutorActivate" value="true" />
-		<property name="transactionsExternallyManaged" value="true" />
+		<property name="transactionsExternallyManaged" value="false" />
+		<property name="idGenerator">
+		    <bean class="org.activiti.engine.impl.persistence.StrongUuidGenerator" />
+		</property>
+
+		<property name="mailServerHost" value="smtp.yandex.ru" />
+		<property name="mailServerPort" value="465" />
+		<property name="mailServerUsername" value="milleni-test@yandex.com" />
+		<property name="mailServerPassword" value="ZAQ!xsw2" />
+		<property name="mailServerUseSSL" value="true" />
+		<property name="mailServerDefaultFrom" value="milleni-test@yandex.com" />
+
+
+		<!-- <property name="mailServerHost" value="mail.milleni.com.tr" /> <property 
+			name="mailServerUsername" value="bizmon" /> <property name="mailServerPassword" 
+			value="P@ssw0rd" /> <property name="mailServerUseSSL" value="false" /> -->
+
+
+
 		<property name="customFormTypes">
 			<list>
 				<bean class="org.activiti.explorer.form.UserFormType" />

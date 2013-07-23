@@ -1,28 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<definitions id="definitions" 
-  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:activiti="http://activiti.org/bpmn"
-  targetNamespace="Examples">
-  
-  <process id="limitedExpressionProcess">
-  
-    <startEvent id="start" />
-    <sequenceFlow id="flow1" sourceRef="start" targetRef="serviceTask" />
-    
-    <serviceTask id="serviceTask" activiti:expression="${bean1.getSentence()}" activiti:resultVariableName="beanOutput" />
-    <sequenceFlow id="flow2" sourceRef="serviceTask" targetRef="userTask" />
-    
-    <userTask id="userTask" name="Schedule meeting" />
-    <sequenceFlow id="flow3" sourceRef="userTask" targetRef="serviceTask2" />
-    
-    <!-- Using bean that is available in app-context, but not mentioned in beans -->
-    <serviceTask id="serviceTask2" activiti:expression="${bean2.getSentence()}" />
-    
-    <sequenceFlow id="flow4" sourceRef="serviceTask2" targetRef="end" />
-    
-    <endEvent id="end" />
-    
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="Examples">
+  <process id="limitedExpressionProcess" isExecutable="true">
+    <startEvent id="start"></startEvent>
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="serviceTask"></sequenceFlow>
+    <serviceTask id="serviceTask" activiti:expression="${bean1.getSentence()}" activiti:resultVariableName="beanOutput"></serviceTask>
+    <userTask id="userTask" name="Schedule meeting"></userTask>
+    <sequenceFlow id="flow3" sourceRef="userTask" targetRef="serviceTask2"></sequenceFlow>
+    <serviceTask id="serviceTask2" activiti:expression="${bean2.getSentence()}"></serviceTask>
+    <sequenceFlow id="flow4" sourceRef="serviceTask2" targetRef="end"></sequenceFlow>
+    <endEvent id="end"></endEvent>
+    <serviceTask id="mailtask1" name="Mail Task" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="to">
+          <activiti:string>test@test.com</activiti:string>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:string>test@test.com</activiti:string>
+        </activiti:field>
+        <activiti:field name="subject">
+          <activiti:string>test</activiti:string>
+        </activiti:field>
+        <activiti:field name="text">
+          <activiti:expression>${beanOutput}</activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow5" sourceRef="serviceTask" targetRef="mailtask1"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="mailtask1" targetRef="userTask"></sequenceFlow>
   </process>
-
+  <bpmndi:BPMNDiagram id="BPMNDiagram_limitedExpressionProcess">
+    <bpmndi:BPMNPlane bpmnElement="limitedExpressionProcess" id="BPMNPlane_limitedExpressionProcess">
+      <bpmndi:BPMNShape bpmnElement="serviceTask2" id="BPMNShape_serviceTask2">
+        <omgdc:Bounds height="60.0" width="100.0" x="380.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="0.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="userTask" id="BPMNShape_userTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="230.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="530.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="serviceTask" id="BPMNShape_serviceTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="80.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="mailtask1" id="BPMNShape_mailtask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="179.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="330.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="342.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="342.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="30.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="480.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="492.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="492.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="530.0" y="32.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="35.0" y="32.0"></omgdi:waypoint>
+        <omgdi:waypoint x="42.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="42.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="80.0" y="30.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="130.0" y="60.0"></omgdi:waypoint>
+        <omgdi:waypoint x="231.0" y="80.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="231.0" y="80.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="60.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
 </definitions>

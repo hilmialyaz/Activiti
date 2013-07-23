@@ -50,7 +50,7 @@ public class InvoiceTableComponent extends Table{
 			for (CustomerInvoices inv : invoiceList) {
 				Item item = this.addItem(inv.getInvoiceId());
 				Embedded embed = null;
-				if ( "Y".equalsIgnoreCase(inv.getPaymentStatus())) {
+				if ( Constants.PAID.equalsIgnoreCase(inv.getPaymentStatus())) {
 					embed = new Embedded(null, Images.TASK_FINISHED_22);
 					embed.setDescription(Constants.DUNNING_INVOICE_PAID);
 					item.getItemProperty("status").setValue(embed);		

@@ -58,6 +58,10 @@ public interface ViewManager {
   
   void showCustomerPage();
   
+  void showDunningProcess();
+  
+  public void showDunningProcessDetail();
+  
   void showInboxPage(String taskId);
   
   void showQueuedPage(String groupId);

@@ -11,10 +11,10 @@
 
 
 	<!-- import cxf webservices -->
-	<import resource="cxf.xml" />
-	<import resource="cxf-servlet.xml" />
+
 
 	<jpa:repositories base-package="org.milleni.dunning.datamodel.dao" />
+	<context:component-scan base-package="org.milleni.dunning.datamodel.dao" />
 	<context:component-scan base-package="org.milleni.dunning.datamodel.util" />
 	<context:component-scan base-package="org.milleni.dunning.datamodel.service" />
 	<context:component-scan base-package="org.milleni.dunning.datamodel.rule" />
@@ -30,6 +30,11 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="processExecutionListenerService"
+	class=" org.milleni.dunning.activiti.executionlistener.ProcessExecutionListenerServiceImpl">
+	</bean>
+	
 
 	<jaxws:endpoint id="invoicePaymentWs" implementor="#invoicePaymentOperations"
 		address="/invoicePaymentOperations" />
@@ -65,5 +70,13 @@
 	<jaxws:client id="customerStatusOperations"
 		serviceClass="org.milleni.dunning.ws.client.customerstatus.CustomerStatusOperationsSoap" address="http://localhost:8328/CustomerStatusOperations.asmx?wsdl" />
 		
-
+	
+	<jaxws:client id="milldeskService"
+		serviceClass=" org.milleni.dunning.ws.client.milldesk.MilldeskSoap" address="http://217.65.184.126/BizmonWS_Test/milldesk.asmx?wsdl" />
+		
+		
+	<jaxws:client id="onlineTahsilatService"
+		serviceClass=" org.milleni.dunning.ws.client.tahsilat.MilleniComOnlineTahsilatSoap" address="http://192.168.2.52/OnlineTahsilatProd/MilleniComOnlineTahsilat.asmx?wsdl" />
+			
+		
 </beans>

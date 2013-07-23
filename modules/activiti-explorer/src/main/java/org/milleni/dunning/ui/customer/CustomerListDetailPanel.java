@@ -45,6 +45,7 @@ import org.activiti.explorer.ui.util.ThemeImageColumnGenerator;
 import org.activiti.explorer.ui.variable.VariableRendererManager;
 import org.milleni.dunning.datamodel.dao.CustomerDao;
 import org.milleni.dunning.datamodel.dao.CustomerRepository;
+import org.milleni.dunning.datamodel.dao.DunningProcessDetailRepository;
 import org.milleni.dunning.datamodel.model.Customer;
 import org.milleni.dunning.datamodel.model.CustomerInvoices;
 import org.milleni.dunning.datamodel.model.DunningProcessDetail;
@@ -54,10 +55,12 @@ import org.milleni.dunning.datamodel.service.CustomerService;
 import org.milleni.dunning.datamodel.service.DunningProcessService;
 import org.milleni.dunning.datamodel.util.Constants;
 import org.milleni.dunning.datamodel.util.DaoHelper;
+import org.milleni.dunning.ui.customer.component.DunningStepTableComponent;
 import org.milleni.dunning.ui.customer.form.CustomProcessInstanceDetailPanel;
 import org.milleni.dunning.ui.customer.form.CustomerDetailPopupWindow;
 import org.milleni.dunning.ui.customer.form.ProcessDetailPopupWindow;
 import org.milleni.dunning.ui.db.Invoice;
+import org.milleni.dunning.ui.dpmaster.DunningProcessTableListItem;
 import org.springframework.util.StringUtils;
 
 import com.google.gwt.user.client.rpc.core.java.util.Collections;
@@ -101,6 +104,7 @@ public class CustomerListDetailPanel extends DetailPanel {
 	private CustomerService customerService;
 	private DunningProcessService dunningProcessService;
 	private LazyLoadingQuery lazyLoadingQuery = null;
+	private DunningProcessDetailRepository dunningProcessDetailRepository;
 
 	public CustomerListDetailPanel(LazyLoadingQuery lazyLoadingQuery) {
 		this.lazyLoadingQuery = lazyLoadingQuery;
@@ -113,6 +117,7 @@ public class CustomerListDetailPanel extends DetailPanel {
 		this.i18nManager = ExplorerApp.get().getI18nManager();
 		this.customerService = DaoHelper.getInstance().getCustomerService();
 		this.dunningProcessService = DaoHelper.getInstance().getDunningProcessService();
+		this.dunningProcessDetailRepository = DaoHelper.getInstance().getDunningProcessDetailRepository();
 		init();
 	}
 
@@ -272,7 +277,7 @@ public class CustomerListDetailPanel extends DetailPanel {
 			dunningProcessLayout.addComponent(duningProcessTable);
 
 			for (DunningProcessMaster dnngPMaster : dngPrcsMasterList) {
-				Item item = duningProcessTable.addItem(dnngPMaster.getProcessId());
+				Item item = duningProcessTable.addItem(dnngPMaster);
 
 				Button detailsField = new Button(dnngPMaster.getBpmProcessId());
 				detailsField.setData(dnngPMaster.getBpmProcessId());
@@ -291,7 +296,7 @@ public class CustomerListDetailPanel extends DetailPanel {
 				String masterStatusDesc = "";
 				if( StringUtils.hasLength(dnngPMaster.getStatusDesc())) 
 					masterStatusDesc = "("+dnngPMaster.getStatusDesc()+")";
-				item.getItemProperty("status").setValue(dnngPMaster.getStatus() + masterStatusDesc);
+				item.getItemProperty("status").setValue(dnngPMaster.getStatus().getStatusText() + masterStatusDesc);
 				item.getItemProperty("currentDebit").setValue(String.valueOf(  dnngPMaster.getCurrentDebit()!=null ? dnngPMaster.getCurrentDebit() : ""));
 			}
 			duningProcessTable.setPageLength(duningProcessTable.size());
@@ -299,23 +304,18 @@ public class CustomerListDetailPanel extends DetailPanel {
 				private static final long serialVersionUID = 1L;
 
 				public void valueChange(ValueChangeEvent event) {
-					Item item = duningProcessTable.getItem(event.getProperty().getValue());
-
+					DunningProcessMaster item = (DunningProcessMaster) event.getProperty().getValue();
+					
 					if (item != null) {
-
-						Long dunningProcessMasterId = Long.parseLong(event.getProperty().getValue().toString());
-						List<DunningProcessDetail> dngProcessDetailList = dunningProcessService.listCustomerDunningProcessDetails(dunningProcessMasterId);
-
-						if (processStepTable != null) {
-							dunningProcessLayout.removeComponent(processStepTable);
-						}
-						createProcessStepList(dngProcessDetailList);
+						if (dunningProcessLayout != null && processStepTable!=null)	dunningProcessLayout.removeComponent(processStepTable);
+						
+						List<DunningProcessDetail> dunningProcessDetails = dunningProcessDetailRepository.findDunningProcessDetails(item.getProcessId());
+						processStepTable = new DunningStepTableComponent(dunningProcessDetails);
 						dunningProcessLayout.addComponent(processStepTable);
-
 					}
 				}
 			});
-			createProcessStepList(dngPrcsMasterList.get(0).getDunningProcessDetailCollection());
+			processStepTable = new DunningStepTableComponent(dngPrcsMasterList.get(0).getDunningProcessDetailCollection());
 			dunningProcessLayout.addComponent(processStepTable);
 
 		} else {
@@ -327,68 +327,6 @@ public class CustomerListDetailPanel extends DetailPanel {
 
 	Table processStepTable;
 
-	protected Table createProcessStepList(Collection<DunningProcessDetail> processDetails) {
 
-		processStepTable = new Table();
-		processStepTable.addStyleName(ExplorerLayout.STYLE_PROCESS_DEFINITION_LIST);
-
-		// Set non-editable, selectable and full-size
-		processStepTable.setEditable(false);
-		processStepTable.setImmediate(true);
-		processStepTable.setSelectable(true);
-		processStepTable.setNullSelectionAllowed(false);
-		processStepTable.setSortDisabled(true);
-		processStepTable.setSizeFull();
-
-		processStepTable.addContainerProperty("finished", Component.class, null, "", null, Table.ALIGN_CENTER);
-		processStepTable.setColumnWidth("finished", 22);
-		processStepTable.addContainerProperty("name", String.class, null, i18nManager.getMessage(Constants.DUNNING_BPM_RPOCESS_ID), null, Table.ALIGN_LEFT);
-		processStepTable.addContainerProperty("startDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_START_DATE), null, Table.ALIGN_LEFT);
-		processStepTable.addContainerProperty("endDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_END_DATE), null, Table.ALIGN_LEFT);
-		processStepTable.addContainerProperty("currentDebit", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_DEBIT), null, Table.ALIGN_LEFT);
-		//processStepTable.addContainerProperty("logkey", String.class, null, i18nManager.getMessage(Constants.DUNNING_BPM_RPOCESS_ID), null, Table.ALIGN_LEFT);
-		//processStepTable.addContainerProperty("logvalue", String.class, null, i18nManager.getMessage(Constants.DUNNING_BPM_RPOCESS_ID), null, Table.ALIGN_LEFT);
-
-		// processStepTable.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
-		
-		
-
-		for (DunningProcessDetail dunningProcessDetail : processDetails) {
-			Item item = processStepTable.addItem(dunningProcessDetail.getProcessDetailId());
-			Embedded embed = null;
-			if (Constants.SUCCESS.equals(dunningProcessDetail.getStatus())) {
-				embed= new Embedded(null, Images.TASK_FINISHED_22);
-				item.getItemProperty("finished").setValue(embed);
-			} else {
-				embed = new Embedded(null, Images.TASK_22);
-				item.getItemProperty("finished").setValue(embed);
-			}
-			
-			item.getItemProperty("name").setValue(dunningProcessDetail.getProcessStepId().getStepText());
-			item.getItemProperty("startDate").setValue(dunningProcessDetail.getCreateDate());
-			item.getItemProperty("endDate").setValue(dunningProcessDetail.getStatusDate());
-			item.getItemProperty("currentDebit").setValue(String.valueOf(  dunningProcessDetail.getCurrentDebit()!=null ? dunningProcessDetail.getCurrentDebit() : ""));
-			Collection<DunningProcessDetailLogs> logs = dunningProcessDetail.getDunningProcessDetailLogsCollection();
-			
-			
-			String desc = "<h2>Task Logları</h2><ul>";
-						
-			for (DunningProcessDetailLogs dunningProcessDetailLogs : logs) {
-				/*
-				Item itemLog = processStepTable.addItem(dunningProcessDetailLogs);
-				itemLog.getItemProperty("name").setValue("");
-				itemLog.getItemProperty("logkey").setValue();
-				itemLog.getItemProperty("logvalue").setValue();
-				*/				
-				desc  ="<li>"+ dunningProcessDetailLogs.getLogKey()+": "+dunningProcessDetailLogs.getLogText() +"</li>"; 
-				    
-			}
-			desc += "</ul>";
-			if(logs!=null  && logs.size()>0)
-				embed.setDescription(desc);
-		}
-
-		return processStepTable;
-	}
 
 }
