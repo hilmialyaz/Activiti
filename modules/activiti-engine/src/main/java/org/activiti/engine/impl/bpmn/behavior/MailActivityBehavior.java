@@ -20,6 +20,7 @@ import org.activiti.engine.delegate.Expression;
 import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.pvm.delegate.ActivityExecution;
+import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
@@ -43,6 +44,38 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
   protected Expression charset;
 
   public void execute(ActivityExecution execution) {
+	  
+	  /*
+	  try{
+	  HtmlEmail email = new HtmlEmail();
+	  String authusers = "kemal.alyaz@gmail.com";
+	  String authpwds = "telit.gm.862";
+	  // Very Important, Don't use email.setAuthentication()
+	  email.setSmtpPort(465);
+	  email.setAuthenticator(new DefaultAuthenticator(authusers, authpwds));
+	  //email.setDebug(true); // true if you want to debug
+	  email.setHostName("smtp.gmail.com");
+	  
+	  email.getMailSession().getProperties().put("mail.smtp.auth", "true");
+	  email.getMailSession().getProperties().put("mail.debug", "true");
+	  email.getMailSession().getProperties().put("mail.smtp.port", "465");
+	  email.getMailSession().getProperties().put("mail.smtp.socketFactory.port", "465");
+	  email.getMailSession().getProperties().put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+	  email.getMailSession().getProperties().put("mail.smtp.socketFactory.fallback", "false");
+	  
+	  email.getMailSession().getProperties().put("mail.smtp.starttls.enable", "true");
+	  
+	  email.setFrom("kemal.alyaz@gmail.com", "SenderName");
+	  email.setSubject("hebele");
+	  email.setHtmlMsg(getStringFromField(text, execution));	  
+	  email.addTo("hilmi.alyaz@milleni.com.tr", "ToName");
+	  email.send();
+	  
+	  }catch(Exception ex){
+		  System.out.println(ex);
+	  }
+	  
+	  */
     String toStr = getStringFromField(to, execution);
     String fromStr = getStringFromField(from, execution);
     String ccStr = getStringFromField(cc, execution);
