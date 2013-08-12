@@ -66,6 +66,7 @@ public class DunningProcessDetailTableListItem extends PropertysetItem implement
 		addItemProperty("startDate", new ObjectProperty<Date>(dpDetail.getCreateDate(), Date.class));
 		addItemProperty("endDate", new ObjectProperty<Date>(dpDetail.getStatusDate(), Date.class));
 		addItemProperty("status",  new ObjectProperty<String>(dpDetail.getStatus()!=null ? dpDetail.getStatus().getStatusText():"" , String.class));
+		addItemProperty("customerId",  new ObjectProperty<String>((dpDetail.getProcessId()!=null && dpDetail.getProcessId().getCustomerId()!=null) ? dpDetail.getProcessId().getCustomerId().getCustomerId():"" , String.class));
 		addItemProperty("currentDebit", new ObjectProperty<String>(dpDetail.getCurrentDebit() != null ? dpDetail.getCurrentDebit() : "", String.class));
 		
 		

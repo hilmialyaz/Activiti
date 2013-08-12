@@ -21,6 +21,7 @@ import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.explorer.ExplorerApp;
 import org.activiti.explorer.I18nManager;
+import org.activiti.explorer.Messages;
 import org.activiti.explorer.ui.mainlayout.ExplorerLayout;
 
 import com.vaadin.data.Validator.InvalidValueException;
@@ -28,6 +29,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
@@ -55,6 +57,7 @@ public class FormPropertiesForm extends VerticalLayout {
   protected Button submitFormButton;
   protected Button cancelFormButton;
   protected FormPropertiesComponent formPropertiesComponent;
+  protected CheckBox otherTasks;
   
   public FormPropertiesForm() {
     super();
@@ -105,6 +108,7 @@ public class FormPropertiesForm extends VerticalLayout {
   protected void initButtons() {
     submitFormButton = new Button();
     cancelFormButton = new Button();
+    otherTasks = new CheckBox(i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_TASK_OTHER_COMPLETE));
     
     HorizontalLayout buttons = new HorizontalLayout();
     buttons.setSpacing(true);
@@ -115,6 +119,9 @@ public class FormPropertiesForm extends VerticalLayout {
     
     buttons.addComponent(cancelFormButton);
     buttons.setComponentAlignment(cancelFormButton, Alignment.BOTTOM_RIGHT);
+    
+    buttons.addComponent(otherTasks);
+    buttons.setComponentAlignment(otherTasks, Alignment.BOTTOM_RIGHT);
     
     Label buttonSpacer = new Label();
     buttons.addComponent(buttonSpacer);
@@ -136,6 +143,7 @@ public class FormPropertiesForm extends VerticalLayout {
         // Extract the submitted values from the form. Throws exception when validation fails.
         try {
           Map<String, String> formProperties = formPropertiesComponent.getFormPropertyValues();
+          formProperties.put(FormPropertiesEvent.TYPE_SUBMIT_ALL_TASK, otherTasks.getValue().toString());
           fireEvent(new FormPropertiesEvent(FormPropertiesForm.this, FormPropertiesEvent.TYPE_SUBMIT, formProperties));
           submitFormButton.setComponentError(null);
         } catch(InvalidValueException ive) {
@@ -176,6 +184,7 @@ public class FormPropertiesForm extends VerticalLayout {
     private static final long serialVersionUID = -410814526942034125L;
     
     public static final String TYPE_SUBMIT = "SUBMIT";
+    public static final String TYPE_SUBMIT_ALL_TASK = "SUBMIT_ALL_TASK";
     public static final String TYPE_CANCEL = "CANCEL";
     
     private String type;

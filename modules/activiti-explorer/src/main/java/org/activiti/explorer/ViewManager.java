@@ -62,6 +62,10 @@ public interface ViewManager {
   
   public void showDunningProcessDetail();
   
+  public void showStartDunningProcess();
+  
+  public void showCustomerInboxPage();
+  
   void showInboxPage(String taskId);
   
   void showQueuedPage(String groupId);

@@ -13,17 +13,14 @@
 
 package org.activiti.explorer.ui.task;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import org.activiti.engine.ActivitiException;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.activiti.explorer.ExplorerApp;
-import org.activiti.explorer.Messages;
 import org.activiti.explorer.data.LazyLoadingContainer;
 import org.activiti.explorer.data.LazyLoadingQuery;
 import org.activiti.explorer.navigation.UriFragment;
@@ -36,23 +33,28 @@ import org.activiti.explorer.ui.event.SubmitEvent;
 import org.activiti.explorer.ui.event.SubmitEventListener;
 import org.activiti.explorer.ui.mainlayout.ExplorerLayout;
 import org.activiti.explorer.ui.util.ThemeImageColumnGenerator;
-import org.milleni.dunning.datamodel.util.Constants;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.CellStyle;
 
+import com.vaadin.addon.tableexport.ExcelExport;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.Table.HeaderClickEvent;
 import com.vaadin.ui.Table.HeaderClickListener;
+import com.vaadin.ui.themes.BaseTheme;
 
 /**
  * Abstract super class for all task pages (inbox, queued, archived, etc.),
@@ -167,18 +169,7 @@ public abstract class TaskPage extends AbstractTablePage {
 			private static final long serialVersionUID = 1L;
 
 			public void valueChange(ValueChangeEvent event) {
-				Item item = taskTable.getItem(event.getProperty().getValue()); // the
-																				// value
-																				// of
-																				// the
-																				// property
-																				// is
-																				// the
-																				// itemId
-																				// of
-																				// the
-																				// table
-																				// entry
+				Item item = taskTable.getItem(event.getProperty().getValue()); 
 
 				if (item != null) {
 					String id = (String) item.getItemProperty("id").getValue();
@@ -198,7 +189,7 @@ public abstract class TaskPage extends AbstractTablePage {
 	protected Component createDetailComponent(String id) {
 		Task task = taskService.createTaskQuery().taskId(id).singleResult();
 		Component detailComponent = new TaskDetailPanel(task, TaskPage.this);
-		taskEventPanel.setTaskId(task.getId());
+		if(taskEventPanel!=null) taskEventPanel.setTaskId(task.getId());
 		return detailComponent;
 	}
 
@@ -291,14 +282,41 @@ public abstract class TaskPage extends AbstractTablePage {
 			}
 		});
 
+		final ThemeResource export = new ThemeResource("../images/table-excel.png");
+		final Button excelExportButton = new Button();
+		excelExportButton.setIcon(export);
+		excelExportButton.setStyleName(BaseTheme.BUTTON_LINK);
+
+		excelExportButton.addListener(new ClickListener() {
+			private static final long serialVersionUID = -73954695086117200L;
+			private ExcelExport excelExport;
+
+			public void buttonClick(final ClickEvent event) {
+				excelExport = new ExcelExport(taskTable);
+
+				excelExport.excludeCollapsedColumns();
+				excelExport.setDisplayTotals(false);
+				excelExport.setRowHeaders(true);
+				CellStyle cs = excelExport.getTitleStyle();
+				cs.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index);
+				excelExport.setTitleStyle(cs);
+				excelExport.setDoubleDataFormat("0.00");
+				excelExport.setExcelFormatOfProperty("konto", "0");
+				excelExport.export();
+			}
+		});
 		
 		if(!(this instanceof InboxPage || this instanceof TasksPage) ){
-			header.getButtonlayout().addComponent(claimButton);	
+			header.getButtonlayout().addComponent(claimButton);
+			header.getButtonlayout().setComponentAlignment(claimButton, Alignment.TOP_LEFT);
 		}
 
 		
 		header.getButtonlayout().addComponent(assignButton);
-
+		header.getButtonlayout().setComponentAlignment(assignButton, Alignment.TOP_LEFT);
+		header.getButtonlayout().addComponent(excelExportButton);
+		header.getButtonlayout().setComponentAlignment(excelExportButton, Alignment.TOP_LEFT);
+		
 		return header;
 	}
 

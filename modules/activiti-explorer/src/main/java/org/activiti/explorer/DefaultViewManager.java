@@ -46,6 +46,7 @@ import org.activiti.explorer.ui.reports.ReportsMenuBar;
 import org.activiti.explorer.ui.reports.RunReportsPage;
 import org.activiti.explorer.ui.reports.SavedReportsPage;
 import org.activiti.explorer.ui.task.ArchivedPage;
+import org.activiti.explorer.ui.task.CustomerInboxPage;
 import org.activiti.explorer.ui.task.InboxPage;
 import org.activiti.explorer.ui.task.InvolvedPage;
 import org.activiti.explorer.ui.task.QueuedPage;
@@ -56,6 +57,7 @@ import org.milleni.dunning.ui.customer.CustomTaskSearchPage;
 import org.milleni.dunning.ui.customer.CustomerPage;
 import org.milleni.dunning.ui.dpdetail.DunningProcessDetailPage;
 import org.milleni.dunning.ui.dpmaster.DunningProcessPage;
+import org.milleni.dunning.ui.prcstart.DunningProcessOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.ui.Window;
@@ -193,6 +195,9 @@ public class DefaultViewManager implements ViewManager, Serializable {
 	    switchView(new DunningProcessDetailPage(), ViewManager.MAIN_NAVIGATION_CUSTOMERS, TaskMenuBar.ENTRY_INBOX);
   }
   
+  public void showStartDunningProcess() {
+	    switchView(new DunningProcessOperations(), ViewManager.MAIN_NAVIGATION_CUSTOMERS, TaskMenuBar.ENTRY_INBOX);
+  }
   
   public void showInboxPage(String taskId) {
     switchView(new InboxPage(taskId), ViewManager.MAIN_NAVIGATION_TASK, TaskMenuBar.ENTRY_INBOX);
@@ -205,6 +210,11 @@ public class DefaultViewManager implements ViewManager, Serializable {
   public void showQueuedPage(String groupId, String taskId) {
     switchView(new QueuedPage(groupId, taskId), ViewManager.MAIN_NAVIGATION_TASK, TaskMenuBar.ENTRY_QUEUED);
   }
+  
+  public void showCustomerInboxPage() {
+	  switchView(new CustomerInboxPage(), ViewManager.MAIN_NAVIGATION_TASK, TaskMenuBar.CUSTOMER_ENTRY_INBOX);
+  }
+  
   
   public void showInvolvedPage() {
     switchView(new InvolvedPage(), ViewManager.MAIN_NAVIGATION_TASK, TaskMenuBar.ENTRY_INVOLVED);

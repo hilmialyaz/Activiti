@@ -12,6 +12,7 @@
  */
 
 package org.milleni.dunning.ui.customer;
+
 import org.activiti.explorer.data.LazyLoadingContainer;
 import org.activiti.explorer.data.LazyLoadingQuery;
 import org.activiti.explorer.ui.AbstractPage;
@@ -26,81 +27,84 @@ import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
 
-
 /**
  * @author Joram Barrez
  */
 public class CustomerPage extends AbstractPage {
 
-  private static final long serialVersionUID = -5259331126409002997L;
-  
-  protected Table reportTable;
-  protected LazyLoadingQuery reportListQuery;
-  protected LazyLoadingContainer reportListContainer;
-  
-  //private CustomerService customerService;
-  //@Autowired
-  //private LoanRequestBean loanRequestBean;
-  
-  
-  protected Table createList() {
-	//customerService =  ProcessEngines.getDefaultProcessEngine().getCustomerService(); 
-	//customerService.newUser("hebele");
-    Table table = new Table();
+	private static final long serialVersionUID = -5259331126409002997L;
 
-    table.addStyleName(ExplorerLayout.STYLE_PROCESS_DEFINITION_LIST);
-    //table.addGeneratedColumn("icon", new ThemeImageColumnGenerator(Images.REPORT_22));
-    table.setColumnWidth("icon", 18);
-    
-    //table.addContainerProperty("name", String.class, null);
-    table.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
-    
-    // Set non-editable, selectable and full-size
-    table.setEditable(false);
-    table.setImmediate(true);
-    table.setSelectable(true);
-    table.setNullSelectionAllowed(false);
-    table.setSortDisabled(true);
-    table.setSizeFull();
-    
-    return table;
-  }
-  
- 
-  public void setDetailComponent(LazyLoadingQuery lazyLoadingQuery){
-	  setDetailComponent(new CustomerListDetailPanel(lazyLoadingQuery));
-  }
+	protected Table reportTable;
+	protected LazyLoadingQuery reportListQuery;
+	protected LazyLoadingContainer reportListContainer;
 
-  protected ToolBar createMenuBar() {
-    return new CustomerMenuBar();
-  }
+	// private CustomerService customerService;
+	// @Autowired
+	// private LoanRequestBean loanRequestBean;
 
+	protected Table createList() {
+		// customerService =
+		// ProcessEngines.getDefaultProcessEngine().getCustomerService();
+		// customerService.newUser("hebele");
+		Table table = new Table();
 
-   
-  @Override
-  public Component getSearchComponent() {
-    return new CustomerSearchPanel(this);
-  }
+		table.addStyleName(ExplorerLayout.STYLE_PROCESS_DEFINITION_LIST);
+		// table.addGeneratedColumn("icon", new
+		// ThemeImageColumnGenerator(Images.REPORT_22));
+		table.setColumnWidth("icon", 18);
 
+		// table.addContainerProperty("name", String.class, null);
+		table.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 
-@Override
-protected AbstractSelect createSelectComponent() {
-	// TODO Auto-generated method stub
-	return null;
-}
+		// Set non-editable, selectable and full-size
+		table.setEditable(false);
+		table.setImmediate(true);
+		table.setSelectable(true);
+		table.setNullSelectionAllowed(false);
+		table.setSortDisabled(true);
+		table.setSizeFull();
 
+		return table;
+	}
 
-@Override
-public void refreshSelectNext() {
-	// TODO Auto-generated method stub
+	public void setDetailComponent(LazyLoadingQuery lazyLoadingQuery) {
+		setDetailComponent(new CustomerListDetailPanel(lazyLoadingQuery));
+	}
+
+	protected ToolBar createMenuBar() {
+		return new CustomerMenuBar();
+	}
+
+	@Override
+	public Component getSearchComponent() {
+		return new CustomerSearchPanel(this);
+	}
+
+	@Override
+	protected AbstractSelect createSelectComponent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void refreshSelectNext() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void selectElement(int index) {
+		// TODO Auto-generated method stub
+
+	}
 	
-}
+	protected void addSelectComponent() {
+		AbstractSelect select = createSelectComponent();
+		grid.setColumnExpandRatio(0, .25f);
+		grid.setColumnExpandRatio(1, .75f);
+		if (select != null) {
+			grid.addComponent(select, 0, 2);
+		}
+	}
 
-
-@Override
-public void selectElement(int index) {
-	// TODO Auto-generated method stub
-	
-} 
-  
 }

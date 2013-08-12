@@ -12,6 +12,7 @@
  */
 package org.activiti.explorer.ui.task;
 
+import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.FormService;
@@ -41,6 +42,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
@@ -80,6 +82,7 @@ public class TaskDetailPanel extends DetailPanel {
   protected TaskRelatedContentComponent relatedContent;
   protected Button completeButton;
   protected Button claimButton;
+  protected CheckBox otherTasks;
   
   public TaskDetailPanel(Task task, TaskPage taskPage) {
     this.task = task;
@@ -312,7 +315,14 @@ public class TaskDetailPanel extends DetailPanel {
         @Override
         protected void handleFormSubmit(FormPropertiesEvent event) {
           Map<String, String> properties = event.getFormProperties();
-          formService.submitTaskFormData(task.getId(), properties);
+          if("true".equalsIgnoreCase(properties.get(FormPropertiesEvent.TYPE_SUBMIT_ALL_TASK)) && task.getTaskDefinitionKey()!=null){
+        	  List<Task> taskList= taskService.createTaskQuery().taskAssignee(task.getAssignee()).taskDefinitionKey(task.getTaskDefinitionKey()).list();
+        	  for (Task task : taskList) {
+        		  formService.submitTaskFormData(task.getId(), properties);
+        	  }
+          }else{
+        	  formService.submitTaskFormData(task.getId(), properties);
+          }
           notificationManager.showInformationNotification(Messages.TASK_COMPLETED, task.getName());
           taskPage.refreshSelectNext();
         }
@@ -338,7 +348,7 @@ public class TaskDetailPanel extends DetailPanel {
       centralLayout.addComponent(buttonLayout);
       
       completeButton = new Button(i18nManager.getMessage(Messages.TASK_COMPLETE));
-      
+      otherTasks = new CheckBox(i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_TASK_OTHER_COMPLETE));
       completeButton.addListener(new ClickListener() {
         
         private static final long serialVersionUID = 1L;
@@ -357,7 +367,9 @@ public class TaskDetailPanel extends DetailPanel {
       });
       
       completeButton.setEnabled(isCurrentUserAssignee() || isCurrentUserOwner());
+      otherTasks.setEnabled(isCurrentUserAssignee() || isCurrentUserOwner());
       buttonLayout.addComponent(completeButton);
+      buttonLayout.addComponent(otherTasks);
     }
   }
 

@@ -49,20 +49,20 @@ public class DunningProcessDetailListLazyLoadinQuery extends AbstractLazyLoading
 
 	public List<Item> loadItems(int start, int count) {
 
-		List<Item> dpMasterItems = new ArrayList<Item>();
+		List<Item> dpDetailItems = new ArrayList<Item>();
 		if(dpDetail!=null){			
 			List<DunningProcessDetail> dpMasterList = dunningProcessDetailDao.findByExample(dpDetail,start,count);
-			for (DunningProcessDetail dpMaster : dpMasterList) {
-				dpMasterItems.add(new DunningProcessDetailTableListItem(dpDetail));
+			for (DunningProcessDetail dpDetail : dpMasterList) {
+				dpDetailItems.add(new DunningProcessDetailTableListItem(dpDetail));
 			}
-			return dpMasterItems;
+			return dpDetailItems;
 		}
 		
 		Iterable<DunningProcessDetail> dpMasterList = dunningProcessDetailDao.listAllDunnningProcessMasters(start,count);
 		for (DunningProcessDetail dpMaster : dpMasterList) {
-			dpMasterItems.add(new DunningProcessDetailTableListItem(dpDetail));
+			dpDetailItems.add(new DunningProcessDetailTableListItem(dpDetail));
 		}
-		return dpMasterItems;
+		return dpDetailItems;
 	}
 	
 	public Item loadSingleResult(String id) {

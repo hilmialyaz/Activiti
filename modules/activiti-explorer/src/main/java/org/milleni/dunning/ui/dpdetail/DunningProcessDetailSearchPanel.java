@@ -23,6 +23,7 @@ import org.activiti.explorer.I18nManager;
 import org.milleni.dunning.datamodel.model.Customer;
 import org.milleni.dunning.datamodel.model.DunningPolicy;
 import org.milleni.dunning.datamodel.model.DunningProcessDetail;
+import org.milleni.dunning.datamodel.model.DunningProcessDetailStatus;
 import org.milleni.dunning.datamodel.model.DunningProcessMaster;
 import org.milleni.dunning.datamodel.model.DunningProcessMasterStatus;
 import org.milleni.dunning.datamodel.model.ProcessSteps;
@@ -71,6 +72,8 @@ public class DunningProcessDetailSearchPanel extends Panel {
 	private ComboBox stepCombo ;
 	private ComboBox statusCombo ;
 	private DateField processStartDate;
+	private DateField stepCreateDate;
+	private DateField statusChangeDate;
 
 	private DunningProcessDetailPage dunningProcessPage;
 	
@@ -160,7 +163,7 @@ public class DunningProcessDetailSearchPanel extends Panel {
 		        	    policyCombo.setItemCaptionPropertyId("policyName");
 		        	    return policyCombo;
 		         }else if("processLastStepId".equals(propertyId)){		        	   
-		        	    stepCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_POLICY_LAST_STEP));		        	   
+		        	    stepCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_POLICY_STEP));		        	   
 		        	    stepCombo.setItemCaptionPropertyId("stepText");
 		        	    return stepCombo;
 		         }else if("status".equals(propertyId)){		        	   
@@ -231,15 +234,18 @@ public class DunningProcessDetailSearchPanel extends Panel {
 		        	    stepCombo.setItemCaptionPropertyId("stepText");
 		        	    return stepCombo;
 		         }else if("status".equals(propertyId)){		        	   
-		        	 	statusCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_PROCESS_STATUS));
+		        	 	statusCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_PROCESS_STEP_STATUS));
 		        	 	statusCombo.setItemCaptionPropertyId("statusText");
-		        	 	List<DunningProcessMasterStatus> statusList = DaoHelper.getInstance().getDunningPolicyRepository().retrieveAllDunningProcessMasterStatus();
-		        	 	BeanItemContainer<DunningProcessMasterStatus> objects = new BeanItemContainer(DunningProcessMasterStatus.class, statusList);
+		        	 	List<DunningProcessDetailStatus> statusList = DaoHelper.getInstance().getDunningPolicyRepository().retrieveAllDunningProcessDetailStatus();
+		        	 	BeanItemContainer<DunningProcessDetailStatus> objects = new BeanItemContainer(DunningProcessDetailStatus.class, statusList);
 		        	 	statusCombo.setContainerDataSource(objects); 
 		        	    return statusCombo;
 		         }else if("createDate".equals(propertyId)){		        	   
-		        	 processStartDate  = new DateField("Process Başlama Zamanı");
-		        	 return processStartDate;
+		        	 stepCreateDate  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_STEP_START));
+		        	 return stepCreateDate;
+		         }else if("statusDate".equals(propertyId)){		        	   
+		        	 statusChangeDate  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_STEP_STOP));
+		        	 return statusChangeDate;
 		         }
 		         
 		        return field;
@@ -249,8 +255,8 @@ public class DunningProcessDetailSearchPanel extends Panel {
 		
 	     
 		
-		BeanItem<DunningProcessMaster> item = new BeanItem<DunningProcessMaster>(dpMaster,new String[]{"dunningPolicyId"});
-		BeanItem<DunningProcessDetail> items = new BeanItem<DunningProcessDetail>(dpDetail,new String[]{"processStepId"});
+		BeanItem<DunningProcessMaster> item = new BeanItem<DunningProcessMaster>(dpMaster,new String[]{"dunningPolicyId","processLastStepId"});
+		BeanItem<DunningProcessDetail> items = new BeanItem<DunningProcessDetail>(dpDetail,new String[]{"status","createDate","statusDate"});
 		
 		dpSearchForm.setItemDataSource(item);
 		dpDetailSearchForm.setItemDataSource(items);
@@ -267,7 +273,7 @@ public class DunningProcessDetailSearchPanel extends Panel {
 			public void handleAction(Action action, Object sender, Object target) {
 				DunningProcessDetailListLazyLoadinQuery query = new DunningProcessDetailListLazyLoadinQuery();
 				dpDetail.setProcessId(dpMaster);
-				if(dpMaster!=null){
+				if(dpDetail!=null ){
 					query.setDpDetail(dpDetail);
 				}
 				dunningProcessPage.setDetailComponent(query);	

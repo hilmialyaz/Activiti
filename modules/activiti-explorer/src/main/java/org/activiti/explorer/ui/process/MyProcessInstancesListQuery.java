@@ -93,7 +93,7 @@ public class MyProcessInstancesListQuery extends AbstractLazyLoadingQuery {
     ProcessDefinition processDefinition = cachedProcessDefinitions.get(id);
     if(processDefinition == null) {
       processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(id).singleResult();
-      cachedProcessDefinitions.put(id, processDefinition);
+      if(processDefinition!=null) cachedProcessDefinitions.put(id, processDefinition);
     }
     return processDefinition;
   }

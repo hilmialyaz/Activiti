@@ -29,6 +29,7 @@ import org.activiti.explorer.ui.custom.ToolbarEntry;
 import org.activiti.explorer.ui.custom.ToolbarEntry.ToolbarCommand;
 import org.activiti.explorer.ui.custom.ToolbarPopupEntry;
 import org.activiti.explorer.ui.task.data.ArchivedListQuery;
+import org.activiti.explorer.ui.task.data.CustomerInboxListQuery;
 import org.activiti.explorer.ui.task.data.InboxListQuery;
 import org.activiti.explorer.ui.task.data.InvolvedListQuery;
 import org.activiti.explorer.ui.task.data.QueuedListQuery;
@@ -50,6 +51,7 @@ public class TaskMenuBar extends ToolBar {
   
   public static final String ENTRY_TASKS = "tasks";
   public static final String ENTRY_INBOX = "inbox";
+  public static final String CUSTOMER_ENTRY_INBOX = "customerinbox";
   public static final String ENTRY_QUEUED = "queued";
   public static final String ENTRY_INVOLVED = "involved";
   public static final String ENTRY_ARCHIVED = "archived";
@@ -79,7 +81,15 @@ public class TaskMenuBar extends ToolBar {
         viewManager.showInboxPage();
       }
     });
-    inboxEntry.setCount(inboxCount);
+    inboxEntry.setCount(inboxCount);    
+    
+    long customerInboxCount = new CustomerInboxListQuery().size();
+    ToolbarEntry customInboxEntry = addToolbarEntry(CUSTOMER_ENTRY_INBOX, i18nManager.getMessage(Messages.CUSTOMER_TASK_MENU_INBOX), new ToolbarCommand() {
+      public void toolBarItemSelected() {
+        viewManager.showCustomerInboxPage();
+      }
+    });
+    customInboxEntry.setCount(customerInboxCount);
     
     // Tasks
     LoggedInUser user = ExplorerApp.get().getLoggedInUser();

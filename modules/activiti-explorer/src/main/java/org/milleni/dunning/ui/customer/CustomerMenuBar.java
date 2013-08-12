@@ -57,6 +57,8 @@ public class CustomerMenuBar extends ToolBar {
   
   public static final String ENTRY_DUNNING_PROCESS_DETAIL = "dunningProcessDetail";
   
+  public static final String ENTRY_DUNNING_PROCESS_START = "dunningProcessStart";
+  
   protected transient IdentityService identityService;
   protected ViewManager viewManager;
   protected I18nManager i18nManager;
@@ -89,6 +91,11 @@ public class CustomerMenuBar extends ToolBar {
         }
       });
   
+    ToolbarEntry dunningProcessStart = addToolbarEntry(ENTRY_DUNNING_PROCESS_START, i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_START), new ToolbarCommand() {
+        public void toolBarItemSelected() {
+          viewManager.showStartDunningProcess();       
+        }
+      });
   }
   
   protected void initActions() {

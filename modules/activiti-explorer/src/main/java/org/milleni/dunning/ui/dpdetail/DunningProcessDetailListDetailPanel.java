@@ -182,7 +182,7 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 		};
 
 		dpDetailTable.setWidth(100, UNITS_PERCENTAGE);
-		dpDetailTable.setHeight(250, UNITS_PIXELS);
+		dpDetailTable.setHeight(600, UNITS_PIXELS);
 		dpDetailTable.setEditable(false);
 		dpDetailTable.setImmediate(true);
 		dpDetailTable.setSelectable(true);
@@ -195,10 +195,11 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 
 		dpDetailTable.addContainerProperty("finished", Component.class, null, "", null, Table.ALIGN_CENTER);
 		dpDetailTable.setColumnWidth("finished", 22);
-		dpDetailTable.addContainerProperty("name", String.class, null, i18nManager.getMessage(Constants.DUNNING_BPM_RPOCESS_ID), null, Table.ALIGN_LEFT);
+		dpDetailTable.addContainerProperty("name", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_STEP), null, Table.ALIGN_LEFT);
 		dpDetailTable.addContainerProperty("startDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_START_DATE), null, Table.ALIGN_LEFT);
 		dpDetailTable.addContainerProperty("endDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_END_DATE), null, Table.ALIGN_LEFT);
 		dpDetailTable.addContainerProperty("status", String.class, null, i18nManager.getMessage(Constants.DUNNING_STATUS), null, Table.ALIGN_LEFT);
+		dpDetailTable.addContainerProperty("customerId", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_ID), null, Table.ALIGN_LEFT);
 		dpDetailTable.addContainerProperty("currentDebit", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_DEBIT), null, Table.ALIGN_LEFT);
 		
 		

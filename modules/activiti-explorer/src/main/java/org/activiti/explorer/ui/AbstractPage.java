@@ -60,7 +60,8 @@ public abstract class AbstractPage extends CustomComponent {
   }
   
   protected void addEventComponent() {
-    grid.addComponent(getEventComponent(), 2, 0, 2, 2);
+	  if(getEventComponent()!=null)
+		  grid.addComponent(getEventComponent(), 2, 0, 2, 2);
   }
 
   /**

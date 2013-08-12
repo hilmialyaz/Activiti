@@ -486,9 +486,14 @@ public interface Messages {
   
   
   
-  
+  String CUSTOMER_TASK_MENU_INBOX = "main.menu.dunningProcess.custominbox";
   String MAIN_MENU_CUSTOMERS = "main.menu.customers";
   String MAIN_MENU_DUNNING_PROCESS = "main.menu.dunningProcess";
   String MAIN_MENU_DUNNING_PROCESS_DETAIL = "main.menu.dunningProcess.detail";
+  String MAIN_MENU_DUNNING_PROCESS_START = "main.menu.dunningProcess.start";
+  
+  String MAIN_MENU_DUNNING_PROCESS_BASLAT = "main.menu.dunningProcess.baslat";
+  
+  String MAIN_MENU_DUNNING_PROCESS_TASK_OTHER_COMPLETE = "main.menu.dunningProcess.task.complete";
 
 }

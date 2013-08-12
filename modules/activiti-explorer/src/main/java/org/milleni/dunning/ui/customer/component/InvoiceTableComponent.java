@@ -41,6 +41,7 @@ public class InvoiceTableComponent extends Table{
 
 		this.addContainerProperty("total", String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_AMOUNT), null, Table.ALIGN_LEFT);
 		this.addContainerProperty("dueDate",String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_SOT), null, Table.ALIGN_LEFT);
+		this.addContainerProperty("invoiceDate",String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_DATE), null, Table.ALIGN_LEFT);
 		this.addContainerProperty("sapId",  String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_PAYMENT_ID), null, Table.ALIGN_LEFT);
 		
 		if (invoiceList.size() > 0) {
@@ -62,7 +63,10 @@ public class InvoiceTableComponent extends Table{
 
 				item.getItemProperty("total").setValue(inv.getInvoiceAmount());
 				try{
-					item.getItemProperty("dueDate").setValue(simpleDateFormat.format(inv.getInvoiceAmount()));
+					item.getItemProperty("dueDate").setValue(simpleDateFormat.format(inv.getInvoiceDueDate()));
+				}catch(Exception ex){};
+				try{
+					item.getItemProperty("invoiceDate").setValue(simpleDateFormat.format(inv.getInvoiceDate()));
 				}catch(Exception ex){};
 				item.getItemProperty("sapId").setValue(inv.getExtPaymentInvId());
 			}
