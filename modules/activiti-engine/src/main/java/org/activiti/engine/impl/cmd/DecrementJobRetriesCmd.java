@@ -55,11 +55,7 @@ public class DecrementJobRetriesCmd implements Command<Object> {
       job.setExceptionMessage(exception.getMessage());
       job.setExceptionStacktrace(getExceptionStacktrace());
     }
-    
-    JobEntity job2 = Context
-    	      .getCommandContext()
-    	      .getJobEntityManager()
-    	      .findJobById(jobId);
+        
     
     JobExecutor jobExecutor = Context.getProcessEngineConfiguration().getJobExecutor();
     MessageAddedNotification messageAddedNotification = new MessageAddedNotification(jobExecutor);
