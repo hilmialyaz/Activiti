@@ -340,7 +340,7 @@ public class CustomProcessInstanceDetailPanel extends DetailPanel {
   }
   
   protected Component getTaskAssigneeComponent(String assignee) {
-    return new UserProfileLink(identityService, true, assignee);
+    return new UserProfileLink(identityService, false, assignee);
   }
 
   protected void addVariables() {

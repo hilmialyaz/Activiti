@@ -315,16 +315,22 @@ public class TaskDetailPanel extends DetailPanel {
         @Override
         protected void handleFormSubmit(FormPropertiesEvent event) {
           Map<String, String> properties = event.getFormProperties();
-          if("true".equalsIgnoreCase(properties.get(FormPropertiesEvent.TYPE_SUBMIT_ALL_TASK)) && task.getTaskDefinitionKey()!=null){
-        	  List<Task> taskList= taskService.createTaskQuery().taskAssignee(task.getAssignee()).taskDefinitionKey(task.getTaskDefinitionKey()).list();
-        	  for (Task task : taskList) {
-        		  formService.submitTaskFormData(task.getId(), properties);
-        	  }
-          }else{
-        	  formService.submitTaskFormData(task.getId(), properties);
+          if("true".equalsIgnoreCase(properties.get(FormPropertiesEvent.TYPE_SAVE))){
+        	  taskService.setVariables(task.getId(), properties);
+        	  notificationManager.showInformationNotification(Messages.TASK_COMPLETED, task.getName());
+          }else{  
+        	  	 if("true".equalsIgnoreCase(properties.get(FormPropertiesEvent.TYPE_SUBMIT_ALL_TASK)) && task.getTaskDefinitionKey()!=null){
+		        	  List<Task> taskList= taskService.createTaskQuery().taskAssignee(task.getAssignee()).taskDefinitionKey(task.getTaskDefinitionKey()).list();
+		        	  for (Task task : taskList) {
+		        		  formService.submitTaskFormData(task.getId(), properties);
+		        	  }
+		          }else{
+		        	  formService.submitTaskFormData(task.getId(), properties);
+		          }
+        	  	notificationManager.showInformationNotification(Messages.TASK_COMPLETED, task.getName());
+                taskPage.refreshSelectNext();
           }
-          notificationManager.showInformationNotification(Messages.TASK_COMPLETED, task.getName());
-          taskPage.refreshSelectNext();
+          properties.put(FormPropertiesEvent.TYPE_SUBMIT_ALL_TASK, "false");
         }
         
         @Override

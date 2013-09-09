@@ -55,6 +55,7 @@ public class FormPropertiesForm extends VerticalLayout {
   // UI
   protected Label formTitle;
   protected Button submitFormButton;
+  protected Button saveTaskButton;
   protected Button cancelFormButton;
   protected FormPropertiesComponent formPropertiesComponent;
   protected CheckBox otherTasks;
@@ -108,6 +109,7 @@ public class FormPropertiesForm extends VerticalLayout {
   protected void initButtons() {
     submitFormButton = new Button();
     cancelFormButton = new Button();
+    saveTaskButton   = new Button(i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_TASK_SAVE_TASK));
     otherTasks = new CheckBox(i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_TASK_OTHER_COMPLETE));
     
     HorizontalLayout buttons = new HorizontalLayout();
@@ -118,7 +120,9 @@ public class FormPropertiesForm extends VerticalLayout {
     buttons.setComponentAlignment(submitFormButton, Alignment.BOTTOM_RIGHT);
     
     buttons.addComponent(cancelFormButton);
+    buttons.addComponent(saveTaskButton);
     buttons.setComponentAlignment(cancelFormButton, Alignment.BOTTOM_RIGHT);
+    buttons.setComponentAlignment(saveTaskButton, Alignment.BOTTOM_RIGHT);
     
     buttons.addComponent(otherTasks);
     buttons.setComponentAlignment(otherTasks, Alignment.BOTTOM_RIGHT);
@@ -152,6 +156,23 @@ public class FormPropertiesForm extends VerticalLayout {
       }
     });
     
+    saveTaskButton.addListener(new ClickListener() {
+        
+        private static final long serialVersionUID = -6091586145870618870L;
+      
+        public void buttonClick(ClickEvent event) {
+          // Extract the submitted values from the form. Throws exception when validation fails.
+          try {
+            Map<String, String> formProperties = formPropertiesComponent.getFormPropertyValues();
+            formProperties.put(FormPropertiesEvent.TYPE_SAVE, "true");
+            fireEvent(new FormPropertiesEvent(FormPropertiesForm.this, FormPropertiesEvent.TYPE_SUBMIT, formProperties));
+            submitFormButton.setComponentError(null);
+          } catch(InvalidValueException ive) {
+            // Error is presented to user by the form component
+          }
+        }
+      });
+    
     cancelFormButton.addListener(new ClickListener() {
       
       private static final long serialVersionUID = -8980500491522472381L;
@@ -161,6 +182,9 @@ public class FormPropertiesForm extends VerticalLayout {
         submitFormButton.setComponentError(null);
       }
     });
+    
+    
+   
   }
   
   public void hideCancelButton() {
@@ -186,6 +210,7 @@ public class FormPropertiesForm extends VerticalLayout {
     public static final String TYPE_SUBMIT = "SUBMIT";
     public static final String TYPE_SUBMIT_ALL_TASK = "SUBMIT_ALL_TASK";
     public static final String TYPE_CANCEL = "CANCEL";
+    public static final String TYPE_SAVE = "SAVE";
     
     private String type;
     private Map<String, String> formProperties;

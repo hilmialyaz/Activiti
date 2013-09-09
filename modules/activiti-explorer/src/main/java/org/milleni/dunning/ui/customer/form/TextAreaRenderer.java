@@ -35,10 +35,12 @@ public class TextAreaRenderer extends AbstractFormPropertyRenderer {
 	public Field getPropertyField(FormProperty formProperty) {
 	
 		TextArea textArea = new TextArea(getPropertyLabel(formProperty));
+		
 		textArea.setRequired(formProperty.isRequired());
 		textArea.setEnabled(formProperty.isWritable());
 		textArea.setRows(10);
 		textArea.setColumns(50);
+		if(formProperty.getValue()!=null) textArea.setValue(formProperty.getValue());
 		/*
 		if (formProperty.getValue() != null) {
 			textArea.setValue(formProperty.getValue());

@@ -1,33 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions id="definitions"
-  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:activiti="http://activiti.org/bpmn" 
-  targetNamespace="Examples">
-
-  <signal id="alertSignal" name="alert" />
-
-  <process id="catchSignal">
-
-    <startEvent id="start" />
-
-    <sequenceFlow sourceRef="start" targetRef="task" />
-
-    <userTask id="task" activiti:assignee="kermit" />     
-    
-    <boundaryEvent id="boundary" attachedToRef="task" cancelActivity="true">       
-          <signalEventDefinition signalRef="alertSignal"/>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="Examples">
+  <signal id="alertSignal" name="alert"></signal>
+  <process id="catchSignal" isExecutable="true">
+    <startEvent id="start"></startEvent>
+    <sequenceFlow id="sequenceFlow-8102f9b3-b4ad-4d92-a43c-97bc0ea19a56" sourceRef="start" targetRef="task"></sequenceFlow>
+    <userTask id="task" activiti:assignee="kermit"></userTask>
+    <boundaryEvent id="boundary" attachedToRef="task" cancelActivity="true">
+      <signalEventDefinition signalRef="alertSignal"></signalEventDefinition>
     </boundaryEvent>
-
-    <sequenceFlow sourceRef="task" targetRef="end" />
-    <sequenceFlow sourceRef="boundary" targetRef="serviceTask" />
-
-    <serviceTask id="serviceTask" activiti:delegateExpression="#{signalReceivedDelegate}" />
-    <sequenceFlow sourceRef="serviceTask" targetRef="receiveTask" />
-    
-    <receiveTask id="receiveTask" />
-    <sequenceFlow sourceRef="receiveTask" targetRef="end" />
-
-    <endEvent id="end" />
-
+    <sequenceFlow id="sequenceFlow-faca530c-f736-436f-8c5a-1ff3c07dafb0" sourceRef="task" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="sequenceFlow-cac07db8-2870-4a77-a61e-3848cceb2bf6" sourceRef="boundary" targetRef="serviceTask"></sequenceFlow>
+    <serviceTask id="serviceTask" activiti:delegateExpression="#{signalReceivedDelegate}"></serviceTask>
+    <sequenceFlow id="sequenceFlow-fa8efe37-e0f5-4a36-8fb5-6cbdbb39138f" sourceRef="serviceTask" targetRef="receiveTask"></sequenceFlow>
+    <receiveTask id="receiveTask"></receiveTask>
+    <sequenceFlow id="sequenceFlow-f96bb45c-dc69-43ab-955b-1a529e8e5770" sourceRef="receiveTask" targetRef="end"></sequenceFlow>
+    <endEvent id="end"></endEvent>
   </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_catchSignal">
+    <bpmndi:BPMNPlane bpmnElement="catchSignal" id="BPMNPlane_catchSignal">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="35.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="receiveTask" id="BPMNShape_receiveTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="300.0" y="201.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="task" id="BPMNShape_task">
+        <omgdc:Bounds height="60.0" width="100.0" x="150.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="boundary" id="BPMNShape_boundary">
+        <omgdc:Bounds height="30.0" width="30.0" x="215.0" y="45.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="300.0" y="95.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="serviceTask" id="BPMNShape_serviceTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="140.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow-faca530c-f736-436f-8c5a-1ff3c07dafb0" id="BPMNEdge_sequenceFlow-faca530c-f736-436f-8c5a-1ff3c07dafb0">
+        <omgdi:waypoint x="250.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="262.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="262.0" y="110.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="112.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow-8102f9b3-b4ad-4d92-a43c-97bc0ea19a56" id="BPMNEdge_sequenceFlow-8102f9b3-b4ad-4d92-a43c-97bc0ea19a56">
+        <omgdi:waypoint x="70.0" y="32.0"></omgdi:waypoint>
+        <omgdi:waypoint x="112.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="112.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="150.0" y="30.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow-fa8efe37-e0f5-4a36-8fb5-6cbdbb39138f" id="BPMNEdge_sequenceFlow-fa8efe37-e0f5-4a36-8fb5-6cbdbb39138f">
+        <omgdi:waypoint x="240.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="350.0" y="261.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow-f96bb45c-dc69-43ab-955b-1a529e8e5770" id="BPMNEdge_sequenceFlow-f96bb45c-dc69-43ab-955b-1a529e8e5770">
+        <omgdi:waypoint x="350.0" y="201.0"></omgdi:waypoint>
+        <omgdi:waypoint x="262.0" y="190.0"></omgdi:waypoint>
+        <omgdi:waypoint x="262.0" y="110.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="112.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow-cac07db8-2870-4a77-a61e-3848cceb2bf6" id="BPMNEdge_sequenceFlow-cac07db8-2870-4a77-a61e-3848cceb2bf6">
+        <omgdi:waypoint x="230.0" y="75.0"></omgdi:waypoint>
+        <omgdi:waypoint x="50.0" y="230.0"></omgdi:waypoint>
+        <omgdi:waypoint x="190.0" y="250.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
 </definitions>

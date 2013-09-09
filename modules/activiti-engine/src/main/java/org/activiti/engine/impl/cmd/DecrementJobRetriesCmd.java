@@ -73,7 +73,7 @@ public class DecrementJobRetriesCmd implements Command<Object> {
   
 	private Date calculateRepeat() {
 		BusinessCalendar businessCalendar = Context.getProcessEngineConfiguration().getBusinessCalendarManager().getBusinessCalendar(DueDateBusinessCalendar.NAME);
-		return businessCalendar.resolveDuedate("PT3M");
+		return businessCalendar.resolveDuedate("PT5M");
 	}
 }
 

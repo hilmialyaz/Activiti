@@ -495,5 +495,6 @@ public interface Messages {
   String MAIN_MENU_DUNNING_PROCESS_BASLAT = "main.menu.dunningProcess.baslat";
   
   String MAIN_MENU_DUNNING_PROCESS_TASK_OTHER_COMPLETE = "main.menu.dunningProcess.task.complete";
+  String MAIN_MENU_DUNNING_PROCESS_TASK_SAVE_TASK = "main.menu.dunningProcess.task.save.task";
 
 }

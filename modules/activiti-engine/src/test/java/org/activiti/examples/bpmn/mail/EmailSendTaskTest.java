@@ -69,7 +69,7 @@ public class EmailSendTaskTest extends PluggableActivitiTestCase {
     String recipientName = "John Doe";
     String recipient = "johndoe@alfresco.com";
     Date now = new Date();
-    String orderId = "123456";
+    String orderId = "123456ddddd";
     
     Map<String, Object> vars = new HashMap<String, Object>();
     vars.put("sender", from);

@@ -437,7 +437,7 @@ public class CustomCompletedInstancesPanel extends DetailPanel {
   }
   
   protected Component getTaskAssigneeComponent(String assignee) {
-    return new UserProfileLink(identityService, true, assignee);
+    return new UserProfileLink(identityService, false, assignee);
   }
   
   private Label variablesHeader;

@@ -45,11 +45,14 @@ public class DunningStepLogTableComponent extends Table{
 		this.setSortDisabled(true);
 		this.setSizeFull();
 
-		this.addContainerProperty("key", String.class, null, i18nManager.getMessage(Constants.DUNNING_BPM_RPOCESS_ID), null, Table.ALIGN_LEFT);
-		this.addContainerProperty("value", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_DEBIT), null, Table.ALIGN_LEFT);
+		this.addContainerProperty("step", String.class, null, i18nManager.getMessage(Constants.DUNNING_DETAIL_LOG_STEP), null, Table.ALIGN_LEFT);
+		this.addContainerProperty("key", String.class, null, i18nManager.getMessage(Constants.DUNNING_DETAIL_LOG_KEY), null, Table.ALIGN_LEFT);
+		this.addContainerProperty("value", String.class, null, i18nManager.getMessage(Constants.DUNNING_DETAIL_LOG_MESSAGE), null, Table.ALIGN_LEFT);
+		
 
 		for (DunningProcessDetailLogs dunningProcessDetailLog : processDetails) {
 			Item item = this.addItem(dunningProcessDetailLog);
+			item.getItemProperty("step").setValue(dunningProcessDetailLog.getLogStep()!=null ? dunningProcessDetailLog.getLogStep():"");
 			item.getItemProperty("key").setValue(dunningProcessDetailLog.getLogKey()!=null ? dunningProcessDetailLog.getLogKey():"");
 			item.getItemProperty("value").setValue(dunningProcessDetailLog.getLogText()!=null ? dunningProcessDetailLog.getLogText():"");
 		}

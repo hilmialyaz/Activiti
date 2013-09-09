@@ -2,12 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:context="http://www.springframework.org/schema/context"
+	 xmlns:cache="http://www.springframework.org/schema/cache"
+	 xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
          http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
-         http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+         http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+         http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 
 	<!-- import cxf webservices -->
@@ -21,6 +24,11 @@
 	<context:component-scan base-package="org.milleni.dunning.ws.proxy" />
 
 
+	<cache:annotation-driven key-generator="keyGenerator"/>
+
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"	p:cacheManager-ref="ehcache"  />
+	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"	p:configLocation="/WEB-INF/ehcache.xml" p:shared="true"/>
+	<bean id="keyGenerator" class="org.milleni.dunning.datamodel.util.MethodAwareCacheKeyGenerator"></bean>
 
 	<bean id="dunningPropertyPlaceholder"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -30,11 +38,11 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="processExecutionListenerService"
-	class=" org.milleni.dunning.activiti.executionlistener.ProcessExecutionListenerServiceImpl">
+		class=" org.milleni.dunning.activiti.executionlistener.ProcessExecutionListenerServiceImpl">
 	</bean>
-	
+
 
 	<jaxws:endpoint id="invoicePaymentWs" implementor="#invoicePaymentOperations"
 		address="/invoicePaymentOperations" />
@@ -66,17 +74,24 @@
 
 	<jaxws:client id="smsWs"
 		serviceClass="org.milleni.dunning.ws.client.sms.SmsgwSoap" address="http://localhost/bizmonws/smsgw.asmx" />
-	
+
 	<jaxws:client id="customerStatusOperations"
-		serviceClass="org.milleni.dunning.ws.client.customerstatus.CustomerStatusOperationsSoap" address="http://localhost:8328/CustomerStatusOperations.asmx?wsdl" />
-		
-	
+		serviceClass="org.milleni.dunning.ws.client.customerstatus.CustomerStatusOperationsSoap"
+		address="http://localhost:8328/CustomerStatusOperations.asmx?wsdl" />
+
+
 	<jaxws:client id="milldeskService"
-		serviceClass=" org.milleni.dunning.ws.client.milldesk.MilldeskSoap" address="http://217.65.184.126/BizmonWS_Test/milldesk.asmx?wsdl" />
-		
-		
+		serviceClass=" org.milleni.dunning.ws.client.milldesk.MilldeskSoap"
+		address="http://217.65.184.126/BizmonWS_Test/milldesk.asmx?wsdl" />
+
+
 	<jaxws:client id="onlineTahsilatService"
-		serviceClass=" org.milleni.dunning.ws.client.tahsilat.MilleniComOnlineTahsilatSoap" address="http://192.168.2.52/OnlineTahsilatProd/MilleniComOnlineTahsilat.asmx?wsdl" />
-			
-		
+		serviceClass=" org.milleni.dunning.ws.client.tahsilat.MilleniComOnlineTahsilatSoap"
+		address="http://192.168.2.52/OnlineTahsilatProd/MilleniComOnlineTahsilat.asmx?wsdl" />
+
+
+	<jaxws:client id="callCenterInformService"
+		serviceClass=" org.milleni.dunning.ws.client.callcenter.CallCenterNotificationOperationsSoap"
+		address="http://localhost:1140/CallCenterNotificationOperations.asmx?wsdl" />
+
 </beans>

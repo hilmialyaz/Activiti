@@ -18,6 +18,7 @@ import org.milleni.dunning.datamodel.util.Constants;
 import org.milleni.dunning.datamodel.util.DaoHelper;
 
 import com.vaadin.data.Item;
+import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Table;
@@ -51,6 +52,7 @@ public class DunningStepTableComponent extends Table{
 		this.addContainerProperty("finished", Component.class, null, "", null, Table.ALIGN_CENTER);
 		this.setColumnWidth("finished", 22);
 		this.addContainerProperty("name", String.class, null, i18nManager.getMessage(Constants.DUNNING_BPM_RPOCESS_ID), null, Table.ALIGN_LEFT);
+		this.addContainerProperty("status", String.class, null, i18nManager.getMessage(Constants.DUNNING_STATUS), null, Table.ALIGN_LEFT);
 		this.addContainerProperty("startDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_START_DATE), null, Table.ALIGN_LEFT);
 		this.addContainerProperty("endDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_END_DATE), null, Table.ALIGN_LEFT);
 		this.addContainerProperty("currentDebit", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_DEBIT), null, Table.ALIGN_LEFT);
@@ -73,6 +75,7 @@ public class DunningStepTableComponent extends Table{
 			}
 			
 			item.getItemProperty("name").setValue(dunningProcessDetail.getProcessStepId().getStepText());
+			item.getItemProperty("status").setValue(dunningProcessDetail.getStatus()!=null ? dunningProcessDetail.getStatus().getStatusText():"");
 			item.getItemProperty("startDate").setValue(dunningProcessDetail.getCreateDate());
 			item.getItemProperty("endDate").setValue(dunningProcessDetail.getStatusDate());
 			item.getItemProperty("currentDebit").setValue(String.valueOf(  dunningProcessDetail.getCurrentDebit()!=null ? dunningProcessDetail.getCurrentDebit() : ""));

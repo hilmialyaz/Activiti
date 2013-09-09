@@ -94,7 +94,8 @@ public final class ByteArrayRef implements Serializable {
       entity = Context.getCommandContext()
         .getByteArrayEntityManager()
         .findById(id);
-      name = entity.getName();
+      if(entity!=null)
+    	  name = entity.getName();
     }
   }
 

@@ -75,7 +75,7 @@ public class UserDetailsComponent extends HorizontalLayout {
     public void attach() {
       super.attach();
       setSpacing(true);
-      addUserPicture();
+      //addUserPicture();
       addUserDetails();
     }
 
