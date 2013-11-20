@@ -272,6 +272,8 @@ public class CustomerListDetailPanel extends DetailPanel {
 			duningProcessTable.addContainerProperty("bpmProcessId", Button.class, null, i18nManager.getMessage(Constants.DUNNING_BPM_RPOCESS_ID), null, Table.ALIGN_LEFT);
 			duningProcessTable.addContainerProperty("startDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_START_DATE), null, Table.ALIGN_LEFT);
 			duningProcessTable.addContainerProperty("status", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_STATUS), null, Table.ALIGN_LEFT);
+			duningProcessTable.addContainerProperty("nextStep", String.class, null, i18nManager.getMessage(Constants.DUNNING_NEXT_STEP), null, Table.ALIGN_LEFT);
+			duningProcessTable.addContainerProperty("nextStepDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_NEXT_STEP_DATE), null, Table.ALIGN_LEFT);
 			duningProcessTable.addContainerProperty("currentDebit", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_DEBIT), null, Table.ALIGN_LEFT);
 
 			dunningProcessLayout.addComponent(duningProcessTable);
@@ -298,6 +300,12 @@ public class CustomerListDetailPanel extends DetailPanel {
 					masterStatusDesc = "("+dnngPMaster.getStatusDesc()+")";
 				item.getItemProperty("status").setValue(dnngPMaster.getStatus().getStatusText() + masterStatusDesc);
 				item.getItemProperty("currentDebit").setValue(String.valueOf(  dnngPMaster.getCurrentDebit()!=null ? dnngPMaster.getCurrentDebit() : ""));
+				item.getItemProperty("nextStepDate").setValue(dnngPMaster.getNextStepExecutionDate());
+				if(dnngPMaster.getNextStepId()!=null)
+					item.getItemProperty("nextStep").setValue(dnngPMaster.getNextStepId().getStepText());
+				duningProcessTable.addContainerProperty("nextStep", String.class, null, i18nManager.getMessage(Constants.DUNNING_NEXT_STEP), null, Table.ALIGN_LEFT);
+				duningProcessTable.addContainerProperty("nextStepDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_NEXT_STEP_DATE), null, Table.ALIGN_LEFT);
+				
 			}
 			duningProcessTable.setPageLength(duningProcessTable.size());
 			duningProcessTable.addListener(new Property.ValueChangeListener() {

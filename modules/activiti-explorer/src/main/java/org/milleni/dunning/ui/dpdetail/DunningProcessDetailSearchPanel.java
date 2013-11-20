@@ -255,7 +255,7 @@ public class DunningProcessDetailSearchPanel extends Panel {
 		
 	     
 		
-		BeanItem<DunningProcessMaster> item = new BeanItem<DunningProcessMaster>(dpMaster,new String[]{"dunningPolicyId","processLastStepId"});
+		BeanItem<DunningProcessMaster> item = new BeanItem<DunningProcessMaster>(dpMaster,new String[]{"dunningPolicyId","processLastStepId","createDate"});
 		BeanItem<DunningProcessDetail> items = new BeanItem<DunningProcessDetail>(dpDetail,new String[]{"status","createDate","statusDate"});
 		
 		dpSearchForm.setItemDataSource(item);

@@ -38,7 +38,10 @@ public class Picture implements Serializable {
   }
   
   public InputStream getInputStream() {
-    return new ByteArrayInputStream(bytes);
+	  if(bytes!=null)
+		  return new ByteArrayInputStream(bytes);
+	  else
+		  return null;
   }
 
   public String getMimeType() {

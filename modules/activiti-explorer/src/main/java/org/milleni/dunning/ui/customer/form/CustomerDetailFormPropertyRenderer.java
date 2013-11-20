@@ -52,30 +52,28 @@ public class CustomerDetailFormPropertyRenderer extends AbstractFormPropertyRend
 		
 		final Table custTable = new Table();
 		custTable.setWidth(100,com.vaadin.terminal.Sizeable.UNITS_PERCENTAGE);
-		custTable.setHeight(60, com.vaadin.terminal.Sizeable.UNITS_PIXELS);
+		custTable.setHeight(70, com.vaadin.terminal.Sizeable.UNITS_PIXELS);
 
 		custTable.setEditable(false);
 		custTable.setImmediate(true);
 		custTable.setSelectable(true);
 		custTable.setSortDisabled(false);
 
-		custTable.addContainerProperty("id", String.class, null, "Müşteri No", null, Table.ALIGN_LEFT);
+		//custTable.addContainerProperty("id", String.class, null, "Müşteri No", null, Table.ALIGN_LEFT);
 		custTable.addContainerProperty("musteriAdi", String.class, null, "Müşteri Adı", null, Table.ALIGN_LEFT);
 		custTable.addContainerProperty("hizmetTuru", String.class, null, "Müşteri Tipi", null, Table.ALIGN_LEFT);
 		custTable.addContainerProperty("durum", String.class, null, "Durum", null, Table.ALIGN_LEFT);
 		
 		
-		custTable.addItem(new Object[] {bean.getCustomerId(),bean.getCustomerName(),bean.getCustomerType().getTypeName(),bean.getStatus()}, bean.getCustomerId());
+		custTable.addItem(new Object[] {bean.getCustomerName(),bean.getCustomerType().getTypeName(),bean.getStatus()}, bean.getCustomerId());
 		
 		custTable.addListener(new Property.ValueChangeListener() {
 			private static final long serialVersionUID = 1L;
 
 			public void valueChange(ValueChangeEvent event) {
-				Item item = custTable.getItem(event.getProperty().getValue()); 
-				
-				if (item != null) {
-					Long customerId = Long.parseLong(item.getItemProperty("id").getValue().toString());
-		            ExplorerApp.get().getViewManager().showPopupWindow(new CustomerDetailPopupWindow(customerId));
+				Long rowCustomerId  = (Long) event.getProperty().getValue();
+				if (rowCustomerId != null) {
+		            ExplorerApp.get().getViewManager().showPopupWindow(new CustomerDetailPopupWindow(rowCustomerId));
 				}
 			}
 		});

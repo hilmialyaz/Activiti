@@ -234,7 +234,8 @@ public class ExplorerApp extends Application implements HttpServletRequestListen
     if (exception == null) {
       exception = event.getThrowable().getCause();
     }
-    notificationManager.showErrorNotification(Messages.UNCAUGHT_EXCEPTION, exception.getMessage());
+    notificationManager.showErrorNotification(Messages.UNCAUGHT_EXCEPTION,exception!=null ? exception.getMessage():"");
+    viewManager.showCustomerPage();
   }
   
   // URL Handling ---------------------------------------------------------------------------------

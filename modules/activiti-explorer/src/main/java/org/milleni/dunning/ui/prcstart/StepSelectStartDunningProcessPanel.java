@@ -29,14 +29,21 @@ import org.activiti.explorer.identity.LoggedInUser;
 import org.activiti.explorer.ui.Images;
 import org.activiti.explorer.ui.custom.DetailPanel;
 import org.activiti.explorer.ui.mainlayout.ExplorerLayout;
+import org.milleni.dunning.datamodel.model.DunningPolicy;
+import org.milleni.dunning.datamodel.model.ProcessSteps;
 import org.milleni.dunning.datamodel.util.Constants;
+import org.milleni.dunning.datamodel.util.DaoHelper;
 import org.springframework.util.StringUtils;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
@@ -45,7 +52,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
-public class BulkDunningProcessStartPanel extends DetailPanel {
+public class StepSelectStartDunningProcessPanel extends DetailPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -59,12 +66,15 @@ public class BulkDunningProcessStartPanel extends DetailPanel {
 	
 	protected CheckBox check = null;
 	
-	
+	private ComboBox policyCombo ;
+	private ComboBox stepCombo ;
 	DateField processDate;
 	private LoggedInUser loggedInUser;
 	protected RuntimeService runtimeService;
 
-	public BulkDunningProcessStartPanel() {
+	ProcessSteps selectedProcessStep;
+	
+	public StepSelectStartDunningProcessPanel() {
 		runtimeService = ProcessEngines.getDefaultProcessEngine().getRuntimeService();
 		this.i18nManager = ExplorerApp.get().getI18nManager();
 		loggedInUser=ExplorerApp.get().getLoggedInUser();
@@ -96,6 +106,42 @@ public class BulkDunningProcessStartPanel extends DetailPanel {
 		layout.addComponent(groupName);
 		layout.setComponentAlignment(groupName, Alignment.MIDDLE_LEFT);
 		layout.setExpandRatio(groupName, 1.0f);
+		
+		
+		List<DunningPolicy> dunningPolicyList = new ArrayList<DunningPolicy>();
+	    Iterable<DunningPolicy> dunningPolicies= DaoHelper.getInstance().getDunningPolicyRepository().findAll();
+	    for (DunningPolicy dunningPolicy : dunningPolicies) {
+	    	dunningPolicyList.add(dunningPolicy);
+		}
+	    BeanItemContainer<DunningPolicy> objects = new BeanItemContainer(DunningPolicy.class, dunningPolicyList);
+
+	   
+	   policyCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_POLICY_TYPE), objects);
+	   policyCombo.setItemCaptionPropertyId("policyName");
+	   
+	   stepCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_POLICY_STEP));		        	   
+	   stepCombo.setItemCaptionPropertyId("stepText");
+	   policyCombo.addListener(new ValueChangeListener() {
+		   
+		    @Override
+	        public void valueChange(ValueChangeEvent event) {
+	        	DunningPolicy selectedDunningPolicy = (DunningPolicy) event.getProperty().getValue();
+	        	List<ProcessSteps> processSteps =  DaoHelper.getInstance().getDunningPolicyRepository().retrieveDunningProcessSteps(selectedDunningPolicy.getPolicyId());		        	        	
+	        	BeanItemContainer<ProcessSteps> objects = new BeanItemContainer(ProcessSteps.class, processSteps);
+	        	stepCombo.setContainerDataSource(objects); 
+	        }
+		    
+	      }); 
+	   
+	   stepCombo.addListener(new ValueChangeListener() {
+		   
+		    @Override
+	        public void valueChange(ValueChangeEvent event) {
+		    	selectedProcessStep = (ProcessSteps) event.getProperty().getValue();
+	        }
+		    
+	      }); 
+	    
 		
 	}
 
@@ -130,9 +176,11 @@ public class BulkDunningProcessStartPanel extends DetailPanel {
 		textArea.setRows(10);
 		textArea.setColumns(50);
 		check = new CheckBox("Günü geçmiş stepi yapma");
-		panelLayout.addComponent(check);
-		panelLayout.addComponent(textArea);
 		
+		
+		panelLayout.addComponent(policyCombo);
+		panelLayout.addComponent(stepCombo);
+		panelLayout.addComponent(textArea);
 		
 		Button claimButton = new Button("Başlat");
 		claimButton.setIcon(Images.EXECUTE);
@@ -140,13 +188,10 @@ public class BulkDunningProcessStartPanel extends DetailPanel {
 			private static final long serialVersionUID = 1L;
 
 			public void buttonClick(ClickEvent event) {
+				if(selectedProcessStep==null)
+					throw new RuntimeException("Adım boş olamaz");
 				String customerIds = (String) textArea.getValue();
 				Date processDateValue = (Date) processDate.getValue();
-				
-				boolean startStepFirst = false;
-				if ((Boolean) check.getValue()) {
-					startStepFirst = true;
-				}
 				
 				String[] customerIdArray = customerIds.split("\n");
 				List<Long> customerIdList = new ArrayList<Long>();
@@ -162,10 +207,12 @@ public class BulkDunningProcessStartPanel extends DetailPanel {
 					variables.put(Constants.customerId,customerId);
 					if(loggedInUser!=null)
 						variables.put(Constants.user, loggedInUser.getFullName());
-					if(startStepFirst)
-						variables.put(Constants.firstStepNext, true);
 					if(processDateValue!=null)
-						variables.put(Constants.processStartDate,processDateValue);					
+						variables.put(Constants.processStartDate,processDateValue);			
+					
+					if(selectedProcessStep!=null){
+						variables.put(Constants.userSelectedProcessStep,selectedProcessStep.getStepId());		
+					}
 				    runtimeService.startProcessInstanceByKey(Constants.FL100_DunningProcessInitializer,variables);
 				}
 				textArea.setValue("");
@@ -173,6 +220,7 @@ public class BulkDunningProcessStartPanel extends DetailPanel {
 		});
 
 		panelLayout.addComponent(claimButton);
+		
 	}
 
 	

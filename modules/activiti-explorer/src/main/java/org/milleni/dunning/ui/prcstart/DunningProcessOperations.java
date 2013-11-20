@@ -64,8 +64,8 @@ public class DunningProcessOperations extends AbstractTablePage {
 		menuTable.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 
 		menuTable.addItem(new String[] { i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_BASLAT) }, 0);
-		//menuTable.addItem(new String[] { i18nManager.getMessage(Messages.ADMIN_MENU_COMPLETED) }, 1);
-		//menuTable.addItem(new String[] { i18nManager.getMessage(Messages.ADMIN_MENU_DATABASE) }, 2);
+		menuTable.addItem(new String[] { i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_PROCESS_SELECT) }, 1);
+		menuTable.addItem(new String[] { i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_BITIR) }, 2);
 
 		// Listener to change right panel when clicked on a user
 		menuTable.addListener(new Property.ValueChangeListener() {
@@ -78,9 +78,9 @@ public class DunningProcessOperations extends AbstractTablePage {
 					if ("0".equals(event.getProperty().getValue().toString())) {
 						setDetailComponent(new BulkDunningProcessStartPanel());
 					} else if ("1".equals(event.getProperty().getValue().toString())) {
-						setDetailComponent(new AdminCompletedInstancesPanel());
+						setDetailComponent(new StepSelectStartDunningProcessPanel());
 					} else if ("2".equals(event.getProperty().getValue().toString())) {
-						setDetailComponent(new AdminDatabaseSettingsPanel());
+						setDetailComponent(new BulkDunningProcessFinishPanel());
 					}
 
 					// Update URL

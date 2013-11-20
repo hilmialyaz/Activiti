@@ -14,6 +14,7 @@
 package org.milleni.dunning.ui.dpmaster;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.activiti.engine.ProcessEngines;
@@ -69,8 +70,23 @@ public class DunningProcessSearchPanel extends Panel {
 	
 	private ComboBox policyCombo ;
 	private ComboBox stepCombo ;
+	private ComboBox currentStepCombo ;
+	private ComboBox nextStepCombo ;
 	private ComboBox statusCombo ;
+	
 	private DateField processStartDate;
+	private DateField processStartEnd;
+	
+	private DateField nextStepDateStart;
+	private DateField nextStepDateEnd;
+
+	private DateField invoiceDateStart;
+	private DateField invoiceDateEnd;
+	
+	private DateField processStatusDateStart;
+	private DateField processStatusDateEnd;
+	
+
 
 	private DunningProcessPage dunningProcessPage;
 	
@@ -150,35 +166,33 @@ public class DunningProcessSearchPanel extends Panel {
 		        	        	List<ProcessSteps> processSteps =  DaoHelper.getInstance().getDunningPolicyRepository().retrieveDunningProcessSteps(selectedDunningPolicy.getPolicyId());		        	        	
 		        	        	BeanItemContainer<ProcessSteps> objects = new BeanItemContainer(ProcessSteps.class, processSteps);
 		        	        	stepCombo.setContainerDataSource(objects); 
+		        	        	nextStepCombo.setContainerDataSource(objects); 
+		        	        	currentStepCombo.setContainerDataSource(objects);
 		        	        }
 		        		    
 		        	      }); 
 		        	    policyCombo.setItemCaptionPropertyId("policyName");
 		        	    return policyCombo;
+		         }else if("currentStepId".equals(propertyId)){		        	   
+		        	 	currentStepCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_POLICY_CURRENT_STEP));		        	   
+		        	 	currentStepCombo.setItemCaptionPropertyId("stepText");
+		        	    return currentStepCombo;
 		         }else if("processLastStepId".equals(propertyId)){		        	   
 		        	    stepCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_POLICY_LAST_STEP));		        	   
 		        	    stepCombo.setItemCaptionPropertyId("stepText");
 		        	    return stepCombo;
-		         }else if("status".equals(propertyId)){		        	   
+		         }else if("nextStepId".equals(propertyId)){		        	   
+		        	 	nextStepCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_NEXT_STEP));		        	   
+		        	 	nextStepCombo.setItemCaptionPropertyId("stepText");
+		        	    return nextStepCombo;
+		         }
+		         else if("status".equals(propertyId)){		        	   
 		        	 	statusCombo = new ComboBox(i18nManager.getMessage(Constants.DUNNING_PROCESS_STATUS));
 		        	 	statusCombo.setItemCaptionPropertyId("statusText");
 		        	 	List<DunningProcessMasterStatus> statusList = DaoHelper.getInstance().getDunningPolicyRepository().retrieveAllDunningProcessMasterStatus();
 		        	 	BeanItemContainer<DunningProcessMasterStatus> objects = new BeanItemContainer(DunningProcessMasterStatus.class, statusList);
 		        	 	statusCombo.setContainerDataSource(objects); 
-		        	 	/*
-		        	 	statusCombo.addItem(Constants.SUCCESS);
-		        	 	statusCombo.setItemCaption(Constants.SUCCESS, "Başarılı");
-		        	 	statusCombo.addItem(Constants.WARNING);
-		        	 	statusCombo.setItemCaption(Constants.WARNING, "Uyarı");
-		        	 	statusCombo.addItem(Constants.ERROR);
-		        	 	statusCombo.setItemCaption(Constants.ERROR, "Hatalı");
-		        	 	statusCombo.addItem(Constants.INITIAL);
-		        	 	statusCombo.setItemCaption(Constants.INITIAL, "Başlangıç");
-		        		*/
 		        	    return statusCombo;
-		         }else if("createDate".equals(propertyId)){		        	   
-		        	 processStartDate  = new DateField("Process Başlama Zamanı");
-		        	 return processStartDate;
 		         }else if("customerId".equals(propertyId)){		
 		        	 txtCustomerId = (TextField) field;
 		        	 txtCustomerId.setCaption(i18nManager.getMessage(Constants.CUSTOMER_ID));
@@ -212,26 +226,73 @@ public class DunningProcessSearchPanel extends Panel {
 			
 		});
 		
-		
-		
-	     
-		
-		BeanItem<DunningProcessMaster> item = new BeanItem<DunningProcessMaster>(dpMaster,new String[]{"dunningPolicyId","processLastStepId","customerId","status","createDate"});
-		
+		BeanItem<DunningProcessMaster> item = new BeanItem<DunningProcessMaster>(dpMaster,new String[]{"dunningPolicyId","currentStepId","processLastStepId","nextStepId","customerId","status"});
 		dpSearchForm.setItemDataSource(item);
-	
+		
+      	nextStepDateStart  = new DateField(i18nManager.getMessage(Constants.DUNNING_NEXT_STEP_DATE_START));
+      	nextStepDateStart.setDateFormat("dd.MM.yyyy");
+      	
+      	nextStepDateEnd  = new DateField(i18nManager.getMessage(Constants.DUNNING_NEXT_STEP_DATE_END));
+      	nextStepDateEnd.setDateFormat("dd.MM.yyyy");
+      	
+      	processStartDate  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_DATE_START));
+      	processStartDate.setDateFormat("dd.MM.yyyy");
+      	
+      	processStartEnd  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_DATE_END));
+      	processStartEnd.setDateFormat("dd.MM.yyyy");
+      	
+      	
+      	processStatusDateStart  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_STATUS_DATE_START));
+      	processStatusDateStart.setDateFormat("dd.MM.yyyy");
+      	
+      	processStatusDateEnd  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_STATUS_DATE_END));
+      	processStatusDateEnd.setDateFormat("dd.MM.yyyy");
+      	
+      	
+      	invoiceDateStart  = new DateField(i18nManager.getMessage(Constants.DUNNING_INVOICE_DATE_START));
+      	invoiceDateStart.setDateFormat("dd.MM.yyyy");
+      	
+      	invoiceDateEnd  = new DateField(i18nManager.getMessage(Constants.DUNNING_INVOICE_DATE_END));
+      	invoiceDateEnd.setDateFormat("dd.MM.yyyy");
+      	
+      	
+      	
+		//dpSearchForm.addField(processStartFinishDate, processStartFinishDate);
+		
+		FormLayout layout = (FormLayout)dpSearchForm.getLayout();
+		layout.addComponent(nextStepDateStart);
+		layout.addComponent(nextStepDateEnd);
+		layout.addComponent(processStartDate);
+		layout.addComponent(processStartEnd);
+		layout.addComponent(processStatusDateStart);
+		layout.addComponent(processStatusDateEnd);
+		layout.addComponent(invoiceDateStart);
+		layout.addComponent(invoiceDateEnd);
+		
 		formLayout.addComponent(dpSearchForm);
-		
 		setContent(formLayout);
-		
-		
 	}
 
 	protected void initKeyboardListener() {
 		addActionHandler(new Handler() {
 			public void handleAction(Action action, Object sender, Object target) {
 				DunningProcessListLazyLoadinQuery query = new DunningProcessListLazyLoadinQuery();
-			
+				
+				if(nextStepDateStart.getValue()!=null) query.setNextStepDateStart((Date)nextStepDateStart.getValue());
+				if(nextStepDateEnd.getValue()!=null) query.setNextStepDateEnd((Date)nextStepDateEnd.getValue());
+				
+				if(processStartDate.getValue()!=null) query.setProcessStartDateStart((Date)processStartDate.getValue());
+				if(processStartEnd.getValue()!=null) query.setProcessStartDateEnd((Date)processStartEnd.getValue());
+				
+				
+				if(processStatusDateStart.getValue()!=null) query.setStatusDateStart((Date)processStatusDateStart.getValue());
+				if(processStatusDateEnd.getValue()!=null) query.setStatusDateEnd((Date)processStatusDateEnd.getValue());
+				
+				
+				if(invoiceDateStart.getValue()!=null) query.setInvoiceDateStart((Date)invoiceDateStart.getValue());
+				if(invoiceDateEnd.getValue()!=null) query.setInvoiceDateEnd((Date)invoiceDateEnd.getValue());
+				
+				
 				if(dpMaster!=null){
 					query.setDpMaster(dpMaster);
 				}

@@ -12,6 +12,7 @@
  */
 package org.milleni.dunning.ui.dpmaster;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.activiti.explorer.ExplorerApp;
@@ -36,7 +37,8 @@ public class DunningProcessTableListItem extends PropertysetItem implements Comp
 	private static final long serialVersionUID = 1L;
 
 	private DunningProcessMaster dnngProcessMaster = null;
-
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	
 	public DunningProcessTableListItem(DunningProcessMaster dnngPMaster) {
 		this.dnngProcessMaster = dnngPMaster;
 		Button detailsField = new Button(dnngPMaster.getBpmProcessId());
@@ -50,12 +52,17 @@ public class DunningProcessTableListItem extends PropertysetItem implements Comp
 			}
 		});
 		addItemProperty("bpmProcessId", new ObjectProperty<Button>(detailsField, Button.class));
-		addItemProperty("currentStep", new ObjectProperty<String>(dnngPMaster.getProcessLastStepId() != null ? dnngPMaster.getProcessLastStepId().getStepText() : "", String.class));
-		addItemProperty("startDate", new ObjectProperty<Date>(dnngPMaster.getCreateDate(), Date.class));
+		addItemProperty("currentStep", new ObjectProperty<String>(dnngPMaster.getCurrentStepId() != null ? dnngPMaster.getCurrentStepId().getStepText() : "", String.class));
+		addItemProperty("lastStep", new ObjectProperty<String>(dnngPMaster.getProcessLastStepId() != null ? dnngPMaster.getProcessLastStepId().getStepText() : "", String.class));
+		addItemProperty("nextStep", new ObjectProperty<String>(dnngPMaster.getNextStepId() != null ? dnngPMaster.getNextStepId().getStepText() : "", String.class));
+		addItemProperty("startDate", new ObjectProperty<Date>(dnngPMaster.getCreateDate(), Date.class));		
+		addItemProperty("nextStepDate", new ObjectProperty<Date>(dnngPMaster.getNextStepExecutionDate(), Date.class));
 		addItemProperty("status", new ObjectProperty<String>(dnngPMaster.getStatus().getStatusText(), String.class));
 		addItemProperty("statusDesc", new ObjectProperty<String>(dnngPMaster.getStatusDesc(), String.class));
 		addItemProperty("customerId", new ObjectProperty<String>(dnngPMaster.getCustomerId().getCustomerId(), String.class));
 		addItemProperty("currentDebit", new ObjectProperty<String>(dnngPMaster.getCurrentDebit() != null ? dnngPMaster.getCurrentDebit() : "", String.class));
+		addItemProperty("dunningInvoiceDate", new ObjectProperty<String>((dnngPMaster.getDunningInvoiceId() != null && dnngPMaster.getDunningInvoiceId().getInvoiceDate() != null)? dateFormat.format(dnngPMaster.getDunningInvoiceId().getInvoiceDate()) : "", String.class));
+		addItemProperty("dunningInvoiceDueDate", new ObjectProperty<String>((dnngPMaster.getDunningInvoiceId() != null && dnngPMaster.getDunningInvoiceId().getInvoiceDueDate() != null)? dateFormat.format(dnngPMaster.getDunningInvoiceId().getInvoiceDueDate()) : "", String.class));
 		
 	}
 

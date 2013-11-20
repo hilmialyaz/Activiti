@@ -11,16 +11,7 @@
 		is wired in a different way there -->
 
 
-	<bean id="demoDataGenerator" class="org.activiti.explorer.demo.DemoDataGenerator"
-		init-method="init">
-		<property name="processEngine" ref="processEngine" />
 
-		<!-- Set following properties to false if certain demo data is not wanted -->
-		<property name="createDemoUsersAndGroups" value="false" />
-		<property name="createDemoProcessDefinitions" value="false" />
-		<property name="createDemoModels" value="false" />
-		<property name="generateReportData" value="false" />
-	</bean>
 
 	<bean id="dbProperties"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -56,7 +47,7 @@
 		<property name="jpaProperties">
 			 <props>
 			 	<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.SingletonEhCacheProvider</prop>
                 <prop key="hibernate.cache.provider_configuration">/ehcache.xml</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
@@ -71,41 +62,46 @@
 	<!-- bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"> 
 		<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" 
 		/> <property name="showSql" value="true" /> <property name="generateDdl" 
-		value="true" /> </bean -->
+		value="true" /> </bean 
 
 	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" />
 		<property name="showSql" value="true" />
 		<property name="generateDdl" value="true" />
+	</bean>-->
+
+	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="databasePlatform" value="org.milleni.dunning.datamodel.util.SQLServerDialect" />
+		<property name="showSql" value="true" />
+		<property name="generateDdl" value="true" />
 	</bean>
-
-
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
 		<property name="dataSource" ref="dataSource" />
 		<property name="transactionManager" ref="transactionManager" />
-		<property name="databaseSchemaUpdate" value="false" />
+		<property name="databaseSchemaUpdate" value="true" />
 		<property name="jpaEntityManagerFactory" ref="entityManagerFactory" />
 		<property name="jpaHandleTransaction" value="true" />
 		<property name="jpaCloseEntityManager" value="true" />
-		<property name="jobExecutorActivate" value="true" />
+		<property name="jobExecutorActivate" value="false" />
 		<property name="transactionsExternallyManaged" value="false" />
 		<!-- <property name="idGenerator"> <bean class="org.activiti.engine.impl.persistence.StrongUuidGenerator" 
 			/> </property> -->
-
+		<!-- 
 		<property name="mailServerHost" value="smtp.yandex.ru" />
 		<property name="mailServerPort" value="465" />
 		<property name="mailServerUsername" value="milleni-test@yandex.com" />
 		<property name="mailServerPassword" value="ZAQ!xsw2" />
 		<property name="mailServerUseSSL" value="true" />
-		<property name="mailServerDefaultFrom" value="milleni-test@yandex.com" />
+		<property name="mailServerDefaultFrom" value="milleni-test@yandex.com" />-->
 
 
-		<!-- <property name="mailServerHost" value="mail.milleni.com.tr" /> <property 
-			name="mailServerUsername" value="bizmon" /> <property name="mailServerPassword" 
-			value="P@ssw0rd" /> <property name="mailServerUseSSL" value="false" /> -->
-
-
-
+		
+		 <property name="mailServerHost" value="mail.milleni.com.tr" /> 
+		 <property	name="mailServerUsername" value="dunning" /> 
+		 <property name="mailServerPassword" value="Qazx1234" />
+		 <property name="mailServerUseSSL" value="false" /> 
+		 <property name="mailServerDefaultFrom" value="dunning@milleni.com.tr" />
+ 		
 		<property name="customFormTypes">
 			<list>
 				<bean class="org.activiti.explorer.form.UserFormType" />
@@ -120,9 +116,9 @@
 
 
 	<bean id="jobExecutor" class="org.activiti.engine.impl.jobexecutor.DefaultJobExecutor">
-		<property name="queueSize" value="1" />
-		<property name="corePoolSize" value="1" />
-		<property name="maxPoolSize" value="1" />
+		<property name="queueSize" value="2" />
+		<property name="corePoolSize" value="2" />
+		<property name="maxPoolSize" value="4" />
 		<property name="maxJobsPerAcquisition" value="1" />
 		<property name="waitTimeInMillis" value="10000" />
 		<property name="lockTimeInMillis" value="600000" />

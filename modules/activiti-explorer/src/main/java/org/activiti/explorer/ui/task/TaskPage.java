@@ -209,8 +209,8 @@ public abstract class TaskPage extends AbstractTablePage {
 	public Component getSearchComponent() {
 		TaskListHeader header = new TaskListHeader();
         
-		Button claimButton = new Button("Claim");
-		Button assignButton = new Button("Reassign");
+		Button claimButton = new Button("Taskı Al");
+		Button assignButton = new Button("Taskı Gönder");
 		
 		assignButton.setIcon(Images.EXECUTE);
 		claimButton.setIcon(Images.EXECUTE);

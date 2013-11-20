@@ -35,6 +35,7 @@ import org.activiti.explorer.ui.form.FormPropertiesForm;
 import org.activiti.explorer.ui.form.FormPropertiesForm.FormPropertiesEvent;
 import org.activiti.explorer.ui.mainlayout.ExplorerLayout;
 import org.activiti.explorer.ui.task.listener.ClaimTaskClickListener;
+import org.milleni.dunning.datamodel.util.Constants;
 
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
@@ -315,6 +316,7 @@ public class TaskDetailPanel extends DetailPanel {
         @Override
         protected void handleFormSubmit(FormPropertiesEvent event) {
           Map<String, String> properties = event.getFormProperties();
+          properties.put(Constants.lastCompletedTaskUserName, task.getAssignee());
           if("true".equalsIgnoreCase(properties.get(FormPropertiesEvent.TYPE_SAVE))){
         	  taskService.setVariables(task.getId(), properties);
         	  notificationManager.showInformationNotification(Messages.TASK_COMPLETED, task.getName());
@@ -375,7 +377,7 @@ public class TaskDetailPanel extends DetailPanel {
       completeButton.setEnabled(isCurrentUserAssignee() || isCurrentUserOwner());
       otherTasks.setEnabled(isCurrentUserAssignee() || isCurrentUserOwner());
       buttonLayout.addComponent(completeButton);
-      buttonLayout.addComponent(otherTasks);
+      //buttonLayout.addComponent(otherTasks);
     }
   }
 

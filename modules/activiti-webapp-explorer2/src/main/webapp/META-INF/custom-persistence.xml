@@ -6,8 +6,6 @@
 		<class>org.milleni.dunning.datamodel.model.Customer</class>
 		<class>org.milleni.dunning.datamodel.model.CustomerType</class>
 		<class>org.milleni.dunning.datamodel.model.CustomerGroup</class>
-		<class>org.milleni.dunning.datamodel.model.ContactPhones</class>
-		<class>org.milleni.dunning.datamodel.model.CustomerContacts</class>
 		<class>org.milleni.dunning.datamodel.model.CustomerInvoices</class>
 		<class>org.milleni.dunning.datamodel.model.DunningPolicy</class>
 		<class>org.milleni.dunning.datamodel.model.DunningPolicySteps</class>

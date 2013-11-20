@@ -50,7 +50,7 @@ public class DecrementJobRetriesCmd implements Command<Object> {
     job.setRetries(job.getRetries() - 1);
     job.setLockOwner(null);
     job.setLockExpirationTime(null);
-    job.setDuedate(calculateRepeat());
+    job.setDuedate(calculateRepeat("PT5M"));
     if(exception != null) {
       job.setExceptionMessage(exception.getMessage());
       job.setExceptionStacktrace(getExceptionStacktrace());
@@ -71,9 +71,9 @@ public class DecrementJobRetriesCmd implements Command<Object> {
     return stringWriter.toString();
   }
   
-	private Date calculateRepeat() {
+	public static Date calculateRepeat(String dueDate) {
 		BusinessCalendar businessCalendar = Context.getProcessEngineConfiguration().getBusinessCalendarManager().getBusinessCalendar(DueDateBusinessCalendar.NAME);
-		return businessCalendar.resolveDuedate("PT5M");
+		return businessCalendar.resolveDuedate(dueDate);
 	}
 }
 

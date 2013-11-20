@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/dunning"/>
+<Context antiJARLocking="true" path="/dunning">
+	
+	 <Resource name="jdbc/bizmon"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="sa"
+            password="edimax69"
+            driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+            url="jdbc:sqlserver://192.168.2.18:1433;databaseName=BIZMon"
+            maxActive="8"
+            maxIdle="4"/>	
+		
+		
+		
+</Context>

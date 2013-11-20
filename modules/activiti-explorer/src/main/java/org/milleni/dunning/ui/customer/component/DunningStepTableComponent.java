@@ -48,7 +48,7 @@ public class DunningStepTableComponent extends Table{
 		this.setNullSelectionAllowed(false);
 		this.setSortDisabled(true);
 		this.setSizeFull();
-
+		
 		this.addContainerProperty("finished", Component.class, null, "", null, Table.ALIGN_CENTER);
 		this.setColumnWidth("finished", 22);
 		this.addContainerProperty("name", String.class, null, i18nManager.getMessage(Constants.DUNNING_BPM_RPOCESS_ID), null, Table.ALIGN_LEFT);

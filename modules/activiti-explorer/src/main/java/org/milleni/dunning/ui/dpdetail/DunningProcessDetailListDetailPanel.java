@@ -41,6 +41,7 @@ import org.milleni.dunning.datamodel.util.Constants;
 import org.milleni.dunning.datamodel.util.DaoHelper;
 import org.milleni.dunning.ui.customer.component.DunningStepLogTableComponent;
 import org.milleni.dunning.ui.customer.component.DunningStepTableComponent;
+import org.milleni.dunning.ui.dpmaster.DunningProcessTableListItem;
 
 import com.vaadin.addon.tableexport.ExcelExport;
 import com.vaadin.data.Property;
@@ -175,7 +176,7 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 				try {
 					super.changeVariables(source, variables);
 				} catch (Exception ex) {
-
+					System.out.println(ex.getMessage());
 				}
 			}
 
@@ -208,7 +209,15 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 			private static final long serialVersionUID = 1L;
 
 			public void valueChange(ValueChangeEvent event) {
+				DunningProcessDetailTableListItem item = (DunningProcessDetailTableListItem) dpDetailTable.getItem(event.getProperty().getValue());
 				
+				if (item != null) {
+					if (dunningProcessDetailLogLayout != null && stepLogTable != null)
+						dunningProcessDetailLogLayout.removeComponent(stepLogTable);
+					stepLogTable = new DunningStepLogTableComponent(dunningProcessDetailRepository.getDunningProcessDetailLog(item.getDpDetail()));
+					stepLogTable.setHeight(150, UNITS_PIXELS);
+					dunningProcessDetailLogLayout.addComponent(stepLogTable);
+				}
 			}
 		});
 

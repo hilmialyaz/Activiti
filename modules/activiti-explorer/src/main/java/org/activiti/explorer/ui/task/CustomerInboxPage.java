@@ -147,12 +147,15 @@ public class CustomerInboxPage extends TaskPage {
 	}
 
 	public TaskEventsPanel getTaskEventPanel() {
+		/*
 		if (taskTable != null) {
 			System.out.println(taskTable.size());
 			LinkedList<Integer> container = (LinkedList<Integer>) taskTable.getVisibleItemIds();
 			Map<Long, TaskListItem> customerIdMap = new HashMap<Long, TaskListItem>();
 			for (Integer intIds : container) {
-				TaskListItem taskTT = (TaskListItem) taskTable.getItem(intIds);				
+				TaskListItem taskTT = (TaskListItem) taskTable.getItem(intIds);
+				 Map<String, Object> localVars = taskTT.getTask().getTaskLocalVariables();
+				 Map<String, Object> globalVars = taskTT.getTask().getProcessVariables();
 				String taskName = (String) taskTable.getContainerProperty(intIds, "name").getValue();
 				if (taskName != null && taskName.indexOf("{Müsteri No:") > 0) {
 					// {Müsteri No: 9003801 }
@@ -162,7 +165,6 @@ public class CustomerInboxPage extends TaskPage {
 					String strTaskId = taskName.substring(ikiNokta + 1, parantez2).trim();
 
 					customerIdMap.put(Long.parseLong(strTaskId), taskTT);
-					System.out.println("test");
 				}
 			}
 
@@ -179,14 +181,14 @@ public class CustomerInboxPage extends TaskPage {
 					}
 				}
 		}
-
+		*/
 		return null;
 	}
 
 	protected void addSelectComponent() {
 		AbstractSelect select = createSelectComponent();
-		grid.setColumnExpandRatio(0, .60f);
-		grid.setColumnExpandRatio(1, .40f);
+		grid.setColumnExpandRatio(0, .50f);
+		grid.setColumnExpandRatio(1, .50f);
 		if (select != null) {
 			grid.addComponent(select, 0, 2);
 		}

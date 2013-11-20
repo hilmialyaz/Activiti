@@ -191,12 +191,17 @@ public class DunningProcessListDetailPanel extends DetailPanel {
 		dpMasterTable.setContainerDataSource(container);
 
 		dpMasterTable.addContainerProperty("bpmProcessId", Button.class, null, i18nManager.getMessage(Constants.DUNNING_BPM_RPOCESS_ID), null, Table.ALIGN_LEFT);
-		dpMasterTable.addContainerProperty("currentStep", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_STEP), null, Table.ALIGN_LEFT);
-		dpMasterTable.addContainerProperty("startDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_START_DATE), null, Table.ALIGN_LEFT);
-		dpMasterTable.addContainerProperty("status", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_STATUS), null, Table.ALIGN_LEFT);
-		dpMasterTable.addContainerProperty("statusDesc", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_STATUS), null, Table.ALIGN_LEFT);
 		dpMasterTable.addContainerProperty("customerId", Date.class, null, i18nManager.getMessage(Constants.CUSTOMER_ID), null, Table.ALIGN_LEFT);
+		dpMasterTable.addContainerProperty("currentStep", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_STEP), null, Table.ALIGN_LEFT);
+		dpMasterTable.addContainerProperty("lastStep", String.class, null, i18nManager.getMessage(Constants.DUNNING_LAST_STEP), null, Table.ALIGN_LEFT);		
+		dpMasterTable.addContainerProperty("nextStep", String.class, null, i18nManager.getMessage(Constants.DUNNING_NEXT_STEP), null, Table.ALIGN_LEFT);
+		dpMasterTable.addContainerProperty("startDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_START_DATE), null, Table.ALIGN_LEFT);
+		dpMasterTable.addContainerProperty("nextStepDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_NEXT_STEP_DATE), null, Table.ALIGN_LEFT);
+		dpMasterTable.addContainerProperty("status", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_STATUS), null, Table.ALIGN_LEFT);
 		dpMasterTable.addContainerProperty("currentDebit", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_DEBIT), null, Table.ALIGN_LEFT);
+		dpMasterTable.addContainerProperty("dunningInvoiceDate", String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_DATE), null,Table.ALIGN_LEFT);
+		dpMasterTable.addContainerProperty("dunningInvoiceDueDate", String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_SOT), null,Table.ALIGN_LEFT);
+		dpMasterTable.addContainerProperty("statusDesc", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_STATUS), null, Table.ALIGN_LEFT);
 
 		dpMasterTable.addListener(new Property.ValueChangeListener() {
 			private static final long serialVersionUID = 1L;
