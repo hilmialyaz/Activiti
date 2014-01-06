@@ -12,6 +12,7 @@
  */
 package org.milleni.dunning.ui.customer.form;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -107,6 +108,9 @@ public class CustomerDetailPopupWindow extends Window {
 		customer = DaoHelper.getInstance().getCustomerService().findOne(customerId);
 		// invoiceList =
 		// DaoHelper.getInstance().getCustomerService().listCustomerInvoices(customerId);
+		//dngProcessList = new ArrayList<DunningProcessMaster>(customer.getDunningProcessMasterCollection());
+		
+		
 		dngProcessList = DaoHelper.getInstance().getCustomerService().listCustomerDunningProcesses(customerId);
 		this.dunningProcessDetailRepository = DaoHelper.getInstance().getDunningProcessDetailRepository();
 		this.invoicePaymentRuleService = DaoHelper.getInstance().getInvoicePaymentRuleService();
@@ -231,6 +235,8 @@ public class CustomerDetailPopupWindow extends Window {
 			dunningProcessLayout.addComponent(duningProcessTable);
 
 			for (DunningProcessMaster dnngPMaster : dngPrcsMasterList) {
+				
+				dnngPMaster = DaoHelper.initializeAndUnproxy(dnngPMaster);
 				Item item = duningProcessTable.addItem(dnngPMaster);
 
 				Button detailsField = new Button(dnngPMaster.getBpmProcessId());

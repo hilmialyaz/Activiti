@@ -202,6 +202,13 @@
 			<artifactId>commons-dbcp</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.jolbox</groupId>
+			<artifactId>bonecp</artifactId>
+			<version>0.8.0.RELEASE</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -343,11 +350,11 @@
 			<artifactId>sqljdbc4</artifactId>
 			<version>3.0</version>
 		</dependency>
-		
+
 		<dependency>
-		  <groupId>org.codehaus.groovy.modules.http-builder</groupId>
-		  <artifactId>http-builder</artifactId>
-		  <version>0.7-SNAPSHOT</version>
+			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
+			<artifactId>http-builder</artifactId>
+			<version>0.7-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

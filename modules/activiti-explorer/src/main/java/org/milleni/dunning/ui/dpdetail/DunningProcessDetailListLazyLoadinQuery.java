@@ -14,7 +14,9 @@
 package org.milleni.dunning.ui.dpdetail;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.activiti.explorer.data.AbstractLazyLoadingQuery;
 import org.hibernate.Criteria;
@@ -41,6 +43,8 @@ public class DunningProcessDetailListLazyLoadinQuery extends AbstractLazyLoading
 	private Long customerId = null;
 	private String customerName = null;
 	
+	private Map<String,Object> criteriaMap= new HashMap<String,Object>();
+	
 	private int maxSize = 50;
 	
 	public DunningProcessDetailListLazyLoadinQuery() {
@@ -51,7 +55,7 @@ public class DunningProcessDetailListLazyLoadinQuery extends AbstractLazyLoading
 
 		List<Item> dpDetailItems = new ArrayList<Item>();
 		if(dpDetail!=null){			
-			List<DunningProcessDetail> dpMasterList = dunningProcessDetailDao.findByExample(dpDetail,start,count);
+			List<DunningProcessDetail> dpMasterList = dunningProcessDetailDao.findByExample(dpDetail,criteriaMap,start,count);
 			for (DunningProcessDetail dpDetail : dpMasterList) {
 				dpDetailItems.add(new DunningProcessDetailTableListItem(dpDetail));
 			}
@@ -77,13 +81,21 @@ public class DunningProcessDetailListLazyLoadinQuery extends AbstractLazyLoading
 	@Override
 	public int size() {
 		if(dpDetail!=null){			
-			return  dunningProcessDetailDao.findByExampleRowCount(dpDetail);
+			return  dunningProcessDetailDao.findByExampleRowCount(dpDetail,criteriaMap);
 		}
 		return maxSize;	
 	}
 
 	public void setDpDetail(DunningProcessDetail dpDetail) {
 		this.dpDetail = dpDetail;
+	}
+
+	public Map<String, Object> getCriteriaMap() {
+		return criteriaMap;
+	}
+
+	public void setCriteriaMap(Map<String, Object> criteriaMap) {
+		this.criteriaMap = criteriaMap;
 	}
 
 

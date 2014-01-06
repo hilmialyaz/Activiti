@@ -14,6 +14,7 @@
 package org.milleni.dunning.ui.dpdetail;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.activiti.engine.ProcessEngines;
@@ -71,9 +72,12 @@ public class DunningProcessDetailSearchPanel extends Panel {
 	private ComboBox policyCombo ;
 	private ComboBox stepCombo ;
 	private ComboBox statusCombo ;
+	private ComboBox processStatusCombo ;
 	private DateField processStartDate;
 	private DateField stepCreateDate;
+	private DateField stepCreateDateEnd;
 	private DateField statusChangeDate;
+	private DateField statusChangeDateEnd;
 
 	private DunningProcessDetailPage dunningProcessPage;
 	
@@ -255,14 +259,29 @@ public class DunningProcessDetailSearchPanel extends Panel {
 		
 	     
 		
-		BeanItem<DunningProcessMaster> item = new BeanItem<DunningProcessMaster>(dpMaster,new String[]{"dunningPolicyId","processLastStepId","createDate"});
-		BeanItem<DunningProcessDetail> items = new BeanItem<DunningProcessDetail>(dpDetail,new String[]{"status","createDate","statusDate"});
+		BeanItem<DunningProcessMaster> item = new BeanItem<DunningProcessMaster>(dpMaster,new String[]{"dunningPolicyId","processLastStepId","createDate","status"});
+		BeanItem<DunningProcessDetail> items = new BeanItem<DunningProcessDetail>(dpDetail,new String[]{"status"});
 		
 		dpSearchForm.setItemDataSource(item);
 		dpDetailSearchForm.setItemDataSource(items);
-	
-		formLayout.addComponent(dpSearchForm);
+		
+		
+		stepCreateDateEnd  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_STEP_START_END));
+		stepCreateDate  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_STEP_START));
+      	
+      	statusChangeDate  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_STEP_STOP));
+      	statusChangeDateEnd  = new DateField(i18nManager.getMessage(Constants.DUNNING_PROCESS_STEP_STOP_END));
+      	
+      	formLayout.addComponent(dpSearchForm);
 		formLayout.addComponent(dpDetailSearchForm);
+
+		FormLayout layout = (FormLayout)dpSearchForm.getLayout();
+		layout.addComponent(stepCreateDate);
+		layout.addComponent(stepCreateDateEnd);
+		layout.addComponent(statusChangeDate);
+		layout.addComponent(statusChangeDateEnd);
+	
+		
 		setContent(formLayout);
 		
 		
@@ -276,6 +295,13 @@ public class DunningProcessDetailSearchPanel extends Panel {
 				if(dpDetail!=null ){
 					query.setDpDetail(dpDetail);
 				}
+				
+				if(stepCreateDate.getValue()!=null) query.getCriteriaMap().put("stepCreateDate", (Date)stepCreateDate.getValue());
+				if(stepCreateDateEnd.getValue()!=null) query.getCriteriaMap().put("stepCreateDateEnd", (Date)stepCreateDateEnd.getValue());
+				
+				if(statusChangeDate.getValue()!=null) query.getCriteriaMap().put("statusChangeDate", (Date)statusChangeDate.getValue());
+				if(statusChangeDateEnd.getValue()!=null) query.getCriteriaMap().put("statusChangeDateEnd", (Date)statusChangeDateEnd.getValue());
+				
 				dunningProcessPage.setDetailComponent(query);	
 			}
 

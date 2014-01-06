@@ -97,9 +97,9 @@ public abstract class AbstractPage extends CustomComponent {
   protected void addMainLayout() {
     if(showEvents) {
       grid = new GridLayout(3, 3);
-      grid.setColumnExpandRatio(0, .25f);
-      grid.setColumnExpandRatio(1, .52f);
-      grid.setColumnExpandRatio(2, .23f);
+      grid.setColumnExpandRatio(0, .22f);
+      grid.setColumnExpandRatio(1, .65f);
+      grid.setColumnExpandRatio(2, .13f);
     } else {
       grid = new GridLayout(2, 3);
 

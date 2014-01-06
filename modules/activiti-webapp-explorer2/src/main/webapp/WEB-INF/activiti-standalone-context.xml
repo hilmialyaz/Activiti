@@ -20,12 +20,29 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="${jdbc.driver}" />
-		<property name="url" value="${jdbc.url}" />
+
+
+
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-		<property name="defaultAutoCommit" value="false" />
+		<property name="idleConnectionTestPeriodInMinutes" value="1" />
+		<property name="idleMaxAgeInMinutes" value="1" />
+		<property name="maxConnectionsPerPartition" value="3" />
+		<property name="minConnectionsPerPartition" value="1" />
+		<property name="partitionCount" value="1" />
+		<property name="acquireIncrement" value="5" />
+		<property name="acquireRetryAttempts" value="50" />
+		<property name="acquireRetryDelayInMs" value="1000" />
+		<property name="queryExecuteTimeLimitInMs" value="5000" />
+		<property name="connectionTestStatement" value="SELECT count(*) FROM dbo.sysobjects" />
+		<property name="closeConnectionWatch" value="true" />
+		<property name="lazyInit" value="false" />
+		<property name="statementsCacheSize" value="100" />
+		<property name="releaseHelperThreads" value="3" />
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager"
@@ -45,15 +62,16 @@
 		</property>
 		<property name="jpaVendorAdapter" ref="jpaAdapter" />
 		<property name="jpaProperties">
-			 <props>
-			 	<prop key="hibernate.format_sql">true</prop>
+			<props>
+				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.cache.provider_class">org.hibernate.cache.SingletonEhCacheProvider</prop>
-                <prop key="hibernate.cache.provider_configuration">/ehcache.xml</prop>
-                <prop key="hibernate.cache.use_second_level_cache">true</prop>
-                <prop key="hibernate.cache.use_query_cache">true</prop>
-                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-            </props>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.SingletonEhCacheProvider</prop>
+				<prop key="hibernate.cache.provider_configuration">/ehcache.xml</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory
+				</prop>
+			</props>
 		</property>
 		<property name="persistenceUnitName" value="activiti-jpa-pu" />
 
@@ -62,16 +80,15 @@
 	<!-- bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"> 
 		<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" 
 		/> <property name="showSql" value="true" /> <property name="generateDdl" 
-		value="true" /> </bean 
+		value="true" /> </bean <bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"> 
+		<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" 
+		/> <property name="showSql" value="true" /> <property name="generateDdl" 
+		value="true" /> </bean> -->
 
-	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" />
-		<property name="showSql" value="true" />
-		<property name="generateDdl" value="true" />
-	</bean>-->
-
-	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="databasePlatform" value="org.milleni.dunning.datamodel.util.SQLServerDialect" />
+	<bean id="jpaAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="databasePlatform"
+			value="org.milleni.dunning.datamodel.util.SQLServerDialect" />
 		<property name="showSql" value="true" />
 		<property name="generateDdl" value="true" />
 	</bean>
@@ -82,26 +99,25 @@
 		<property name="jpaEntityManagerFactory" ref="entityManagerFactory" />
 		<property name="jpaHandleTransaction" value="true" />
 		<property name="jpaCloseEntityManager" value="true" />
-		<property name="jobExecutorActivate" value="false" />
+		<property name="jobExecutorActivate" value="true" />
 		<property name="transactionsExternallyManaged" value="false" />
+		<property name="history" value="activity" />
 		<!-- <property name="idGenerator"> <bean class="org.activiti.engine.impl.persistence.StrongUuidGenerator" 
 			/> </property> -->
-		<!-- 
-		<property name="mailServerHost" value="smtp.yandex.ru" />
-		<property name="mailServerPort" value="465" />
-		<property name="mailServerUsername" value="milleni-test@yandex.com" />
-		<property name="mailServerPassword" value="ZAQ!xsw2" />
-		<property name="mailServerUseSSL" value="true" />
-		<property name="mailServerDefaultFrom" value="milleni-test@yandex.com" />-->
+		<!-- <property name="mailServerHost" value="smtp.yandex.ru" /> <property 
+			name="mailServerPort" value="465" /> <property name="mailServerUsername" 
+			value="milleni-test@yandex.com" /> <property name="mailServerPassword" value="ZAQ!xsw2" 
+			/> <property name="mailServerUseSSL" value="true" /> <property name="mailServerDefaultFrom" 
+			value="milleni-test@yandex.com" /> -->
 
 
-		
-		 <property name="mailServerHost" value="mail.milleni.com.tr" /> 
-		 <property	name="mailServerUsername" value="dunning" /> 
-		 <property name="mailServerPassword" value="Qazx1234" />
-		 <property name="mailServerUseSSL" value="false" /> 
-		 <property name="mailServerDefaultFrom" value="dunning@milleni.com.tr" />
- 		
+
+		<property name="mailServerHost" value="mail.milleni.com.tr" />
+		<property name="mailServerUsername" value="dunning" />
+		<property name="mailServerPassword" value="Qazx1234" />
+		<property name="mailServerUseSSL" value="false" />
+		<property name="mailServerDefaultFrom" value="dunning@milleni.com.tr" />
+
 		<property name="customFormTypes">
 			<list>
 				<bean class="org.activiti.explorer.form.UserFormType" />
