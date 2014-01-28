@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.ActivitiException;
+import org.milleni.dunning.ui.customer.component.TableSizeActionListener;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -47,7 +48,13 @@ public class LazyLoadingContainer implements Container.Indexed, Container.Sortab
   
   protected Map<Integer, Item> itemCache = new HashMap<Integer, Item>();
   
-  public LazyLoadingContainer(LazyLoadingQuery lazyLoadingQuery, int batchSize) {
+  private TableSizeActionListener tableSizeActionListener;
+  
+  public void setTableSizeActionListener(TableSizeActionListener tableSizeActionListener) {
+	this.tableSizeActionListener = tableSizeActionListener;
+}
+
+public LazyLoadingContainer(LazyLoadingQuery lazyLoadingQuery, int batchSize) {
     this.lazyLoadingQuery = lazyLoadingQuery;
     this.batchSize = batchSize;
     lazyLoadingQuery.setLazyLoadingContainer(this);
@@ -110,10 +117,20 @@ public class LazyLoadingContainer implements Container.Indexed, Container.Sortab
     return null;
   }
   
-  public int size() {
+  public int getBatchSize() {
+	return batchSize;
+}
+
+public void setBatchSize(int batchSize) {
+	this.batchSize = batchSize;
+}
+
+public int size() {
     if (size == -1) {
       size = lazyLoadingQuery.size();
     }
+    if(tableSizeActionListener!=null)
+    	tableSizeActionListener.updateSize(size);
     return size;
   }
 

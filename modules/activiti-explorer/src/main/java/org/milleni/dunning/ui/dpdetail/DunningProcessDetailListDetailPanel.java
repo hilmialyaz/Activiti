@@ -41,6 +41,7 @@ import org.milleni.dunning.datamodel.util.Constants;
 import org.milleni.dunning.datamodel.util.DaoHelper;
 import org.milleni.dunning.ui.customer.component.DunningStepLogTableComponent;
 import org.milleni.dunning.ui.customer.component.DunningStepTableComponent;
+import org.milleni.dunning.ui.customer.component.TableSizeActionListener;
 import org.milleni.dunning.ui.dpmaster.DunningProcessTableListItem;
 
 import com.vaadin.addon.tableexport.ExcelExport;
@@ -64,7 +65,7 @@ import com.vaadin.ui.themes.Reindeer;
 /**
  * @author Tijs Rademakers
  */
-public class DunningProcessDetailListDetailPanel extends DetailPanel {
+public class DunningProcessDetailListDetailPanel extends DetailPanel implements TableSizeActionListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -94,6 +95,7 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 	private Label dunningProcessHeader;
 	private Label noTasksLabel;
 	private Label tasksEmptyHeader;
+	private LazyLoadingContainer container;
 
 	VerticalLayout dunningProcessDetailLayout;
 	VerticalLayout dunningProcessDetailLogLayout;
@@ -102,7 +104,7 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 	private HorizontalLayout detailHeader = null;
 
 	public DunningProcessDetailListDetailPanel(LazyLoadingQuery lazyLoadingQuery) {
-		this.lazyLoadingQuery = lazyLoadingQuery;
+		this.lazyLoadingQuery = lazyLoadingQuery;		
 		this.runtimeService = ProcessEngines.getDefaultProcessEngine().getRuntimeService();
 		this.historyService = ProcessEngines.getDefaultProcessEngine().getHistoryService();
 		this.repositoryService = ProcessEngines.getDefaultProcessEngine().getRepositoryService();
@@ -129,6 +131,7 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 		instancesHeader.setSpacing(true);
 		//instancesHeader.setWidth(100, UNITS_PERCENTAGE);
 		instancesHeader.addStyleName(ExplorerLayout.STYLE_DETAIL_BLOCK);
+		
 		addDetailComponent(instancesHeader);
 
 		
@@ -154,8 +157,10 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 		initInstancesTable();
 	}
 
+	protected Label instancesLabel = null ;
+	
 	protected void initInstancesTitle(HorizontalLayout instancesHeader) {
-		Label instancesLabel = new Label(i18nManager.getMessage(Constants.DUNNING_PROCESSES));
+		instancesLabel = new Label(i18nManager.getMessage(Constants.DUNNING_PROCESSES));
 		instancesLabel.addStyleName(ExplorerLayout.STYLE_H3);
 		instancesHeader.addComponent(instancesLabel);
 		instancesHeader.setComponentAlignment(instancesLabel, Alignment.BOTTOM_LEFT);
@@ -190,7 +195,8 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 		dpDetailTable.setNullSelectionAllowed(false);
 		dpDetailTable.setSortDisabled(true);
 
-		LazyLoadingContainer container = new LazyLoadingContainer(lazyLoadingQuery, 50);
+		container = new LazyLoadingContainer(lazyLoadingQuery, 50);
+		container.setTableSizeActionListener(this);
 		dpDetailTable.setContainerDataSource(container);
 
 
@@ -201,7 +207,14 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 		dpDetailTable.addContainerProperty("endDate", Date.class, null, i18nManager.getMessage(Constants.DUNNING_END_DATE), null, Table.ALIGN_LEFT);
 		dpDetailTable.addContainerProperty("status", String.class, null, i18nManager.getMessage(Constants.DUNNING_STATUS), null, Table.ALIGN_LEFT);
 		dpDetailTable.addContainerProperty("customerId", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_ID), null, Table.ALIGN_LEFT);
-		dpDetailTable.addContainerProperty("currentDebit", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_DEBIT), null, Table.ALIGN_LEFT);
+		dpDetailTable.addContainerProperty("customerName", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_NAME), null, Table.ALIGN_LEFT);
+		dpDetailTable.addContainerProperty("customerStatus", String.class, null, "Musteri Durumu", null, Table.ALIGN_LEFT);
+		dpDetailTable.addContainerProperty("masterStatus", String.class, null, "Surec Durumu", null, Table.ALIGN_LEFT);
+		dpDetailTable.addContainerProperty("startDebit", String.class, null, i18nManager.getMessage(Constants.DUNNING_CURRENT_DEBIT), null, Table.ALIGN_LEFT);
+		dpDetailTable.addContainerProperty("currentDebit", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_DEBIT), null, Table.ALIGN_LEFT);		
+		dpDetailTable.addContainerProperty("dunningInvoiceDate", String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_DATE), null,Table.ALIGN_LEFT);
+		dpDetailTable.addContainerProperty("dunningInvoiceDueDate", String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_SOT), null,Table.ALIGN_LEFT);
+
 		
 		
 		
@@ -229,23 +242,21 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 		instancesHeader.addComponent(excelExportButton);
 		initInstancesTitle(instancesHeader);
 		instancesLayout.addComponent(dpDetailTable);
-
+		
 		excelExportButton.addListener(new ClickListener() {
 			private static final long serialVersionUID = -73954695086117200L;
 			private ExcelExport excelExport;
 
 			public void buttonClick(final ClickEvent event) {
 				excelExport = new ExcelExport(dpDetailTable);
-
+				container.setBatchSize(100000);
 				excelExport.excludeCollapsedColumns();
 				excelExport.setDisplayTotals(false);
-				excelExport.setRowHeaders(true);
-				CellStyle cs = excelExport.getTitleStyle();
-				cs.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index);
-				excelExport.setTitleStyle(cs);
+				excelExport.setRowHeaders(true);				
 				excelExport.setDoubleDataFormat("0.00");
 				excelExport.setExcelFormatOfProperty("konto", "0");
 				excelExport.export();
+				container.setBatchSize(50);
 			}
 		});
 
@@ -253,7 +264,9 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 
 	protected void refreshInstancesTable() {
 		lazyLoadingQuery = new DunningProcessDetailListLazyLoadinQuery();
-		dpDetailTable.setContainerDataSource(new LazyLoadingContainer(lazyLoadingQuery, 50));
+		container = new LazyLoadingContainer(lazyLoadingQuery, 50);
+		container.setTableSizeActionListener(this);
+		dpDetailTable.setContainerDataSource(container);
 	}
 
 	private Embedded currentEmbedded;
@@ -273,6 +286,13 @@ public class DunningProcessDetailListDetailPanel extends DetailPanel {
 
 	public void setLazyLoadingQuery(LazyLoadingQuery lazyLoadingQuery) {
 		this.lazyLoadingQuery = lazyLoadingQuery;
+	}
+
+	@Override
+	public void updateSize(int size) {
+		// TODO Auto-generated method stub
+		instancesLabel.setCaption("Toplam Sonuc:"+size);
+		
 	}
 
 }

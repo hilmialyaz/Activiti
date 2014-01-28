@@ -61,13 +61,43 @@ public class DunningProcessDetailTableListItem extends PropertysetItem implement
 			embed = new Embedded(null, Images.TASK_22);
 		}
 		
+		String customerName = "";
+		String customerStatus = "";
+		String masterStatus ="";
+		String startDebit ="";
+		String currentDebit ="";
+		Date dunningInvoiceDate = null;
+		Date dunningInvoiceDueDate = null;
+		
+		DunningProcessMaster dpm = dpDetail.getProcessId();
+		if(dpm!=null){
+			Customer customer = dpm.getCustomerId();
+			if(customer!=null){
+				customerName = customer.getCustomerName();
+				customerStatus = customer.getStatus();				
+			}
+			masterStatus = dpm.getStatus()!=null ? dpm.getStatus().getStatusText() : "";
+			startDebit =   dpm.getCurrentDebit() != null ? dpm.getCurrentDebit().toString() : "";
+			currentDebit =  customer.getCurrentDebit()!=null ?  customer.getCurrentDebit().toString() :""; 
+			dunningInvoiceDate = dpm.getDunningInvoiceId() != null ?  dpm.getDunningInvoiceId().getInvoiceDate() : null;
+			dunningInvoiceDueDate = dpm.getDunningInvoiceId() != null ?  dpm.getDunningInvoiceId().getInvoiceDueDate() : null;
+		}
+		
+		
 		addItemProperty("finished", new ObjectProperty<Embedded>(embed, Embedded.class));
 		addItemProperty("name", new ObjectProperty<String>(dpDetail.getProcessStepId() != null ? dpDetail.getProcessStepId().getStepText() : "", String.class));
 		addItemProperty("startDate", new ObjectProperty<Date>(dpDetail.getCreateDate(), Date.class));
 		addItemProperty("endDate", new ObjectProperty<Date>(dpDetail.getStatusDate(), Date.class));
 		addItemProperty("status",  new ObjectProperty<String>(dpDetail.getStatus()!=null ? dpDetail.getStatus().getStatusText():"" , String.class));
 		addItemProperty("customerId",  new ObjectProperty<String>((dpDetail.getProcessId()!=null && dpDetail.getProcessId().getCustomerId()!=null) ? dpDetail.getProcessId().getCustomerId().getCustomerId():"" , String.class));
-		addItemProperty("currentDebit", new ObjectProperty<String>(dpDetail.getCurrentDebit() != null ? dpDetail.getCurrentDebit() : "", String.class));
+		addItemProperty("startDebit", new ObjectProperty<String>(startDebit, String.class));
+		
+		addItemProperty("customerName", new ObjectProperty<String>(customerName, String.class));
+		addItemProperty("customerStatus", new ObjectProperty<String>(customerStatus, String.class));
+		addItemProperty("masterStatus", new ObjectProperty<String>(masterStatus, String.class));
+		addItemProperty("dunningInvoiceDate", new ObjectProperty<Date>(dunningInvoiceDate, Date.class));
+		addItemProperty("dunningInvoiceDueDate", new ObjectProperty<Date>(dunningInvoiceDueDate, Date.class));
+		addItemProperty("currentDebit", new ObjectProperty<String>(currentDebit, String.class));
 		
 		
 		

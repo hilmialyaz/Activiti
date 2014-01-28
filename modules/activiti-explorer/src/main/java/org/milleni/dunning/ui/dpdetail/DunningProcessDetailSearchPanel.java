@@ -302,7 +302,8 @@ public class DunningProcessDetailSearchPanel extends Panel {
 				if(statusChangeDate.getValue()!=null) query.getCriteriaMap().put("statusChangeDate", (Date)statusChangeDate.getValue());
 				if(statusChangeDateEnd.getValue()!=null) query.getCriteriaMap().put("statusChangeDateEnd", (Date)statusChangeDateEnd.getValue());
 				
-				dunningProcessPage.setDetailComponent(query);	
+				dunningProcessPage.setDetailComponent(query);
+				
 			}
 
 			public Action[] getActions(Object target, Object sender) {

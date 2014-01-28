@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/dunning">
-	
-	 <Resource name="jdbc/bizmon"
-            auth="Container"
-            type="javax.sql.DataSource"
-            username="sa"
-            password="edimax69"
-            driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-            url="jdbc:sqlserver://192.168.2.18:1433;databaseName=BIZMon"
-            maxActive="8"
-            maxIdle="4"/>	
-		
-		
-		
+
+	<Resource name="jdbc/bizmon" auth="Container"
+		type="com.jolbox.bonecp.BoneCPDataSource" factory="org.apache.naming.factory.BeanFactory"
+		driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver" username="sa"
+		password="edimax69" jdbcUrl="jdbc:sqlserver://192.168.2.18:1433;databaseName=BIZMon"
+		idleConnectionTestPeriod="0" idleMaxAge="10" partitionCount="1"
+		maxConnectionsPerPartition="5" minConnectionsPerPartition="1"
+		connectionTestStatement="" />
+
+	<Resource name="jdbc/activitiDB" auth="Container"
+		type="com.jolbox.bonecp.BoneCPDataSource" factory="org.apache.naming.factory.BeanFactory"
+		driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver" username="sa"
+		password="P@ssw0rd34"
+		jdbcUrl="jdbc:sqlserver://192.168.2.141:1433;databaseName=dunning_migration"
+		idleConnectionTestPeriod="0" idleMaxAge="10" partitionCount="1"
+		maxConnectionsPerPartition="5" minConnectionsPerPartition="1"
+		connectionTestStatement="" />
+
 </Context>

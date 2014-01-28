@@ -17,9 +17,10 @@ package org.activiti.explorer.data;
 /**
  * @author Joram Barrez
  */
-public abstract class AbstractLazyLoadingQuery implements LazyLoadingQuery {
+public abstract class AbstractLazyLoadingQuery implements LazyLoadingQuery  {
   
   protected LazyLoadingContainer lazyLoadingContainer;
+  
   
   public void setLazyLoadingContainer(LazyLoadingContainer lazyLoadingContainer) {
     this.lazyLoadingContainer = lazyLoadingContainer;

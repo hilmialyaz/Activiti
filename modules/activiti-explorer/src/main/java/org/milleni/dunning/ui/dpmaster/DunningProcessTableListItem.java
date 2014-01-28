@@ -60,7 +60,8 @@ public class DunningProcessTableListItem extends PropertysetItem implements Comp
 		addItemProperty("status", new ObjectProperty<String>(dnngPMaster.getStatus().getStatusText(), String.class));
 		addItemProperty("statusDesc", new ObjectProperty<String>(dnngPMaster.getStatusDesc(), String.class));
 		addItemProperty("customerId", new ObjectProperty<String>(dnngPMaster.getCustomerId().getCustomerId(), String.class));
-		addItemProperty("currentDebit", new ObjectProperty<String>(dnngPMaster.getCurrentDebit() != null ? dnngPMaster.getCurrentDebit() : "", String.class));
+		addItemProperty("startDebit", new ObjectProperty<String>(dnngPMaster.getCurrentDebit() != null ? dnngPMaster.getCurrentDebit() : "", String.class));
+		addItemProperty("currentDebit", new ObjectProperty<String>(dnngPMaster.getCustomerId().getCurrentDebit() != null ? dnngPMaster.getCustomerId().getCurrentDebit() : "", String.class));
 		addItemProperty("dunningInvoiceDate", new ObjectProperty<String>((dnngPMaster.getDunningInvoiceId() != null && dnngPMaster.getDunningInvoiceId().getInvoiceDate() != null)? dateFormat.format(dnngPMaster.getDunningInvoiceId().getInvoiceDate()) : "", String.class));
 		addItemProperty("dunningInvoiceDueDate", new ObjectProperty<String>((dnngPMaster.getDunningInvoiceId() != null && dnngPMaster.getDunningInvoiceId().getInvoiceDueDate() != null)? dateFormat.format(dnngPMaster.getDunningInvoiceId().getInvoiceDueDate()) : "", String.class));
 		
