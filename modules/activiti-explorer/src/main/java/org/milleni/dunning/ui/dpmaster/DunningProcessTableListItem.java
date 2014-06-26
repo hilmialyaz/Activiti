@@ -64,7 +64,7 @@ public class DunningProcessTableListItem extends PropertysetItem implements Comp
 		addItemProperty("currentDebit", new ObjectProperty<String>(dnngPMaster.getCustomerId().getCurrentDebit() != null ? dnngPMaster.getCustomerId().getCurrentDebit() : "", String.class));
 		addItemProperty("dunningInvoiceDate", new ObjectProperty<String>((dnngPMaster.getDunningInvoiceId() != null && dnngPMaster.getDunningInvoiceId().getInvoiceDate() != null)? dateFormat.format(dnngPMaster.getDunningInvoiceId().getInvoiceDate()) : "", String.class));
 		addItemProperty("dunningInvoiceDueDate", new ObjectProperty<String>((dnngPMaster.getDunningInvoiceId() != null && dnngPMaster.getDunningInvoiceId().getInvoiceDueDate() != null)? dateFormat.format(dnngPMaster.getDunningInvoiceId().getInvoiceDueDate()) : "", String.class));
-		
+		addItemProperty("customerStatus", new ObjectProperty<String>(dnngPMaster.getCustomerId()!=null ? dnngPMaster.getCustomerId().getStatus():"", String.class));
 	}
 
 	public int compareTo(DunningProcessTableListItem other) {

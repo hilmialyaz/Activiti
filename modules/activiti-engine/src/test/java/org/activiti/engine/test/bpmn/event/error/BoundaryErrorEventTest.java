@@ -22,6 +22,7 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.history.HistoryLevel;
 import org.activiti.engine.impl.test.PluggableActivitiTestCase;
 import org.activiti.engine.impl.util.CollectionUtil;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.test.Deployment;
 
@@ -441,6 +442,15 @@ public class BoundaryErrorEventTest extends PluggableActivitiTestCase {
     assertProcessEnded(procId);
   }
   
+  private void assertAsyncThatErrorHasBeenCaught(String procId) {
+	    // The service task will throw an error event,
+	    // which is caught on the service task boundary
+	    List<ProcessInstance> list = runtimeService.createProcessInstanceQuery().processInstanceId(procId).list();
+	    
+	    assertEquals(1, list.size());
+	    System.out.println(list);
+	  }
+  
   @Deployment
   public void testConcurrentExecutionsInterruptedOnDestroyScope() {
     
@@ -476,5 +486,19 @@ public class BoundaryErrorEventTest extends PluggableActivitiTestCase {
     String procId = runtimeService.startProcessInstanceByKey("testCatchErrorThrownByJavaDelegateProvidedByDelegateExpressionOnServiceTask", variables).getId();
     assertThatErrorHasBeenCaught(procId);
   }
+  
+  
+  @Deployment(resources = {
+          "org/activiti/engine/test/bpmn/event/error/BoundaryErrorEventTest.testAsyncErrorThrownByExpressionOnServiceTask.bpmn20.xml"
+})
+  public void testCatchAsyncErrorThrownByJavaDelegateProvidedByDelegateExpressionOnServiceTask() {
+    HashMap<String, Object> variables = new HashMap<String, Object>();
+    //variables.put("bpmnErrorBean", new BpmnErrorBean());
+    String procId = runtimeService.startProcessInstanceByKey("testAsyncErrorThrownByExpressionOnServiceTask").getId();
+    waitForJobExecutorToProcessAllJobs(100000, 1000);
+    waitForJobExecutorToProcessAllJobs(100000, 1000);
+    assertAsyncThatErrorHasBeenCaught(procId);
+  }
+  
 
 }

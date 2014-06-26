@@ -22,8 +22,10 @@ import org.activiti.engine.task.Task;
 import org.activiti.explorer.ExplorerApp;
 import org.activiti.explorer.I18nManager;
 import org.activiti.explorer.Messages;
+import org.activiti.explorer.NotificationManager;
 import org.activiti.explorer.ui.mainlayout.ExplorerLayout;
 import org.activiti.explorer.util.StringUtil;
+import org.antlr.grammar.v3.ANTLRv3Parser.throwsSpec_return;
 import org.milleni.dunning.datamodel.model.Customer;
 import org.milleni.dunning.datamodel.model.CustomerGroup;
 import org.milleni.dunning.datamodel.model.CustomerType;
@@ -70,7 +72,7 @@ public class CustomerSearchPanel extends Panel {
 
 	protected I18nManager i18nManager;
 	protected transient TaskService taskService;
-
+	protected NotificationManager notificationManager;
 	protected TextField inputField;
 	
 
@@ -87,7 +89,7 @@ public class CustomerSearchPanel extends Panel {
 		this.customerPage = customerPage;
 		this.i18nManager = ExplorerApp.get().getI18nManager();
 		this.taskService = ProcessEngines.getDefaultProcessEngine().getTaskService();
-
+		this.notificationManager = ExplorerApp.get().getNotificationManager();
 		addStyleName(Reindeer.PANEL_LIGHT);
 		//addStyleName(ExplorerLayout.STYLE_SEARCHBOX);
 		
@@ -213,10 +215,15 @@ public class CustomerSearchPanel extends Panel {
 					}
 					//customer.setCustomerId(Long.parseLong(txtCustomerId.getValue().toString()));
 				}*/
-				if (customer != null)
-					query.setCustomer(customer);
-				//customer.setCustomerType(new CustomerType(1l));
-				customerPage.setDetailComponent(query);
+				if (ExplorerApp.get().getLoggedInUser().isLimited() && org.h2.util.StringUtils.isNullOrEmpty((String)txtCustomerId.getValue())) {
+					notificationManager.showErrorNotification("error", 
+			                i18nManager.getMessage(Messages.CUSTOMER_SEARCH_NOT_NULL));
+				}else{
+					if (customer != null)
+						query.setCustomer(customer);
+					//customer.setCustomerType(new CustomerType(1l));
+					customerPage.setDetailComponent(query);
+				}
 			}
 
 			public Action[] getActions(Object target, Object sender) {

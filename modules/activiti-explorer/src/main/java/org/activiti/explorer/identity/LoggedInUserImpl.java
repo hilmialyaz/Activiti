@@ -35,6 +35,8 @@ public class LoggedInUserImpl implements LoggedInUser {
   
   protected boolean isUser;
   protected boolean isAdmin;
+  protected boolean isLimited;
+  
   protected List<Group> securityRoles = new ArrayList<Group>();
   protected List<Group> groups = new ArrayList<Group>();
   
@@ -77,14 +79,24 @@ public class LoggedInUserImpl implements LoggedInUser {
   public boolean isUser() {
     return isUser;
   }
+  
+  public boolean isLimited(){
+	  return isLimited;
+  }
+  
   public void setUser(boolean isUser) {
     this.isUser = isUser;
   }
   public boolean isAdmin() {
     return isAdmin;
   }
+  
   public void setAdmin(boolean isAdmin) {
     this.isAdmin = isAdmin;
+  }
+  
+  public void setLimited(boolean isLimited) {
+	    this.isLimited = isLimited;
   }
   public void addSecurityRoleGroup(Group securityRoleGroup) {
     securityRoles.add(securityRoleGroup);
@@ -97,6 +109,9 @@ public class LoggedInUserImpl implements LoggedInUser {
   }
   public void addGroup(Group group) {
     groups.add(group);
+    if("LIMITED".equals(group.getId())){
+    	this.setLimited(true);    	
+    }
   }
   
 }

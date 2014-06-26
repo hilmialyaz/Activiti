@@ -13,6 +13,7 @@
 
 package org.activiti.engine.test.bpmn.event.error;
 
+import org.activiti.engine.ActivitiException;
 import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
@@ -31,7 +32,7 @@ public class ThrowBpmnErrorDelegate implements JavaDelegate {
     }
     executions++;
     if (executionsBeforeError == null || executionsBeforeError < executions) {
-      throw new BpmnError("23", "This is a business fault, which can be caught by a BPMN Error Event.");
+      throw new ActivitiException( "This is a business fault, which can be caught by a BPMN Error Event.");
     } else {
       execution.setVariable("executions", executions);
     }

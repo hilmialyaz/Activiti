@@ -29,6 +29,8 @@ public class ExecutionTestVariable implements Serializable{
   
   public void testMethod(DelegateExecution delegateExecution) {
     delegateExecution.setVariable("testVar", "myValue");
+    delegateExecution.getVariable("testVar");
+    delegateExecution.getVariable("testVar222");
   }
 
 }

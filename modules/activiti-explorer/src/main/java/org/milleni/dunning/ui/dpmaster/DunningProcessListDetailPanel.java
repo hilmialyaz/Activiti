@@ -206,7 +206,8 @@ public class DunningProcessListDetailPanel extends DetailPanel implements TableS
 		dpMasterTable.addContainerProperty("dunningInvoiceDate", String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_DATE), null,Table.ALIGN_LEFT);
 		dpMasterTable.addContainerProperty("dunningInvoiceDueDate", String.class, null, i18nManager.getMessage(Constants.DUNNING_INVOICE_SOT), null,Table.ALIGN_LEFT);
 		dpMasterTable.addContainerProperty("statusDesc", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_STATUS), null, Table.ALIGN_LEFT);
-
+		dpMasterTable.addContainerProperty("customerStatus", String.class, null, i18nManager.getMessage(Constants.CUSTOMER_STATUS), null, Table.ALIGN_LEFT);
+		
 		dpMasterTable.addListener(new Property.ValueChangeListener() {
 			private static final long serialVersionUID = 1L;
 

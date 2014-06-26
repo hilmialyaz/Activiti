@@ -86,12 +86,20 @@
 
 
 	<jaxws:client id="onlineTahsilatService"
-		serviceClass=" org.milleni.dunning.ws.client.tahsilat.MilleniComOnlineTahsilatSoap"
+		serviceClass="org.milleni.dunning.ws.client.tahsilat.MilleniComOnlineTahsilatSoap"
 		address="http://192.168.2.52/OnlineTahsilatProd/MilleniComOnlineTahsilat.asmx?wsdl" />
 
 
 	<jaxws:client id="callCenterInformService"
-		serviceClass=" org.milleni.dunning.ws.client.callcenter.CallCenterNotificationOperationsSoap"
+		serviceClass="org.milleni.dunning.ws.client.callcenter.CallCenterNotificationOperationsSoap"
 		address="http://localhost:1140/CallCenterNotificationOperations.asmx?wsdl" />
+		
+	
+	
+	<jaxws:client id="crmCustomerService"
+		serviceClass="org.milleni.dunning.ws.client.crm.CustomerInfoServiceV1"		/>
+		
+		
+		
 
 </beans>

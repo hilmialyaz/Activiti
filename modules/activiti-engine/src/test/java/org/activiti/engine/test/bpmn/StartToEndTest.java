@@ -24,6 +24,8 @@ public class StartToEndTest extends PluggableActivitiTestCase {
   @Deployment
   public void testStartToEnd() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("startToEnd");
+    
+    runtimeService.getVariable(processInstance.getProcessInstanceId(), "afdadsf");
     assertProcessEnded(processInstance.getId());
     assertTrue(processInstance.isEnded());
   }

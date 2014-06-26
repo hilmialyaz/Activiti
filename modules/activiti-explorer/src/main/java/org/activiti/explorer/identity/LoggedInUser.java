@@ -40,6 +40,8 @@ public interface LoggedInUser extends Serializable {
   
   boolean isUser();
   
+  boolean isLimited();
+  
   List<Group> getSecurityRoles();
 
   List<Group> getGroups();

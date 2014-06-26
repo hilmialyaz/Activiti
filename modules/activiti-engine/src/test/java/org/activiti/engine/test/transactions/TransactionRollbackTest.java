@@ -27,6 +27,8 @@ public class TransactionRollbackTest extends PluggableActivitiTestCase {
   
   public static class Buzzz implements ActivityBehavior {
     public void execute(ActivityExecution execution) throws Exception {
+    	execution.getVariable("hilmi");
+    	
       throw new ActivitiException("Buzzz");
     }
   }

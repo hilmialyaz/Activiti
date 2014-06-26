@@ -488,12 +488,13 @@ public interface Messages {
   
   String CUSTOMER_TASK_MENU_INBOX = "main.menu.dunningProcess.custominbox";
   String INVOICE_UPDATE = "main.menu.dunningProcess.custominbox.updateinvoice";
-  String INVOICE_PAYMENT_UPDATE_INFO = "main.menu.dunningProcess.custominbox.customerpaymentreceived";
+  String INVOICE_PAYMENT_UPDATE_INFO = "main.menu.dunningProcess.custominbox.customerpaymentreceived";  
   String INVOICE_PAYMENT_UPDATE_INFO_DESC = "main.menu.dunningProcess.custominbox.customerpaymentreceived.desc";
   String MAIN_MENU_CUSTOMERS = "main.menu.customers";
   String MAIN_MENU_DUNNING_PROCESS = "main.menu.dunningProcess";
   String MAIN_MENU_DUNNING_PROCESS_DETAIL = "main.menu.dunningProcess.detail";
   String MAIN_MENU_DUNNING_PROCESS_START = "main.menu.dunningProcess.start";
+  String CUSTOMER_SEARCH_NOT_NULL = "main.menu.customers.search.customerIdNotNull";
   
   String MAIN_MENU_DUNNING_PROCESS_BASLAT = "main.menu.dunningProcess.baslat";
   String MAIN_MENU_DUNNING_PROCESS_BITIR = "main.menu.dunningProcess.bitir";

@@ -247,11 +247,13 @@ public class GroupQueryTest extends PluggableActivitiTestCase {
 
     assertEquals(1, identityService.createNativeGroupQuery().sql(baseQuerySql + " where ID_ = #{id}")
         .parameter("id", "admin").list().size());
-
+    
     assertEquals(3, identityService.createNativeGroupQuery().sql("SELECT aig.* from " + tableName + " aig"
         + " inner join ACT_ID_MEMBERSHIP aim on aig.ID_ = aim.GROUP_ID_ "
         + " inner join ACT_ID_USER aiu on aiu.ID_ = aim.USER_ID_ where aiu.ID_ = #{id}")
-        .parameter("id", "kermit").list().size());;
+        .parameter("id", "kermit").list().size());
+        
+        
 
     // paging
     assertEquals(2, identityService.createNativeGroupQuery().sql(baseQuerySql).listPage(0, 2).size());

@@ -77,25 +77,29 @@ public class CustomerMenuBar extends ToolBar {
         viewManager.showCustomerPage();        
       }
     });
-    
+    if (!ExplorerApp.get().getLoggedInUser().isLimited()) {
     ToolbarEntry dunningProcessEntry = addToolbarEntry(ENTRY_DUNNING_PROCESS, i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS), new ToolbarCommand() {
         public void toolBarItemSelected() {
           viewManager.showDunningProcess();        
         }
       });
     
-    
+    }
+    if (!ExplorerApp.get().getLoggedInUser().isLimited()) {
     ToolbarEntry dunningProcessDetailEntry = addToolbarEntry(ENTRY_DUNNING_PROCESS_DETAIL, i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_DETAIL), new ToolbarCommand() {
         public void toolBarItemSelected() {
           viewManager.showDunningProcessDetail();       
         }
       });
-  
+    }
+    
+    if (!ExplorerApp.get().getLoggedInUser().isLimited()) {
     ToolbarEntry dunningProcessStart = addToolbarEntry(ENTRY_DUNNING_PROCESS_START, i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_START), new ToolbarCommand() {
         public void toolBarItemSelected() {
           viewManager.showStartDunningProcess();       
         }
       });
+    }
   }
   
   protected void initActions() {
