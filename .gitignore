@@ -3,6 +3,10 @@ target
 *.ipr
 *.iws
 .idea
+*.svn
+*.xml
+*.deployment
+*.target
 .classpath
 .project
 .settings

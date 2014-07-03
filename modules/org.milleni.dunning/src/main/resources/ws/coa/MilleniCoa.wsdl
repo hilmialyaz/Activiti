@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetCustomerFromLoginName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="loginName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomerFromLoginNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCustomerFromLoginNameResult" type="tns:CustomerResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CustomerResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="customer" type="tns:Customer"/>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ServiceResponse">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="resultCode" type="s:int"/>
+          <s:element minOccurs="0" maxOccurs="1" name="resultDescription" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Customer">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="id" type="s:long"/>
+          <s:element minOccurs="0" maxOccurs="1" name="fullName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="quotaDesc" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCustomerAndQuotaFromLoginName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="loginName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomerAndQuotaFromLoginNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCustomerAndQuotaFromLoginNameResult" type="tns:CustomerResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsCustomerUpdateBefore">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerID" type="s:int"/>
+            <s:element minOccurs="0" maxOccurs="1" name="loginName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsCustomerUpdateBeforeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsCustomerUpdateBeforeResult" type="tns:COAUpdateResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="COAUpdateResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="IsUpdate" type="s:boolean"/>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="UpdateUserInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerID" type="s:int"/>
+            <s:element minOccurs="0" maxOccurs="1" name="loginName" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="mobil" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="updateIp" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateUserInfoResult" type="tns:ServiceResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendAnnounceCOA">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="channelID" type="s:int"/>
+            <s:element minOccurs="1" maxOccurs="1" name="customerID" type="s:int"/>
+            <s:element minOccurs="1" maxOccurs="1" name="announceType" type="s:int"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendAnnounceCOAResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendAnnounceCOAResult" type="tns:ServiceResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCustomerFromLoginNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustomerFromLoginName"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerFromLoginNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustomerFromLoginNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerAndQuotaFromLoginNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustomerAndQuotaFromLoginName"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerAndQuotaFromLoginNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustomerAndQuotaFromLoginNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IsCustomerUpdateBeforeSoapIn">
+    <wsdl:part name="parameters" element="tns:IsCustomerUpdateBefore"/>
+  </wsdl:message>
+  <wsdl:message name="IsCustomerUpdateBeforeSoapOut">
+    <wsdl:part name="parameters" element="tns:IsCustomerUpdateBeforeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateUserInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateUserInfo"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateUserInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateUserInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendAnnounceCOASoapIn">
+    <wsdl:part name="parameters" element="tns:SendAnnounceCOA"/>
+  </wsdl:message>
+  <wsdl:message name="SendAnnounceCOASoapOut">
+    <wsdl:part name="parameters" element="tns:SendAnnounceCOAResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="COASoap">
+    <wsdl:operation name="GetCustomerFromLoginName">
+      <wsdl:input message="tns:GetCustomerFromLoginNameSoapIn"/>
+      <wsdl:output message="tns:GetCustomerFromLoginNameSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAndQuotaFromLoginName">
+      <wsdl:input message="tns:GetCustomerAndQuotaFromLoginNameSoapIn"/>
+      <wsdl:output message="tns:GetCustomerAndQuotaFromLoginNameSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="IsCustomerUpdateBefore">
+      <wsdl:input message="tns:IsCustomerUpdateBeforeSoapIn"/>
+      <wsdl:output message="tns:IsCustomerUpdateBeforeSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserInfo">
+      <wsdl:input message="tns:UpdateUserInfoSoapIn"/>
+      <wsdl:output message="tns:UpdateUserInfoSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="SendAnnounceCOA">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">COA Basar.</wsdl:documentation>
+      <wsdl:input message="tns:SendAnnounceCOASoapIn"/>
+      <wsdl:output message="tns:SendAnnounceCOASoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="COASoap" type="tns:COASoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetCustomerFromLoginName">
+      <soap:operation soapAction="http://tempuri.org/GetCustomerFromLoginName" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAndQuotaFromLoginName">
+      <soap:operation soapAction="http://tempuri.org/GetCustomerAndQuotaFromLoginName" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsCustomerUpdateBefore">
+      <soap:operation soapAction="http://tempuri.org/IsCustomerUpdateBefore" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserInfo">
+      <soap:operation soapAction="http://tempuri.org/UpdateUserInfo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendAnnounceCOA">
+      <soap:operation soapAction="http://tempuri.org/SendAnnounceCOA" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="COASoap12" type="tns:COASoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetCustomerFromLoginName">
+      <soap12:operation soapAction="http://tempuri.org/GetCustomerFromLoginName" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAndQuotaFromLoginName">
+      <soap12:operation soapAction="http://tempuri.org/GetCustomerAndQuotaFromLoginName" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsCustomerUpdateBefore">
+      <soap12:operation soapAction="http://tempuri.org/IsCustomerUpdateBefore" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserInfo">
+      <soap12:operation soapAction="http://tempuri.org/UpdateUserInfo" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendAnnounceCOA">
+      <soap12:operation soapAction="http://tempuri.org/SendAnnounceCOA" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="COA">
+    <wsdl:port name="COASoap" binding="tns:COASoap">
+      <soap:address location="http://192.168.2.18/MilleniWS/coa.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="COASoap12" binding="tns:COASoap12">
+      <soap12:address location="http://192.168.2.18/MilleniWS/coa.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

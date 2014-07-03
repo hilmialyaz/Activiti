@@ -1,0 +1,78 @@
+package org.milleni.dunning.datamodel.financetransfer
+
+import org.milleni.dunning.datamodel.model.Customer;
+import org.milleni.dunning.datamodel.model.CustomerGroup;
+import org.milleni.dunning.datamodel.model.CustomerType;
+import org.milleni.dunning.datamodel.model.CustomerInvoices;
+import java.util.Date
+import java.util.Calendar
+
+
+declare ExecutionResult
+	resultCode : int	
+	resultText : String 
+	bpmErrorCode : String
+	processWaitTime :String	
+	bpmProcess :String
+end
+
+function long doubleToLong(Double doubleValue){
+	return doubleValue.longValue();
+}
+
+
+function Date currentDate(){
+	return new Date();
+}
+
+function ExecutionResult setReturnVariables(ExecutionResult res,int resultCode,String resultText) {
+	res.setResultCode(resultCode);
+	res.setResultText(resultText);
+	res.setBpmErrorCode("taskError");	
+	return res;    
+}
+
+
+
+rule "Abonenin Acik Tickleri Var"
+salience 100
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(sikayetSayisi >0)   
+then	
+	res = setReturnVariables(res,1,drools.getRule().getName());
+	update(res);
+end
+ 
+ 
+rule "Abonenin Cdri Yok"
+salience 90
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(firstCdrDate == null)   
+then	
+		res = setReturnVariables(res,1,drools.getRule().getName());
+		update(res);
+end
+
+rule "Abonenin Sozlesmesi Yok"
+salience 80
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(sozlesme == 'N')   
+then	
+		res = setReturnVariables(res,1,drools.getRule().getName());
+		update(res);
+end  
+
+
+rule "Abonenin Taksidi Var"
+salience 70
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(taksitSayisi >0)   
+then	
+		res = setReturnVariables(res,1,drools.getRule().getName());
+		update(res);
+end  
+

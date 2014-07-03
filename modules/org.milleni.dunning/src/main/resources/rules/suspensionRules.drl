@@ -1,0 +1,56 @@
+package org.milleni.dunning.datamodel.suspensionrules
+
+import org.milleni.dunning.datamodel.model.Customer;
+import org.milleni.dunning.datamodel.model.CustomerGroup;
+import org.milleni.dunning.datamodel.model.CustomerType;
+import org.milleni.dunning.datamodel.model.CustomerInvoices;
+import java.util.Date
+import java.util.Calendar
+
+
+declare ExecutionResult
+	resultCode : int	
+	resultText : String 
+	bpmErrorCode : String
+	processWaitTime :String	
+	bpmProcess :String
+end
+
+function long doubleToLong(Double doubleValue){
+	return doubleValue.longValue();
+}
+
+
+function Date currentDate(){
+	return new Date();
+}
+
+
+/*
+rule "sotu gecmis odenmemis fatura sayisi 1 ise bir dunning sureci bitir"
+salience 100
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer()
+ count : Number(intValue < 2) from accumulate(  $inv:CustomerInvoices(  invoiceDueDate < currentDate() , paymentStatus=='N' ) from cus.getCustomerInvoicesCollection() ,count($inv ))  
+then	
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	res.setBpmErrorCode("notRetryError");
+	//res.setProcessWaitTime("PT1M");
+	update(res);
+end
+
+
+rule "Sikayet sayisi 8 den buyukse"
+salience 50
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(sikayetSayisi >8 )   
+then	
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	res.setBpmErrorCode("taskError");	
+	update(res);
+end
+  */

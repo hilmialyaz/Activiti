@@ -1,0 +1,6 @@
+#Thu Sep 19 14:53:55 EEST 2013
+filename=invoicePaymentRules.drl
+revision=13
+lastmodified=Thu, 13 Jun 2013 07\:40\:54 VET
+repository=http\://localhost\:8085/guvnor/org.drools.guvnor.Guvnor/webdav/
+fullpath=http\://localhost\:8085/guvnor/org.drools.guvnor.Guvnor/webdav/packages/org.milleni.dunning.datamodel.invoicepayment/invoicePaymentRules.drl

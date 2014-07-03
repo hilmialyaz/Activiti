@@ -1,0 +1,262 @@
+package org.milleni.dunning.datamodel.processsteprules
+
+import org.milleni.dunning.datamodel.model.Customer;
+import org.milleni.dunning.datamodel.model.CustomerGroup;
+import org.milleni.dunning.datamodel.model.CustomerType;
+import org.milleni.dunning.datamodel.model.CustomerInvoices;
+import org.milleni.dunning.datamodel.model.DunningProcessMaster;
+import org.milleni.dunning.datamodel.model.DunningProcessDetail;
+import java.util.Calendar;
+import java.util.Date
+import java.text.SimpleDateFormat
+import java.lang.Math
+
+declare SmsStepRules
+	dailyLimit : Integer = 1
+	
+end
+
+declare dailyCoaCount
+	dailyLimit : Integer = 4
+end
+
+function Date currentDate(){
+	return new Date();
+}
+
+function Date tatilBaslangic(){
+	return new SimpleDateFormat("yyyy-MM-dd").parse("2013-10-11");
+}
+
+function Date tatilBitis(){
+	return new SimpleDateFormat("yyyy-MM-dd").parse("2013-10-22");
+}
+declare ExecutionResult
+	resultCode : int
+	processStep : String
+	processPreviousStep : String
+	processWaitTime : String
+	resultText : String
+	loopCount : int
+	dailyStepCount:int
+	currentStepCount : int
+	processStartStep : boolean
+	deaktifseAtla : boolean
+end
+
+function ExecutionResult setReturnVariables(ExecutionResult res,int resultCode,String resultText,String processWaitTime,boolean processStartStep) {
+	res.setResultCode(resultCode);
+	res.setResultText(resultText);
+	res.setProcessWaitTime(processWaitTime);
+	res.setProcessStartStep(processStartStep);	
+	System.out.println(resultText);
+	return res;    
+}
+/*
+rule 'bayram tatili sonraki haftaya kaydir'
+	salience 1000
+	dialect 'mvel'
+	when 
+		$res : ExecutionResult(resultCode == 0)		
+		eval(currentDate() > tatilBaslangic() &&  currentDate() < tatilBitis())
+	then
+		System.out.println("RULE: "+drools.getRule().getName());
+		long diffDate =Math.abs( Math.round( (currentDate().getTime() - tatilBitis().getTime()) / 86400000D ))+1;
+		$res = setReturnVariables($res,999,drools.getRule().getName(),"P"+diffDate+"D",false);//processi ertele
+		update($res);	
+end
+*/
+
+rule 'Musteri Deaktifse Bazi Adimlarda Atla'
+	salience 200
+	dialect 'mvel'
+	when 
+		$res : ExecutionResult(resultCode == 0 , processStep in (
+		'BIR_COA_HATIRLATMA',
+		'BIR_COA_IHTAR',
+		'BIR_SUSPEND',
+		'BIR_SUSPEND_TAHSILAT_ARAMASI',
+		'BIR_TT_SUSPENSION',		
+		'BIR_DEACTIVATION',
+		'BIR_YASAL_UYARI_MEKTUBU',
+		'KUR_SUSPEND_TAHSILAT_ARAMASI',
+		'KUR_SUSPEND',		
+		'KUR_DEACTIVATION',
+		'VIP_TAHSILAT_ARAMA_1',
+		'VIP_SATIS_ARAMA_1',
+		'VIP_SUSPEND',
+		'VIP_TAHSILAT_ARAMA_2',
+		'VIP_SATIS_ARAMA_2',		
+		'VIP_DEACTIVATION',
+		'KAMU_TAHSILAT_ARAMA_1',
+		'KAMU_SATIS_ARAMA_1',
+		'KAMU_SUSPEND',
+		'KAMU_TAHSILAT_ARAMA_2',
+		'KAMU_SATIS_ARAMA_2',
+		'KAMU_DEACTIVATION'		
+		))	
+		$cus : Customer(status == 'd')
+	then		
+		$res.setDeaktifseAtla(true);
+		
+end
+
+
+rule 'adim INITIAL ise processi sadece beklet'
+	dialect 'mvel'
+	when
+		$res : ExecutionResult(resultCode == 0 , processStep matches ".*INITIAL(.*)*")	
+	then		
+		$res.setProcessStartStep(false);	
+		$res.setResultCode(999);
+		update($res);		
+end
+
+rule 'adim PROCESS_FINISHED ise processi 1 dakika bekletip bitir'
+	dialect 'mvel'
+	when
+		$res : ExecutionResult(resultCode == 0 , processStep matches ".*PROCESS_FINISHED(.*)*")	
+	then		
+		$res.setProcessWaitTime("PT1M");
+		$res.setResultCode(999);
+		update($res);		
+end
+
+rule 'adim FINANSA_DEVIR ise processi 1 dakika bekletip bitir'
+	dialect 'mvel'
+	when
+		$res : ExecutionResult(resultCode == 0 , processStep matches ".*FINANSA_DEVIR(.*)*")	
+	then		
+		$res.setProcessWaitTime("PT1M");
+		$res.setResultCode(999);
+		update($res);		
+end
+
+
+
+/*
+rule 'haftasonu ise pazartesiye kaydir'
+	salience 100
+	dialect 'mvel'
+	when 
+		$res : ExecutionResult(resultCode == 0)	
+	then
+		Calendar startDate = Calendar.getInstance();		
+		if($res.processStep.toString().indexOf("COA")==-1 &&
+					$res.processStep.toString().indexOf("SMS")==-1){							
+				if ( startDate.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY && ($res.processStep.toString().indexOf("BIR_SUSPEND")>-1 || 
+							$res.processStep.toString().indexOf("KUR_SUSPEND")>-1 ||
+							$res.processStep.toString().indexOf("VIP_SUSPEND")>-1 || 
+							$res.processStep.toString().indexOf("KAMU_SUSPEND")>-1)) {
+					System.out.println("RULE: "+drools.getRule().getName()+" startDate:"+startDate.get(Calendar.DAY_OF_WEEK));
+					$res = setReturnVariables($res,210,drools.getRule().getName(),"P2D",false);//processi ertele
+					$res.setResultCode(999);
+					update($res);
+				}else if (startDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+			    	System.out.println("RULE: "+drools.getRule().getName()+" startDate:"+startDate.get(Calendar.DAY_OF_WEEK));
+					$res = setReturnVariables($res,210,drools.getRule().getName(),"P2D",false);//processi ertele
+					$res.setResultCode(999);
+					update($res);
+			    }else  if (startDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+			    	System.out.println("RULE: "+drools.getRule().getName()+" startDate:"+startDate.get(Calendar.DAY_OF_WEEK));
+			    	$res = setReturnVariables($res,210,drools.getRule().getName(),"P1D",false);//processi ertele
+					update($res); 
+			    }
+		 }
+end
+
+*/
+
+
+
+rule 'adim Deaktivasyon ise Ayin Son is gunune  at'
+	dialect 'mvel'
+	when
+		$res : ExecutionResult(resultCode == 0 , processStep matches ".*DEACTIVATION(.*)*")	
+	then
+		Calendar calendar = Calendar.getInstance();				
+		int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		calendar.set(Calendar.DATE,maxDay);
+		System.out.println("maxDay"+maxDay);
+		
+		if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+			maxDay--;
+		}
+		if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+			maxDay=maxDay-2;
+		}
+		System.out.println("maxDay"+maxDay);
+		Calendar calendarNow = Calendar.getInstance();
+		int now = calendarNow.get(Calendar.DAY_OF_MONTH);
+		System.out.println("now"+now);
+		System.out.println("Deaktivasyon rule yuklendi "+drools.getRule().getName());
+		int processDate = maxDay - now;	
+		if(processDate<=0){
+			$res.setProcessStartStep(true);
+			$res.setResultCode(999);
+			update($res);
+		}else{	
+			$res = setReturnVariables($res,999,drools.getRule().getName(),"P"+processDate+"D",false);	
+			update($res);
+		}		
+end
+
+
+/*
+rule 'adim Deaktivasyon ise hemen baslat'
+	dialect 'mvel'
+	when
+		$res : ExecutionResult(resultCode == 0 , processStep matches ".*DEACTIVATION(.*)*")	
+	then
+			$res.setProcessStartStep(true);
+			$res.setResultCode(999);
+			update($res);
+	
+end
+*/
+
+
+/*
+rule 'adim sms ise sms rulelari yukle'
+	dialect 'mvel'
+	when
+		$res : ExecutionResult(resultCode == 0 , processStep matches "SMS(.*)*")	
+	then
+		System.out.println("SMS rule yuklenindi "+drools.getRule().getName());
+		$res.setResultCode(200);
+		update($res);
+		insert(new SmsStepRules());
+end
+
+
+
+
+rule "sms currentStepCount > dailyStepCount ve loopCount<5 ise process ertele degilse hemen baslat"
+when
+	$smsDaily : SmsStepRules($smsDailyMaxCount :dailyLimit)
+	$res : ExecutionResult(resultCode == 200 , $smsDailyMaxCount < currentStepCount)	
+then
+	if( $res.getLoopCount()<5){
+		$res = setReturnVariables($res,210,drools.getRule().getName(),"PT3M",false);//process ertele
+	}else{
+		$res = setReturnVariables($res,210,drools.getRule().getName(),"PT2M",true);//processi hemen baslat
+	}		
+	//update($res);
+end
+
+
+rule "sms currentStepCount < dailyStepCount adima hemen basla"
+when
+	$smsDaily : SmsStepRules($smsDailyMaxCount :dailyLimit)
+	$res : ExecutionResult(resultCode == 200 , $smsDailyMaxCount > currentStepCount )	
+then
+	$res = setReturnVariables($res,300,drools.getRule().getName(),"PT1M",true);	
+	//update($res);
+end
+
+
+
+*/
+
+
+

@@ -205,6 +205,11 @@
         <artifactId>activiti-modeler</artifactId>
         <version>${project.version}</version>
       </dependency>
+	  <dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>org.milleni.dunning</artifactId>
+			 <version>${project.version}</version>
+	  </dependency>
       <dependency>
         <groupId>org.activiti</groupId>
         <artifactId>activiti-common-rest</artifactId>
@@ -706,6 +711,7 @@
         <module>modules/activiti-cdi</module>
         <module>modules/activiti-osgi</module>
         <module>modules/activiti-ldap</module>
+		<module>modules/org.milleni.dunning</module>		
       </modules>
       <build>
         <plugins>

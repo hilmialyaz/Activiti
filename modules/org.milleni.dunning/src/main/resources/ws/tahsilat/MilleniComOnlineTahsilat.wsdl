@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://milleni.com/online_tahsilat" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://milleni.com/online_tahsilat" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://milleni.com/online_tahsilat">
+      <s:element name="Test">
+        <s:complexType/>
+      </s:element>
+      <s:element name="TestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AcikKalemler">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="musteriNo" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GuvenlikBilgisi">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="KullaniciAdi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Sifre" type="s:string"/>
+          <s:element minOccurs="1" maxOccurs="1" name="ZamanDamgasi" type="s:dateTime"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AcikKalemlerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AcikKalemlerResult" type="tns:ArrayOfAcikKalem"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAcikKalem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AcikKalem" nillable="true" type="tns:AcikKalem"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AcikKalem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MusteriNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MusteriAdi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ReferansNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Aciklama" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="FaturaTarihi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="SonOdemeTarihi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Tutar" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ParaBirimi" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TahsilatYap">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="tahsilatKalemleri" type="tns:ArrayOfTahsilatKalemiExt"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTahsilatKalemiExt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TahsilatKalemiExt" nillable="true" type="tns:TahsilatKalemiExt"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TahsilatKalemiExt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MusteriNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ReferansNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="FaturaTarihi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="TahsilatTarihi" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TahsilatYapResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TahsilatYapResult" type="tns:ArrayOfIslemSonucu"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfIslemSonucu">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="IslemSonucu" nillable="true" type="tns:IslemSonucu"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="IslemSonucu">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MusteriNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ReferansNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="DurumKodu" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="DurumAciklamasi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MesajTipi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MesajKodu" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MesajAciklamasi" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TahsilatIptaliYap">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="tahsilatKalemleri" type="tns:ArrayOfTahsilatKalemi"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTahsilatKalemi">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TahsilatKalemi" nillable="true" type="tns:TahsilatKalemi"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TahsilatKalemi">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MusteriNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ReferansNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="FaturaTarihi" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TahsilatIptaliYapResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TahsilatIptaliYapResult" type="tns:ArrayOfIslemSonucu"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AkibetSorgula">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="tahsilatKalemleri" type="tns:ArrayOfTahsilatKalemi"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AkibetSorgulaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AkibetSorgulaResult" type="tns:ArrayOfIslemSonucu"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TopluMutabakat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="baslangicTarihi" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="bitisTarihi" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TopluMutabakatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TopluMutabakatResult" type="tns:TopluMutabakatRakamlari"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TopluMutabakatRakamlari">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ToplamTahsilatAdedi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ToplamTahsilatTutari" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ToplamIptalAdedi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ToplamIptalTutar" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ToplamNetAdet" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ToplamNetTutar" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DetayMutabakat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="baslangicTarihi" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="bitisTarihi" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DetayMutabakatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DetayMutabakatResult" type="tns:ArrayOfMutabakatDetayKalemi"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMutabakatDetayKalemi">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MutabakatDetayKalemi" nillable="true" type="tns:MutabakatDetayKalemi"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MutabakatDetayKalemi">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="TahsilatTarihi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="TahsilatZamani" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="TahsilatBelgeNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="IptalYapildi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="IptalTarihi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="IptalZamani" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="IptalBelgeNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MutabakatYapildi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MusteriNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ReferansNo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Aciklama" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="FaturaTarihi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="SonOdemeTarihi" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Tutar" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ParaBirimi" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MutabakatYap">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="tahsilatKalemleri" type="tns:ArrayOfTahsilatKalemi"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MutabakatYapResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MutabakatYapResult" type="tns:ArrayOfIslemSonucu"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TopluMutabakatYap">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="baslangicTarihi" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="bitisTarihi" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TopluMutabakatYapResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TopluMutabakatYapResult" type="tns:TopluMutabakatRakamlari"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OdemeTalimatiOlustur">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="musteriNumarasi" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="islemKodu" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OdemeTalimatiOlusturResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OdemeTalimatiOlusturResult" type="tns:IslemSonucu"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OdemeTalimatiSorgula">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="musteriNumarasi" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OdemeTalimatiSorgulaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OdemeTalimatiSorgulaResult" type="tns:IslemSonucu"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OdenecekFaturalariGetir">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OdenecekFaturalariGetirResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OdenecekFaturalariGetirResult" type="tns:ArrayOfAcikKalem"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OdenecekFaturalariGetirDetay">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OdenecekFaturalariGetirDetayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OdenecekFaturalariGetirDetayResult" type="tns:AcikKalemDetay"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AcikKalemDetay">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AcikKalemler" type="tns:ArrayOfAcikKalem"/>
+          <s:element minOccurs="0" maxOccurs="1" name="IslemSonucu" type="tns:IslemSonucu"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AcikKalemlerDetay">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guvenlikBilgisi" type="tns:GuvenlikBilgisi"/>
+            <s:element minOccurs="0" maxOccurs="1" name="musteriNo" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AcikKalemlerDetayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AcikKalemlerDetayResult" type="tns:AcikKalemDetay"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="TestSoapIn">
+    <wsdl:part name="parameters" element="tns:Test"/>
+  </wsdl:message>
+  <wsdl:message name="TestSoapOut">
+    <wsdl:part name="parameters" element="tns:TestResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AcikKalemlerSoapIn">
+    <wsdl:part name="parameters" element="tns:AcikKalemler"/>
+  </wsdl:message>
+  <wsdl:message name="AcikKalemlerSoapOut">
+    <wsdl:part name="parameters" element="tns:AcikKalemlerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TahsilatYapSoapIn">
+    <wsdl:part name="parameters" element="tns:TahsilatYap"/>
+  </wsdl:message>
+  <wsdl:message name="TahsilatYapSoapOut">
+    <wsdl:part name="parameters" element="tns:TahsilatYapResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TahsilatIptaliYapSoapIn">
+    <wsdl:part name="parameters" element="tns:TahsilatIptaliYap"/>
+  </wsdl:message>
+  <wsdl:message name="TahsilatIptaliYapSoapOut">
+    <wsdl:part name="parameters" element="tns:TahsilatIptaliYapResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AkibetSorgulaSoapIn">
+    <wsdl:part name="parameters" element="tns:AkibetSorgula"/>
+  </wsdl:message>
+  <wsdl:message name="AkibetSorgulaSoapOut">
+    <wsdl:part name="parameters" element="tns:AkibetSorgulaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TopluMutabakatSoapIn">
+    <wsdl:part name="parameters" element="tns:TopluMutabakat"/>
+  </wsdl:message>
+  <wsdl:message name="TopluMutabakatSoapOut">
+    <wsdl:part name="parameters" element="tns:TopluMutabakatResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DetayMutabakatSoapIn">
+    <wsdl:part name="parameters" element="tns:DetayMutabakat"/>
+  </wsdl:message>
+  <wsdl:message name="DetayMutabakatSoapOut">
+    <wsdl:part name="parameters" element="tns:DetayMutabakatResponse"/>
+  </wsdl:message>
+  <wsdl:message name="MutabakatYapSoapIn">
+    <wsdl:part name="parameters" element="tns:MutabakatYap"/>
+  </wsdl:message>
+  <wsdl:message name="MutabakatYapSoapOut">
+    <wsdl:part name="parameters" element="tns:MutabakatYapResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TopluMutabakatYapSoapIn">
+    <wsdl:part name="parameters" element="tns:TopluMutabakatYap"/>
+  </wsdl:message>
+  <wsdl:message name="TopluMutabakatYapSoapOut">
+    <wsdl:part name="parameters" element="tns:TopluMutabakatYapResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OdemeTalimatiOlusturSoapIn">
+    <wsdl:part name="parameters" element="tns:OdemeTalimatiOlustur"/>
+  </wsdl:message>
+  <wsdl:message name="OdemeTalimatiOlusturSoapOut">
+    <wsdl:part name="parameters" element="tns:OdemeTalimatiOlusturResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OdemeTalimatiSorgulaSoapIn">
+    <wsdl:part name="parameters" element="tns:OdemeTalimatiSorgula"/>
+  </wsdl:message>
+  <wsdl:message name="OdemeTalimatiSorgulaSoapOut">
+    <wsdl:part name="parameters" element="tns:OdemeTalimatiSorgulaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OdenecekFaturalariGetirSoapIn">
+    <wsdl:part name="parameters" element="tns:OdenecekFaturalariGetir"/>
+  </wsdl:message>
+  <wsdl:message name="OdenecekFaturalariGetirSoapOut">
+    <wsdl:part name="parameters" element="tns:OdenecekFaturalariGetirResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OdenecekFaturalariGetirDetaySoapIn">
+    <wsdl:part name="parameters" element="tns:OdenecekFaturalariGetirDetay"/>
+  </wsdl:message>
+  <wsdl:message name="OdenecekFaturalariGetirDetaySoapOut">
+    <wsdl:part name="parameters" element="tns:OdenecekFaturalariGetirDetayResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AcikKalemlerDetaySoapIn">
+    <wsdl:part name="parameters" element="tns:AcikKalemlerDetay"/>
+  </wsdl:message>
+  <wsdl:message name="AcikKalemlerDetaySoapOut">
+    <wsdl:part name="parameters" element="tns:AcikKalemlerDetayResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="MilleniComOnlineTahsilatSoap">
+    <wsdl:operation name="Test">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web service'in ve arkasındaki R/3'ün erişilebilir olduğunu test etmek için kullanılır.</wsdl:documentation>
+      <wsdl:input message="tns:TestSoapIn"/>
+      <wsdl:output message="tns:TestSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="AcikKalemler">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Müşteri numarası ile müşterinin ödenmeyi bekleyen faturaları sorgulanır.</wsdl:documentation>
+      <wsdl:input message="tns:AcikKalemlerSoapIn"/>
+      <wsdl:output message="tns:AcikKalemlerSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="TahsilatYap">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Tahsilat kalemleri 'AcikKalemler' ile sorgulanmış bilgilerle doldurularak ödemesi yapılmak üzere iletilir.</wsdl:documentation>
+      <wsdl:input message="tns:TahsilatYapSoapIn"/>
+      <wsdl:output message="tns:TahsilatYapSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="TahsilatIptaliYap">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Tahsilatı yapılmış kalemlerin iptalini yapar.</wsdl:documentation>
+      <wsdl:input message="tns:TahsilatIptaliYapSoapIn"/>
+      <wsdl:output message="tns:TahsilatIptaliYapSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="AkibetSorgula">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Daha önceden yapılan bir işlemin sonucunun başarılı olup olmadığının sorgulamasını yapar.</wsdl:documentation>
+      <wsdl:input message="tns:AkibetSorgulaSoapIn"/>
+      <wsdl:output message="tns:AkibetSorgulaSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="TopluMutabakat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Belirli bir tarih aralığında yapılan işlemlerin toplu sayılarını getirir</wsdl:documentation>
+      <wsdl:input message="tns:TopluMutabakatSoapIn"/>
+      <wsdl:output message="tns:TopluMutabakatSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="DetayMutabakat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Belirli bir tarih aralığında yapılmış tüm işlemlerin detayını getirir.</wsdl:documentation>
+      <wsdl:input message="tns:DetayMutabakatSoapIn"/>
+      <wsdl:output message="tns:DetayMutabakatSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="MutabakatYap">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Tahsilatı ya da tahsilat iptali yapılmış borçların mutabakatının yapılmasını sağlar</wsdl:documentation>
+      <wsdl:input message="tns:MutabakatYapSoapIn"/>
+      <wsdl:output message="tns:MutabakatYapSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="TopluMutabakatYap">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Belirli bir tarih aralığında yapılan işlemlerin toplu mutabakatını yapar.</wsdl:documentation>
+      <wsdl:input message="tns:TopluMutabakatYapSoapIn"/>
+      <wsdl:output message="tns:TopluMutabakatYapSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="OdemeTalimatiOlustur">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Müşteri numarası ve işlem kodunu alarak ödeme talimatı oluşturur veya iptal eder.</wsdl:documentation>
+      <wsdl:input message="tns:OdemeTalimatiOlusturSoapIn"/>
+      <wsdl:output message="tns:OdemeTalimatiOlusturSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="OdemeTalimatiSorgula">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Müşteri numarasını alarak ödeme talimatı sorgular.</wsdl:documentation>
+      <wsdl:input message="tns:OdemeTalimatiSorgulaSoapIn"/>
+      <wsdl:output message="tns:OdemeTalimatiSorgulaSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="OdenecekFaturalariGetir">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Günü gelmiş talimatlı faturaları getirir.</wsdl:documentation>
+      <wsdl:input message="tns:OdenecekFaturalariGetirSoapIn"/>
+      <wsdl:output message="tns:OdenecekFaturalariGetirSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="OdenecekFaturalariGetirDetay">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Günü gelmiş talimatlı faturaları getirir. Ödenecek fatura kalemlerini ve işlem sonucunu döner.</wsdl:documentation>
+      <wsdl:input message="tns:OdenecekFaturalariGetirDetaySoapIn"/>
+      <wsdl:output message="tns:OdenecekFaturalariGetirDetaySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="AcikKalemlerDetay">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Müşteri numarası ile müşterinin ödenmeyi bekleyen faturaları sorgulanır. Ödeme bekleyen kalemler ve işlem sonucu döner.</wsdl:documentation>
+      <wsdl:input message="tns:AcikKalemlerDetaySoapIn"/>
+      <wsdl:output message="tns:AcikKalemlerDetaySoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MilleniComOnlineTahsilatSoap" type="tns:MilleniComOnlineTahsilatSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Test">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/Test" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcikKalemler">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/AcikKalemler" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TahsilatYap">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/TahsilatYap" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TahsilatIptaliYap">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/TahsilatIptaliYap" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AkibetSorgula">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/AkibetSorgula" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TopluMutabakat">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/TopluMutabakat" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DetayMutabakat">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/DetayMutabakat" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MutabakatYap">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/MutabakatYap" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TopluMutabakatYap">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/TopluMutabakatYap" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OdemeTalimatiOlustur">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/OdemeTalimatiOlustur" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OdemeTalimatiSorgula">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/OdemeTalimatiSorgula" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OdenecekFaturalariGetir">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/OdenecekFaturalariGetir" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OdenecekFaturalariGetirDetay">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/OdenecekFaturalariGetirDetay" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcikKalemlerDetay">
+      <soap:operation soapAction="http://milleni.com/online_tahsilat/AcikKalemlerDetay" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MilleniComOnlineTahsilatSoap12" type="tns:MilleniComOnlineTahsilatSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Test">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/Test" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcikKalemler">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/AcikKalemler" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TahsilatYap">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/TahsilatYap" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TahsilatIptaliYap">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/TahsilatIptaliYap" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AkibetSorgula">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/AkibetSorgula" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TopluMutabakat">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/TopluMutabakat" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DetayMutabakat">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/DetayMutabakat" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MutabakatYap">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/MutabakatYap" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TopluMutabakatYap">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/TopluMutabakatYap" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OdemeTalimatiOlustur">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/OdemeTalimatiOlustur" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OdemeTalimatiSorgula">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/OdemeTalimatiSorgula" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OdenecekFaturalariGetir">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/OdenecekFaturalariGetir" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OdenecekFaturalariGetirDetay">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/OdenecekFaturalariGetirDetay" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcikKalemlerDetay">
+      <soap12:operation soapAction="http://milleni.com/online_tahsilat/AcikKalemlerDetay" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MilleniComOnlineTahsilat">
+    <wsdl:port name="MilleniComOnlineTahsilatSoap" binding="tns:MilleniComOnlineTahsilatSoap">
+      <soap:address location="http://192.168.2.52/OnlineTahsilat/MilleniComOnlineTahsilat.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="MilleniComOnlineTahsilatSoap12" binding="tns:MilleniComOnlineTahsilatSoap12">
+      <soap12:address location="http://192.168.2.52/OnlineTahsilat/MilleniComOnlineTahsilat.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

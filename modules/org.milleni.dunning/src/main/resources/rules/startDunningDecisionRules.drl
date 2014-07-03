@@ -1,0 +1,174 @@
+package org.milleni.dunning.datamodel.startuprules
+
+import org.milleni.dunning.datamodel.model.Customer;
+import org.milleni.dunning.datamodel.model.CustomerGroup;
+import org.milleni.dunning.datamodel.model.CustomerType;
+import org.milleni.dunning.datamodel.model.CustomerInvoices;
+
+declare ExecutionResult
+	resultCode : int
+	bpmProcess : String
+	resultText : String
+end
+
+function ExecutionResult setReturnVariables(ExecutionResult res,String bpmProcess,int resultCode,String resultText) {
+	res.setResultCode(resultCode);
+	res.setResultText(resultText);
+	res.setBpmProcess(bpmProcess);
+	return res;    
+}
+/*
+rule "Vip Customer Name"
+salience 1000
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(customerName!=null &&  customerName.toLowerCase()  in ("neþe akkoç" ,"kenan balkan","ugur özgiray",
+ 	"okan gündogdu", "sefer özel","meltem cebeci","orkan aytulun",
+ 	"melih özgüç","sami gürer","gülseren kuyulu","sibel kuyulu","mehmet emin karamehmet"
+ 	)   ) 
+then
+	System.out.println("VIIIIPPP name");
+	res = setReturnVariables(res,"FL99_MustNotInDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+*/
+
+//8230328877 target
+//7600353358 atos
+//8370178349 btk
+/*
+9023854	Çukurova Holding A.þ.	2640028465
+9083226	FÝKRÝ GÜCÜM	17074188770
+9012059	ABÝDÝN ÞEVKÝ KUYULU	11996330170
+9037008	Ibrahim Alpay Demirtas	35536114648
+9403491	BÝLGÝ TEKNOLOJÝLERÝ VE ÝLETÝÞÝM KURUMU	8370178349
+9399505	TELEKOMUNÝKASYON ÝLETÝÞÝM BAÞKANLIÐI - TEST	
+
+
+9151046	Türk Hava Yollarý Anonim Ortaklýðý	8760047464
+9296294	Türk Hava Yollarý Teknik A.Þ	8760578179
+
+11999330016      9012547               Sibel Kuyulu
+35228112082      9005629               Melih Özgüç
+12376050510      9452740               NESE AKKOÇ
+43936493584      9468837               SEFER ÖZEL
+12002329942      9012548               Gülseren Kuyulu
+12743437562      9010100               Kenan Balkan
+15071280442      9241821               Meltem Cebeci
+31843791770      9294206               Mehmet Emin Karamehmet
+32506884792	     9452572			   OKAN GÜNDOGDU
+10204413780		 9075862			   Ugur Özgiray
+3010426833       9464508				Diyalog Istanbul Arastirma
+*/
+
+rule "Dunninge Girmemesi Gerekler"
+salience 999
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(registerNumber !=null &&  registerNumber  in ("8230328877" ,"7600353358","8370178349","2640028465",
+ 							"17074188770","11996330170","35536114648",
+ 							"8370178349","8760047464","8760578179" ,
+ 							"11999330016","35228112082","12376050510","43936493584","12002329942",
+ 							"12743437562","15071280442","31843791770","32506884792","10204413780","3010426833")  ) 
+then
+	System.out.println("Dunninge Girmemesi Gerekler");
+	res = setReturnVariables(res,"FL99_MustNotInDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+
+rule "Kamu Customer  Group"
+salience 120
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer()
+ cusGroup : CustomerGroup( groupName.toLowerCase() matches ".*kamu(.*)*")
+then
+	System.out.println("KAMUUUU grooup");
+	res = setReturnVariables(res,"FL102_KamuBelediyeDunningProcess",1,drools.getRule().getName());
+	update(res);
+end 
+
+rule "Vip Customer  Group"
+salience 100
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer()
+ cusGroup : CustomerGroup( groupName.toLowerCase() matches ".*voip(.*)*" ||  groupName.toLowerCase() matches ".*vip(.*)*")
+then
+	System.out.println("VIIIIPPP grooup");
+	res = setReturnVariables(res,"FL101_VipOnnetDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+
+rule "Vip Customer Contract"
+salience 45
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(contractType!=null &&  contractType matches ".*-VOIP-(.*)*")
+then
+	res = setReturnVariables(res,"FL101_VipOnnetDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+
+
+rule "Bireysel Customer"
+salience 50
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(contractType!=null &&  contractType matches ".*-ADSL-(.*)*" )
+then
+System.out.println("Bireysel grooup");
+	res = setReturnVariables(res,"FL201_BireyselAdslDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+
+
+rule "Kurumsal Customer"
+salience 45
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer(contractType!=null &&  contractType matches ".*-PSTN-(.*)*")
+then
+	System.out.println("Kurumsal grooup");
+	res = setReturnVariables(res,"FL301_KurumsalSesDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+
+
+
+rule "Kurumsal CustomerType"
+salience 40
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer( customerType.getTypeId()==2)
+then
+	System.out.println("Kurumsal grooup");
+	res = setReturnVariables(res,"FL301_KurumsalSesDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+
+rule "Bireysel CustomerType"
+salience 35
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer( customerType.getTypeId()==1)
+then
+	System.out.println("Bireysel grooup");
+	res = setReturnVariables(res,"FL201_BireyselAdslDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+
+/*
+rule "Sum all Invoices fire when less than 10"
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer()
+ total : Number(doubleValue > 10) from accumulate( CustomerInvoices( $p:invoiceAmount >23 ) from cus.getCustomerInvoicesCollection() ,sum( $p ))
+  
+then
+	System.out.println(total);
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	update(res);
+end*/
+

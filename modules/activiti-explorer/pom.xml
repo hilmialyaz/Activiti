@@ -177,6 +177,7 @@
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3.0</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>

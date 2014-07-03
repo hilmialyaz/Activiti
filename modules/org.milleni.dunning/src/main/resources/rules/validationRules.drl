@@ -1,0 +1,109 @@
+package org.milleni.dunning.datamodel.validationrules
+
+import org.milleni.dunning.datamodel.model.Customer;
+import org.milleni.dunning.datamodel.model.CustomerGroup;
+import org.milleni.dunning.datamodel.model.CustomerType;
+import org.milleni.dunning.datamodel.model.CustomerInvoices;
+import java.util.Date
+import java.util.Calendar
+
+declare ExecutionResult
+	resultCode : int
+	resultText : String
+	bpmProcess : String
+end
+
+function Date currentDate(){
+	return new Date();
+}
+
+function long doubleToLong(Double doubleValue){
+	return doubleValue.longValue();
+}
+
+rule "customerId null "
+when
+	res : ExecutionResult(resultCode==0)
+	cus : Customer( customerId == null   )
+then	
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	update(res);
+end
+
+/*
+rule "customer aktif degil "
+when
+	res : ExecutionResult(resultCode==0)
+	cus : Customer(status  != 'a'   )
+then	
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	update(res);
+end
+
+
+rule "odenmemis fatura toplami 10 tlden az"
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer()
+ total : Number(doubleValue < 10) from accumulate( CustomerInvoices(  invoiceDueDate < currentDate() , paymentStatus=='N' , $p:doubleToLong(invoiceAmount) ) from cus.getCustomerInvoicesCollection() ,sum($p ))  
+then
+	System.out.println("total:"+total );
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	update(res);
+end
+
+
+*/
+
+/*
+rule "musteri vip(group) ama process vip degil "
+salience 100
+when
+ res : ExecutionResult(resultCode==0 , bpmProcess !='FL101_VipCustomerDunningProcess')	
+ cus : Customer()
+ cusGroup : CustomerGroup( groupName == 'VIP Vergili' || groupName == 'Trendikom Kurumsal Postpaid') from cus.getCustomerGroup()
+then
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	update(res);
+end
+
+
+rule  "musteri vip(name) ama process vip degil "
+salience 90
+when
+ res : ExecutionResult(resultCode==0 , bpmProcess !='FL101_VipCustomerDunningProcess')	
+ cus : Customer( customerName  in ("test" ,"test2")   ) 
+then
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	update(res);
+end
+
+*/
+rule  "musteri bireysel ama process kurumsal"
+when
+ res : ExecutionResult(resultCode==0 , bpmProcess =='FL301_KurumsalCustomerDunningProcess')	
+ cus : Customer()
+ cusGroup : CustomerType( typeName == 'Bireysel') from cus.getCustomerType()
+then
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	update(res);
+end
+
+rule  "musteri kurumsal ama process bireysel"
+when
+ res : ExecutionResult(resultCode==0 ,bpmProcess =='FL201_BireyselAdslDunningProcess')	
+ cus : Customer()
+ cusGroup : CustomerType( typeName == 'Kurumsal') from cus.getCustomerType()
+then
+	res.setResultCode(1);
+	res.setResultText(drools.getRule().getName());
+	update(res);
+end
+
+
