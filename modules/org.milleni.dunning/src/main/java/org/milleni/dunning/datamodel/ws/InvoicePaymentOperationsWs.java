@@ -10,11 +10,11 @@ import javax.jws.soap.SOAPBinding;
  * @author juancavallotti
  */
 @WebService
-@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+@SOAPBinding
 public interface InvoicePaymentOperationsWs {
 
     @WebMethod
-    String doSomeWork(String work);
+    public InvoicePaymentResponse  paymentReceived(long customerId);
     
     
     

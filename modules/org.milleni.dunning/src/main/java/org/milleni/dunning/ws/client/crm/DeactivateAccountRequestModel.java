@@ -21,9 +21,11 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="Application" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="BillingCustomerId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Document" type="{http://milleni.com/Bpm}DocumentInfo" minOccurs="0"/>
  *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StatusReasonDef" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StatusReasonID" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
+ *         &lt;element name="WillBeSentToTT" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,9 +38,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "DeactivateAccountRequestModel", propOrder = {
     "application",
     "billingCustomerId",
+    "document",
     "status",
     "statusReasonDef",
-    "statusReasonID"
+    "statusReasonID",
+    "willBeSentToTT"
 })
 public class DeactivateAccountRequestModel {
 
@@ -46,12 +50,16 @@ public class DeactivateAccountRequestModel {
     protected JAXBElement<String> application;
     @XmlElementRef(name = "BillingCustomerId", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> billingCustomerId;
+    @XmlElementRef(name = "Document", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<DocumentInfo> document;
     @XmlElementRef(name = "Status", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> status;
     @XmlElementRef(name = "StatusReasonDef", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> statusReasonDef;
     @XmlElement(name = "StatusReasonID")
     protected Long statusReasonID;
+    @XmlElement(name = "WillBeSentToTT")
+    protected Boolean willBeSentToTT;
 
     /**
      * Gets the value of the application property.
@@ -99,6 +107,30 @@ public class DeactivateAccountRequestModel {
      */
     public void setBillingCustomerId(JAXBElement<String> value) {
         this.billingCustomerId = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the document property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link DocumentInfo }{@code >}
+     *     
+     */
+    public JAXBElement<DocumentInfo> getDocument() {
+        return document;
+    }
+
+    /**
+     * Sets the value of the document property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link DocumentInfo }{@code >}
+     *     
+     */
+    public void setDocument(JAXBElement<DocumentInfo> value) {
+        this.document = ((JAXBElement<DocumentInfo> ) value);
     }
 
     /**
@@ -171,6 +203,30 @@ public class DeactivateAccountRequestModel {
      */
     public void setStatusReasonID(Long value) {
         this.statusReasonID = value;
+    }
+
+    /**
+     * Gets the value of the willBeSentToTT property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isWillBeSentToTT() {
+        return willBeSentToTT;
+    }
+
+    /**
+     * Sets the value of the willBeSentToTT property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setWillBeSentToTT(Boolean value) {
+        this.willBeSentToTT = value;
     }
 
 }

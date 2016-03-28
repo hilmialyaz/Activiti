@@ -123,7 +123,7 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 					if(runningInctance!=null && runningInctance.size()>0){
 						DunningProcessMaster dpm = runningInctance.get(0);
 						if(dpm.getDunningInvoiceId()!=null && dpm.getDunningInvoiceId().getInvoiceId()!=invoiceList.get(0).getInvoiceId())
-							return false;
+							return false;						
 					}
 				}			
 				return true;

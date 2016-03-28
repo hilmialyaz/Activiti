@@ -17,6 +17,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
+import org.jboss.logging.Logger;
 import org.milleni.dunning.datamodel.dao.CustomerInvoicesRepository;
 import org.milleni.dunning.datamodel.dao.DunningProcessDetailRepository;
 import org.milleni.dunning.datamodel.model.Customer;
@@ -24,6 +25,7 @@ import org.milleni.dunning.datamodel.model.CustomerInvoices;
 import org.milleni.dunning.datamodel.model.CustomerType;
 import org.milleni.dunning.datamodel.model.DunningProcessDetail;
 import org.milleni.dunning.datamodel.model.DunningProcessMaster;
+import org.milleni.dunning.datamodel.rule.InvoicePaymentRuleService;
 import org.milleni.dunning.datamodel.service.CustomerService;
 import org.milleni.dunning.datamodel.service.DunningProcessService;
 import org.milleni.dunning.datamodel.service.ProcessSignalService;
@@ -39,6 +41,8 @@ import org.milleni.dunning.ws.client.customerstatus.ContractStatus;
 import org.milleni.dunning.ws.client.customerstatus.STATUS;
 import org.milleni.dunning.ws.client.customerstatus.STATUSREASON;
 import org.milleni.dunning.ws.client.customerstatus.TTSTATUS;
+import org.milleni.dunning.ws.client.freezexdsl.IFreezeDunningServiceDunningUnfreezeXDSLBusinessFaultFaultFaultMessage;
+import org.milleni.dunning.ws.client.freezexdsl.IFreezeDunningServiceDunningUnfreezeXDSLSystemFaultFaultFaultMessage;
 import org.milleni.dunning.ws.client.tahsilat.AcikKalem;
 import org.milleni.dunning.ws.client.tahsilat.ArrayOfAcikKalem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +77,12 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	DunningProcessDetailRepository dunningProcessDetailRepository;
 	
 	@Autowired
+	InvoicePaymentRuleService invoicePaymentRuleService;
+	
+	@Autowired
 	protected transient RuntimeService runtimeService;
+	
+	protected static final Logger LOGGER = Logger.getLogger(BpmWsDelegateServiceImpl.class);
 
 	// "ihtar1","suspend","welcome","netfatura","update_info","gunkapali","hatirlatma","quota_landing","quota_stopped"
 
@@ -109,23 +118,27 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		if (customerId == null)
 			return;
-		Customer customer = customerService.findOne(customerId);
 
 		DunningProcessDetail detail = dunningProcessService.getCurrentProcessDetail(execution);
+	   coaAnnounce(customerId, detail, announceType);
+	}
 
+	public void coaAnnounce(Long customerId, DunningProcessDetail detail, int announceType) {
+		Customer customer = customerService.findOne(customerId);
+		
 		if (announceType != Constants.COA_ANNOUNCE_SUSPEND && customer.getCustomerType() != null && customer.getCustomerType().getTypeName().equalsIgnoreCase(Constants.KURUMSAL)) {
 			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.SKIPPED));
 			dunningProcessService.saveDunningProcessDetail(detail);
 			return;
 		}
 
-		if (customer.getContractType() != null && customer.getContractType().indexOf("-ADSL-") > -1) {
-
-			coaAnnounce(customerId, detail, announceType);
+		if (customer.getContractType() != null && customer.getContractType().indexOf("-ADSL-") < 0) {
+			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.SKIPPED));
+			dunningProcessService.saveDunningProcessDetail(detail);
+			return;
 		}
-	}
-
-	public void coaAnnounce(Long customerId, DunningProcessDetail detail, int announceType) {
+		
+		
 		ServiceResponse response = commonProxyService.sendCoaAnnounce(customerId, announceType);
 		if (response != null) {// hata durumu 0 basarisiz
 			if (detail == null)
@@ -154,6 +167,14 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 
 	public void sendIptalBildirimSms(DelegateExecution execution) {
 		sendSms(execution, dunningProperties.getProperty(Constants.SMS_IPTAL));
+	}
+	
+	public void sendOdemeBildirimSms(DelegateExecution execution) {
+		sendSms(execution, dunningProperties.getProperty(Constants.SMS_ODEMEBILDIRIM));
+	}
+	
+	public void sendOdemeGelmediSms(DelegateExecution execution) {
+		sendSms(execution, dunningProperties.getProperty(Constants.SMS_ODEMEGELMEDI));
 	}
 
 	public void sendSms(DelegateExecution execution, String message) {
@@ -185,6 +206,13 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		if (Constants.STEP_KUR_SMS_IDARI.equals(dpDetail.getProcessStepId().getStepName()))
 			message = dunningProperties.getProperty(Constants.SMS_KUR_IDARI);
 
+		if (Constants.STEP_BULUT_SMS_HATIRLATMA.equals(dpDetail.getProcessStepId().getStepName()))
+			message = dunningProperties.getProperty(Constants.SMS_BULUT_HATIRLATMA);
+
+		if (Constants.STEP_BULUT_SMS_IHTAR.equals(dpDetail.getProcessStepId().getStepName()))
+			message = dunningProperties.getProperty(Constants.SMS_BULUT_IHTAR);
+
+		
 		if (Constants.STEP_SMS_VIP_HATIRLATMA.equals(dpDetail.getProcessStepId().getStepName()))
 			message = dunningProperties.getProperty(Constants.SMS_VIP_HATIRLATMA);
 
@@ -203,19 +231,12 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		// dunningProcessService.addDunningProcessDetailLogs(detail,
 		// Constants.SMS, msg);
 		String msisdn = getCustomerValidMsisdn(customer);
-		if (msisdn == null) {
-			if (detail == null)
-				return;
-			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.ERROR));
-			addReturnLog(detail, "ERR", "Telefon Numarasi bulunamadi", Constants.STEP_SMS);
-			dunningProcessService.saveDunningProcessDetail(detail);
-			return;
-		}
+		
 		String originator = dunningProperties.getProperty(Constants.WS_SETTINGS_SMS_ORIGINATOR_MILLENICOM);
 		if (customer.getContractType() != null && customer.getContractType().indexOf("ADSL") > 0)
 			originator = dunningProperties.getProperty(Constants.WS_SETTINGS_SMS_ORIGINATOR_ADSL);
 
-		String response = commonProxyService.sendSms(msisdn, msg, originator);
+		String response = commonProxyService.sendSms(msisdn, msg, originator,customerId);
 
 		if (response != null && detail != null) {// 103|Erisim izniniz yok
 													// hatası gelebilir.
@@ -273,6 +294,13 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		return string.replaceAll("[^0-9]+", "");
 	}
 
+	
+	public org.milleni.dunning.ws.client.customerstatus.ServiceResponse billingActivateCustomer(Long customerId) {
+		return  wsChangeStatus(
+				"", STATUS.ACTIVATE, STATUSREASON.BORCTAN_DOLAYI_SUSPEND, customerId);
+		
+	}
+	
 	public void suspendCustomer(DelegateExecution execution) {
 		changeCustomerStatus(execution, STATUS.SUSPEND, STATUSREASON.BORCTAN_DOLAYI_SUSPEND);
 	}
@@ -284,8 +312,8 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	public void changeCustomerStatus(DelegateExecution execution, STATUS status, STATUSREASON reason) {
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		Customer customer = customerService.findOne(customerId);
-		System.out.println("test");
-		org.milleni.dunning.ws.client.customerstatus.ServiceResponse response = commonProxyService.changeCustomerStatus(execution.getProcessInstanceId(), customerId, status, reason);
+		org.milleni.dunning.ws.client.customerstatus.ServiceResponse response = wsChangeStatus(
+				execution.getProcessInstanceId(), status, reason, customerId);
 		if (response != null) {// hata durumu
 			if (response.getResultCode() == -1) {
 				throw new RuntimeException(response.getResultCode() + ": " + response.getResultDescription());
@@ -298,6 +326,12 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 				dunningProcessService.saveDunningProcessDetail(detail);
 			}
 		}
+	}
+
+	public org.milleni.dunning.ws.client.customerstatus.ServiceResponse wsChangeStatus(String processId, STATUS status, STATUSREASON reason,
+			Long customerId) {
+		org.milleni.dunning.ws.client.customerstatus.ServiceResponse response = commonProxyService.changeCustomerStatus(processId, customerId, status, reason);
+		return response;
 	}
 
 	public void oloThkIptal(DelegateExecution execution) {
@@ -319,24 +353,44 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	}
 
 	public void ttCrmFreezeCustomer(DelegateExecution execution) {
-		ttCrmOperations(execution, TTSTATUS.FREEZE);
+		Long customerId = (Long) execution.getVariable(Constants.customerId);
+		DunningProcessDetail detail = dunningProcessService.getCurrentProcessDetail(execution);
+		try {
+			freezeCustomer(customerId);
+		} catch (Exception e) {
+			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.ERROR));
+			dunningProcessService.saveDunningProcessDetail(detail);
+		}
 	}
 
 	public void ttCrmUnfreezeCustomer(DelegateExecution execution) {
-		ttCrmOperations(execution, TTSTATUS.UNFREEZE);
+		Long customerId = (Long) execution.getVariable(Constants.customerId);
+		DunningProcessDetail detail = dunningProcessService.getCurrentProcessDetail(execution);
+		try {
+			unfreezeCustomer(customerId);
+		} catch (Exception e) {
+			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.ERROR));
+			dunningProcessService.saveDunningProcessDetail(detail);
+		}
 	}
 
 	public void ttCrmDeactivateCustomer(DelegateExecution execution) {
-		ttCrmOperations(execution, TTSTATUS.DEACTIVATE);
+		//ttCrmOperations(execution, TTSTATUS.DEACTIVATE);
 	}
 
 	public void ttCrmOperations(DelegateExecution execution, TTSTATUS status) {
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
-		org.milleni.dunning.ws.client.customerstatus.ContractServiceResponse response = commonProxyService.changeCustomerTTCRMStatus(execution.getProcessInstanceId(), customerId, status);
+		org.milleni.dunning.ws.client.customerstatus.ContractServiceResponse response = wsTtCrmStatus(execution.getProcessInstanceId(), status, customerId);
 		if (response != null) {// hata durumu
 			if (response.getResultCode() == -1) {
 				throw new RuntimeException(response.getResultCode() + ": " + response.getResultDescription());
 			} else if (response.getResultCode() != 0) {
+				if(status == TTSTATUS.UNFREEZE)
+					return;
+				
+				if(response.getResultDescription()!=null && response.getResultDescription().indexOf("3001101")>-1){
+					return;
+				}
 				DunningProcessDetail detail = dunningProcessService.getCurrentProcessDetail(execution);
 				if (detail == null)
 					return;
@@ -353,12 +407,31 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		}
 	}
 
+	public org.milleni.dunning.ws.client.customerstatus.ContractServiceResponse wsTtCrmStatus(String processId, TTSTATUS status, Long customerId) {
+		//org.milleni.dunning.ws.client.customerstatus.ContractServiceResponse response = commonProxyService.fchangeCustomerTTCRMStatus(processId, customerId, status);
+		return null;
+	}
+	
+	public void freezeCustomer(Long customerId) throws Exception{
+		try{
+			commonProxyService.freezeCustomer(customerId);
+		}catch(Exception ex){
+			LOGGER.error("freezeCustomer:"+ex);
+		}
+	}
+	
+	public void unfreezeCustomer(Long customerId) throws Exception{
+			commonProxyService.unfreezeCustomer(customerId);
+	}
+
 	public void crmSuspendCustomer(DelegateExecution execution) {
 		millnetCrmOperations(execution, STATUS.SUSPEND);
 	}
 
-	public void crmDeactivateCustomer(DelegateExecution execution) {
-		millnetCrmOperations(execution, STATUS.DEACTIVATE);
+	public void crmDeactivateCustomer(DelegateExecution execution) throws Exception{
+		Long customerId = (Long) execution.getVariable(Constants.customerId);
+		invoicePaymentRuleService.checkInvoicePaymentStatusWithCustomerId(customerId);		
+		deactivateCrmAccount(customerId);
 	}
 
 	public void millnetCrmOperations(DelegateExecution execution, STATUS status) {
@@ -436,6 +509,8 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	}
 
 	public void agentCallService(DelegateExecution execution, CallType callType) {
+		dunningProcessService.setDetailNotification(execution);
+		/*
 		GregorianCalendar calendar = new GregorianCalendar();
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		List<CustomerInvoices> customerInvoices = invoiceRepository.getCustomerUnpaidInvoices(customerId);
@@ -470,6 +545,7 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 			}
 			dunningProcessService.saveDunningProcessDetail(detail);
 		}
+		*/
 	}
 
 	public void addReturnLog(DunningProcessDetail detail, String resultCode, String resultDesc, String stepName) {
@@ -479,14 +555,18 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	}
 
 	public void addTaskQuick(Long customerId, String sMessage) {
+//		Customer customer = customerService.findOne(customerId);
+//		String reason = Constants.nedenPstn;
+//		if (customer.getContractType() != null && customer.getContractType().indexOf("ADSL") > 0)
+//			reason = Constants.nedenAdsl;
+//		String response = commonProxyService.addQuickTickler(customerId, reason, Constants.talepKonusu, Constants.altDurum, Constants.talepStatus, sMessage);
+//		System.out.println(response);
+		
 		Customer customer = customerService.findOne(customerId);
-		String reason = Constants.nedenAdsl;
-		if (customer.getContractType() != null && customer.getContractType().indexOf("PSTN") > 0)
-			reason = Constants.nedenPstn;
-		String response = commonProxyService.addQuickTickler(customerId, reason, Constants.talepKonusu, Constants.altDurum, Constants.talepStatus, sMessage);
-		System.out.println(response);
-	}
-
+		boolean isIndividual = customer.getCustomerType()!=null && customer.getCustomerType().getTypeName()!=null && customer.getCustomerType().getTypeName().toLowerCase().contains("bireysel") ? true : false;
+		commonProxyService.createTickler(customerId,customer.getCustomerName(),isIndividual, sMessage);
+	}	
+	
 	public void retrieveCustomerAggreement(DelegateExecution execution) {
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		customerService.retrieveCustomerAggreement(execution.getProcessInstanceId(), customerId);
@@ -564,9 +644,18 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void suspendCrmAccount(Long customerId, DunningProcessMaster dpMaster ,DunningProcessDetail detail) {
 		try {
+			
+			Customer customer = customerService.findOne(customerId);
+			dpMaster = customer.getDunningProcessMaster();
+			if(dpMaster==null || !Constants.RUNNING.equalsIgnoreCase(dpMaster.getStatus().getId())){
+				throw new BpmnError(Constants.DUNNING_PROCESS_MASTER_NOT_FOUND);
+			}
 			commonProxyService.suspendCrmAccount(customerId);
 			setDpDetailSuccess(detail);
 		} catch (Exception ex) {
+			if(ex instanceof BpmnError){
+				throw (BpmnError)ex;
+			}
 			if (dpMaster!=null && detail!=null && ex.getMessage()!=null && ex.getMessage().indexOf(Constants.CrmAccountNotFound)> -1) {
 				try {
 					Map<String, Object> variables = new HashMap<String, Object>();
@@ -589,17 +678,21 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 			commonProxyService.activateCrmAccount(customerId);
 			setDpDetailSuccess(detail);
 		} catch (Exception ex) {
-			setStatusAfterFault(detail, ex);
+			 org.milleni.dunning.ws.client.customerstatus.ServiceResponse  resp = billingActivateCustomer(customerId);
+			 if(resp.getResultCode()==-1)
+				 setStatusAfterFault(detail, ex);
+			 else{
+				 setStatusAfterFault(detail, ex);
+			 }
 		}
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void deactivateCrmAccount(Long customerId, DunningProcessDetail detail) {
+	public void deactivateCrmAccount(Long customerId) throws BpmnError{
 		try {
 			commonProxyService.deactivateCrmAccount(customerId);
-			setDpDetailSuccess(detail);
 		} catch (Exception ex) {
-			setStatusAfterFault(detail, ex);
+			throw new BpmnError(Constants.CRM_DEACTIVATION_FAILED, ex.getMessage());
 		}
 	}
 

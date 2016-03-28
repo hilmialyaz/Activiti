@@ -31,6 +31,7 @@ import org.milleni.dunning.datamodel.rule.InvoicePaymentRuleService;
 import org.milleni.dunning.datamodel.util.CalendarUtil;
 import org.milleni.dunning.datamodel.util.Constants;
 import org.milleni.dunning.datamodel.util.DaoHelper;
+import org.milleni.dunning.ws.client.customerstatus.TTSTATUS;
 import org.milleni.dunning.ws.proxy.BpmWsDelegateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -216,7 +217,11 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 	public void setCustomerInYasalTakip(DelegateExecution execution) {
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		Customer customer = customerService.findOne(customerId);
+		String taskStatusFinans = (String) execution.getVariable(Constants.taskStatusFinans);
 		customer.setYasalTakipte(Constants.VAR);
+		if(Constants.takipDisiBirak.equalsIgnoreCase(taskStatusFinans))
+			customer.setYasalTakipte(Constants.TAKIP_DISI);
+		
 		customer.setYasalTakipTarihi(new Date());
 		customerService.saveCustomer(customer);
 		successProcessDetail(execution);
@@ -235,15 +240,25 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 			dunningProcessMasterRepository.save(dunningProcessMaster);
 			execution.setVariable(Constants.dunningProcessDetail, lastProcessDetail.getProcessDetailId());
 			execution.setVariable(Constants.processStepName,lastProcessDetail.getProcessStepId().getStepText());//Son yapılan adim.
+			
+			Date stepStartDateTime = (Date)execution.getVariable(Constants.stepStartDateTime);
+			if(stepStartDateTime==null){
+				execution.setVariable(Constants.stepStartDateTime, lastProcessDetail.getCreateDate());
+			}
 		}
+		
 		arrageProcessWaitTime(execution);
 	}
 	
 	public void successLastProcessDetail(DelegateExecution execution,String status){
 		Long dunningProcesDetailId = (Long) execution.getVariable(Constants.dunningProcessDetail);
-		if(dunningProcesDetailId==null ) return;
-		
-		DunningProcessDetail dpDetail = dunningProcessDetailRepository.findOne(dunningProcesDetailId);
+		DunningProcessDetail dpDetail = null;
+		if(dunningProcesDetailId==null ) {
+			dpDetail = getCurrentProcessDetail(execution);
+			if(dpDetail==null)
+				return;
+		}		
+		dpDetail = dunningProcessDetailRepository.findOne(dunningProcesDetailId);
 		if(dpDetail!=null && !Constants.ERROR.equals(dpDetail.getStatus().getId())){
 			dpDetail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(status));
 			saveDunningProcessDetail(dpDetail);
@@ -292,6 +307,25 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 			}
 		}
 	}
+
+
+
+
+	public boolean activateIfSuspend(Long customerId) {
+		Customer customer= customerService.updateCustomerStatusFromTecon("", customerId);		
+		if(Constants.SUSPEND.equalsIgnoreCase(customer.getStatus())){
+				bpmWsDelegateService.activateCrmAccount(customerId, null);
+				if(customer.getContractType()!=null && customer.getContractType().indexOf("ADSL")>0 ){
+					try {
+						bpmWsDelegateService.unfreezeCustomer(customerId);
+					} catch (Exception e) {						
+					}
+				}
+			return true;
+		}
+		return false;
+	}
+	
 	
 	public void manualyFinishedProcessMaster(DelegateExecution execution) {
 		setDunningProcessMasterStatus(execution, Constants.MANUAL_FINISHED);
@@ -339,8 +373,16 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public DunningProcessMaster getDunningProcessMaster(DelegateExecution execution) {
 		Long dunningProcessMasterId = (Long) execution.getVariable(Constants.dunningProcessMaster);
-		if (dunningProcessMasterId == null)
-			return null;
+		if (dunningProcessMasterId == null){
+			Long customerId = (Long) execution.getVariable(Constants.customerId);	
+			if(customerId==null)
+				return null;
+			
+			Customer customer = customerService.findOne(customerId);
+			DunningProcessMaster dunningProcessMaster = customer.getDunningProcessMaster();
+			execution.setVariable(Constants.dunningProcessMaster, dunningProcessMaster.getProcessId());
+			return dunningProcessMaster;
+		}
 		return dunningProcessMasterRepository.findOne(dunningProcessMasterId);
 	}
 

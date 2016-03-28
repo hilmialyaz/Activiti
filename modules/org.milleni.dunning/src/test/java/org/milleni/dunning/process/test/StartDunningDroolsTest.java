@@ -62,8 +62,7 @@ public class StartDunningDroolsTest extends SpringActivitiTestCase {
 
 
 	
-	public void testRejectionRules() throws InstantiationException, IllegalAccessException{
-
+	public void testRejectionRules() throws InstantiationException, IllegalAccessException{ 
 		String drlFileName = "rules/startDunningDecisionRules.drl";
 		
 		Object[] obj = customerService.findByTheCustomerById(9439286l);

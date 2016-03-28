@@ -27,207 +27,9 @@ public interface CustomerInfoServiceV1 {
      * 
      * @param request
      * @return
-     *     returns org.milleni.dunning.ws.client.crm.ProcessStaticIpRequestsResponseModel
-     * @throws CustomerInfoServiceV1ProcessStaticIpRequestsSystemFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1ProcessStaticIpRequestsBusinessFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "ProcessStaticIpRequests", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/ProcessStaticIpRequests")
-    @WebResult(name = "ProcessStaticIpRequestsResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "ProcessStaticIpRequests", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ProcessStaticIpRequests")
-    @ResponseWrapper(localName = "ProcessStaticIpRequestsResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ProcessStaticIpRequestsResponse")
-    public ProcessStaticIpRequestsResponseModel processStaticIpRequests(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        ProcessStaticIpRequestsRequestModel request)
-        throws CustomerInfoServiceV1ProcessStaticIpRequestsBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ProcessStaticIpRequestsSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.MigratePartyResponseModel
-     * @throws CustomerInfoServiceV1MigratePartySystemFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1MigratePartyBusinessFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "MigrateParty", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/MigrateParty")
-    @WebResult(name = "MigratePartyResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "MigrateParty", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateParty")
-    @ResponseWrapper(localName = "MigratePartyResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigratePartyResponse")
-    public MigratePartyResponseModel migrateParty(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        MigratePartyRequestModel request)
-        throws CustomerInfoServiceV1MigratePartyBusinessFaultFaultFaultMessage, CustomerInfoServiceV1MigratePartySystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.RemoveNumbersFromContractResponseModel
-     * @throws CustomerInfoServiceV1RemoveNumbersFromContractBusinessFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1RemoveNumbersFromContractSystemFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "RemoveNumbersFromContract", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/RemoveNumbersFromContract")
-    @WebResult(name = "RemoveNumbersFromContractResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "RemoveNumbersFromContract", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RemoveNumbersFromContract")
-    @ResponseWrapper(localName = "RemoveNumbersFromContractResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RemoveNumbersFromContractResponse")
-    public RemoveNumbersFromContractResponseModel removeNumbersFromContract(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        RemoveNumbersFromContractRequestModel request)
-        throws CustomerInfoServiceV1RemoveNumbersFromContractBusinessFaultFaultFaultMessage, CustomerInfoServiceV1RemoveNumbersFromContractSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.AddNumbersToContractResponseModel
-     * @throws CustomerInfoServiceV1AddNumbersToContractBusinessFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1AddNumbersToContractSystemFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "AddNumbersToContract", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/AddNumbersToContract")
-    @WebResult(name = "AddNumbersToContractResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "AddNumbersToContract", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.AddNumbersToContract")
-    @ResponseWrapper(localName = "AddNumbersToContractResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.AddNumbersToContractResponse")
-    public AddNumbersToContractResponseModel addNumbersToContract(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        AddNumbersToContractRequestModel request)
-        throws CustomerInfoServiceV1AddNumbersToContractBusinessFaultFaultFaultMessage, CustomerInfoServiceV1AddNumbersToContractSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.MigrateAccountResponseModel
-     * @throws CustomerInfoServiceV1MigrateAccountSystemFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1MigrateAccountBusinessFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "MigrateAccount", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/MigrateAccount")
-    @WebResult(name = "MigrateAccountResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "MigrateAccount", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateAccount")
-    @ResponseWrapper(localName = "MigrateAccountResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateAccountResponse")
-    public MigrateAccountResponseModel migrateAccount(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        MigrateAccountRequestModel request)
-        throws CustomerInfoServiceV1MigrateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1MigrateAccountSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.MigrateContractResponseModel
-     * @throws CustomerInfoServiceV1MigrateContractSystemFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1MigrateContractBusinessFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "MigrateContract", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/MigrateContract")
-    @WebResult(name = "MigrateContractResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "MigrateContract", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateContract")
-    @ResponseWrapper(localName = "MigrateContractResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateContractResponse")
-    public MigrateContractResponseModel migrateContract(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        MigrateContractRequestModel request)
-        throws CustomerInfoServiceV1MigrateContractBusinessFaultFaultFaultMessage, CustomerInfoServiceV1MigrateContractSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.RemoveDopingBoxProductResponseModel
-     * @throws CustomerInfoServiceV1RemoveDopingBoxProductBusinessFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1RemoveDopingBoxProductSystemFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "RemoveDopingBoxProduct", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/RemoveDopingBoxProduct")
-    @WebResult(name = "RemoveDopingBoxProductResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "RemoveDopingBoxProduct", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RemoveDopingBoxProduct")
-    @ResponseWrapper(localName = "RemoveDopingBoxProductResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RemoveDopingBoxProductResponse")
-    public RemoveDopingBoxProductResponseModel removeDopingBoxProduct(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        RemoveDopingBoxProductRequestModel request)
-        throws CustomerInfoServiceV1RemoveDopingBoxProductBusinessFaultFaultFaultMessage, CustomerInfoServiceV1RemoveDopingBoxProductSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.GetAccountPartyCodeResponseModel
-     * @throws CustomerInfoServiceV1GetAccountPartyCodeBusinessFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1GetAccountPartyCodeSystemFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "GetAccountPartyCode", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/GetAccountPartyCode")
-    @WebResult(name = "GetAccountPartyCodeResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "GetAccountPartyCode", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.GetAccountPartyCode")
-    @ResponseWrapper(localName = "GetAccountPartyCodeResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.GetAccountPartyCodeResponse")
-    public GetAccountPartyCodeResponseModel getAccountPartyCode(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        GetAccountPartyCodeRequestModel request)
-        throws CustomerInfoServiceV1GetAccountPartyCodeBusinessFaultFaultFaultMessage, CustomerInfoServiceV1GetAccountPartyCodeSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.ActivateAccountResponseModel
-     * @throws CustomerInfoServiceV1ActivateAccountBusinessFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1ActivateAccountSystemFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "ActivateAccount", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/ActivateAccount")
-    @WebResult(name = "ActivateAccountResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "ActivateAccount", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ActivateAccount")
-    @ResponseWrapper(localName = "ActivateAccountResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ActivateAccountResponse")
-    public ActivateAccountResponseModel activateAccount(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        ActivateAccountRequestModel request)
-        throws CustomerInfoServiceV1ActivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ActivateAccountSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.SuspendAccountResponseModel
-     * @throws CustomerInfoServiceV1SuspendAccountBusinessFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1SuspendAccountSystemFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "SuspendAccount", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/SuspendAccount")
-    @WebResult(name = "SuspendAccountResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "SuspendAccount", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SuspendAccount")
-    @ResponseWrapper(localName = "SuspendAccountResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SuspendAccountResponse")
-    public SuspendAccountResponseModel suspendAccount(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        SuspendAccountRequestModel request)
-        throws CustomerInfoServiceV1SuspendAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1SuspendAccountSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
-     *     returns org.milleni.dunning.ws.client.crm.DeactivateAccountResponseModel
-     * @throws CustomerInfoServiceV1DeactivateAccountSystemFaultFaultFaultMessage
-     * @throws CustomerInfoServiceV1DeactivateAccountBusinessFaultFaultFaultMessage
-     */
-    @WebMethod(operationName = "DeactivateAccount", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/DeactivateAccount")
-    @WebResult(name = "DeactivateAccountResult", targetNamespace = "/CustomerInfo/Service/v1")
-    @RequestWrapper(localName = "DeactivateAccount", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeactivateAccount")
-    @ResponseWrapper(localName = "DeactivateAccountResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeactivateAccountResponse")
-    public DeactivateAccountResponseModel deactivateAccount(
-        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
-        DeactivateAccountRequestModel request)
-        throws CustomerInfoServiceV1DeactivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1DeactivateAccountSystemFaultFaultFaultMessage
-    ;
-
-    /**
-     * 
-     * @param request
-     * @return
      *     returns org.milleni.dunning.ws.client.crm.QueryCustomerResponseModel
-     * @throws CustomerInfoServiceV1QueryCustomerSystemFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1QueryCustomerBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1QueryCustomerSystemFaultFaultFaultMessage
      */
     @WebMethod(operationName = "QueryCustomer", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/QueryCustomer")
     @WebResult(name = "QueryCustomerResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -369,9 +171,27 @@ public interface CustomerInfoServiceV1 {
      * 
      * @param request
      * @return
+     *     returns org.milleni.dunning.ws.client.crm.QueryStockItemResponseModel
+     * @throws CustomerInfoServiceV1QueryStockItemByStateSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1QueryStockItemByStateBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "QueryStockItemByState", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/QueryStockItemByState")
+    @WebResult(name = "QueryStockItemByStateResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "QueryStockItemByState", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.QueryStockItemByState")
+    @ResponseWrapper(localName = "QueryStockItemByStateResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.QueryStockItemByStateResponse")
+    public QueryStockItemResponseModel queryStockItemByState(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        QueryStockItemByStateRequestModel request)
+        throws CustomerInfoServiceV1QueryStockItemByStateBusinessFaultFaultFaultMessage, CustomerInfoServiceV1QueryStockItemByStateSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
      *     returns org.milleni.dunning.ws.client.crm.QueryStockItemOuidResponseModel
-     * @throws CustomerInfoServiceV1QueryStockItemOuidBusinessFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1QueryStockItemOuidSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1QueryStockItemOuidBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "QueryStockItemOuid", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/QueryStockItemOuid")
     @WebResult(name = "QueryStockItemOuidResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -388,8 +208,8 @@ public interface CustomerInfoServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crm.ChangeStockItemStatusResponseModel
-     * @throws CustomerInfoServiceV1ReserveStockItemBusinessFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1ReserveStockItemSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1ReserveStockItemBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "ReserveStockItem", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/ReserveStockItem")
     @WebResult(name = "ReserveStockItemResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -406,8 +226,8 @@ public interface CustomerInfoServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crm.ChangeStockItemStatusResponseModel
-     * @throws CustomerInfoServiceV1AssignStockItemSystemFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1AssignStockItemBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1AssignStockItemSystemFaultFaultFaultMessage
      */
     @WebMethod(operationName = "AssignStockItem", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/AssignStockItem")
     @WebResult(name = "AssignStockItemResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -441,6 +261,78 @@ public interface CustomerInfoServiceV1 {
      * 
      * @param request
      * @return
+     *     returns org.milleni.dunning.ws.client.crm.ChangeStockItemStatusResponseModel
+     * @throws CustomerInfoServiceV1SetStockItemStatusControlSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1SetStockItemStatusControlBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "SetStockItemStatusControl", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/SetStockItemStatusControl")
+    @WebResult(name = "SetStockItemStatusControlResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "SetStockItemStatusControl", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SetStockItemStatusControl")
+    @ResponseWrapper(localName = "SetStockItemStatusControlResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SetStockItemStatusControlResponse")
+    public ChangeStockItemStatusResponseModel setStockItemStatusControl(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        ChangeStockItemStatusRequestModel request)
+        throws CustomerInfoServiceV1SetStockItemStatusControlBusinessFaultFaultFaultMessage, CustomerInfoServiceV1SetStockItemStatusControlSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.ChangeStockItemStatusResponseModel
+     * @throws CustomerInfoServiceV1SetStockItemStatusOperationalTracingBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1SetStockItemStatusOperationalTracingSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "SetStockItemStatusOperationalTracing", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/SetStockItemStatusOperationalTracing")
+    @WebResult(name = "SetStockItemStatusOperationalTracingResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "SetStockItemStatusOperationalTracing", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SetStockItemStatusOperationalTracing")
+    @ResponseWrapper(localName = "SetStockItemStatusOperationalTracingResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SetStockItemStatusOperationalTracingResponse")
+    public ChangeStockItemStatusResponseModel setStockItemStatusOperationalTracing(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        ChangeStockItemStatusRequestModel request)
+        throws CustomerInfoServiceV1SetStockItemStatusOperationalTracingBusinessFaultFaultFaultMessage, CustomerInfoServiceV1SetStockItemStatusOperationalTracingSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.ChangeStockItemStatusResponseModel
+     * @throws CustomerInfoServiceV1SetStockItemStatusAssignedSupportBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1SetStockItemStatusAssignedSupportSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "SetStockItemStatusAssignedSupport", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/SetStockItemStatusAssignedSupport")
+    @WebResult(name = "SetStockItemStatusAssignedSupportResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "SetStockItemStatusAssignedSupport", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SetStockItemStatusAssignedSupport")
+    @ResponseWrapper(localName = "SetStockItemStatusAssignedSupportResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SetStockItemStatusAssignedSupportResponse")
+    public ChangeStockItemStatusResponseModel setStockItemStatusAssignedSupport(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        ChangeStockItemStatusRequestModel request)
+        throws CustomerInfoServiceV1SetStockItemStatusAssignedSupportBusinessFaultFaultFaultMessage, CustomerInfoServiceV1SetStockItemStatusAssignedSupportSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.ChangeStockItemStatusResponseModel
+     * @throws CustomerInfoServiceV1SetStockItemStatusBilledSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1SetStockItemStatusBilledBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "SetStockItemStatusBilled", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/SetStockItemStatusBilled")
+    @WebResult(name = "SetStockItemStatusBilledResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "SetStockItemStatusBilled", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SetStockItemStatusBilled")
+    @ResponseWrapper(localName = "SetStockItemStatusBilledResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SetStockItemStatusBilledResponse")
+    public ChangeStockItemStatusResponseModel setStockItemStatusBilled(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        ChangeStockItemStatusRequestModel request)
+        throws CustomerInfoServiceV1SetStockItemStatusBilledBusinessFaultFaultFaultMessage, CustomerInfoServiceV1SetStockItemStatusBilledSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
      *     returns org.milleni.dunning.ws.client.crm.CRMProvisionResponseModel
      * @throws CustomerInfoServiceV1ProvisionOrderToCRMBusinessFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1ProvisionOrderToCRMSystemFaultFaultFaultMessage
@@ -459,9 +351,27 @@ public interface CustomerInfoServiceV1 {
      * 
      * @param request
      * @return
+     *     returns org.milleni.dunning.ws.client.crm.CRMProvisionResponseModel
+     * @throws CustomerInfoServiceV1ProvisionOrderItemToCRMSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1ProvisionOrderItemToCRMBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "ProvisionOrderItemToCRM", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/ProvisionOrderItemToCRM")
+    @WebResult(name = "ProvisionOrderItemToCRMResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "ProvisionOrderItemToCRM", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ProvisionOrderItemToCRM")
+    @ResponseWrapper(localName = "ProvisionOrderItemToCRMResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ProvisionOrderItemToCRMResponse")
+    public CRMProvisionResponseModel provisionOrderItemToCRM(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        CRMProvisionRequestModel request)
+        throws CustomerInfoServiceV1ProvisionOrderItemToCRMBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ProvisionOrderItemToCRMSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
      *     returns org.milleni.dunning.ws.client.crm.GetNumbersFromPoolResponseModel
-     * @throws CustomerInfoServiceV1GetNumbersFromPoolBusinessFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1GetNumbersFromPoolSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1GetNumbersFromPoolBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "GetNumbersFromPool", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/GetNumbersFromPool")
     @WebResult(name = "GetNumbersFromPoolResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -478,8 +388,8 @@ public interface CustomerInfoServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crm.QueryNumberPoolItemResponseModel
-     * @throws CustomerInfoServiceV1QueryNumberPoolItemSystemFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1QueryNumberPoolItemBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1QueryNumberPoolItemSystemFaultFaultFaultMessage
      */
     @WebMethod(operationName = "QueryNumberPoolItem", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/QueryNumberPoolItem")
     @WebResult(name = "QueryNumberPoolItemResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -496,8 +406,8 @@ public interface CustomerInfoServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crm.ChangeNumberPoolItemStatusResponseModel
-     * @throws CustomerInfoServiceV1ReserveNumberPoolItemBusinessFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1ReserveNumberPoolItemSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1ReserveNumberPoolItemBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "ReserveNumberPoolItem", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/ReserveNumberPoolItem")
     @WebResult(name = "ReserveNumberPoolItemResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -550,8 +460,8 @@ public interface CustomerInfoServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crm.ChangeNumberPoolItemStatusResponseModel
-     * @throws CustomerInfoServiceV1BlockNumberPoolItemBusinessFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1BlockNumberPoolItemSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1BlockNumberPoolItemBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "BlockNumberPoolItem", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/BlockNumberPoolItem")
     @WebResult(name = "BlockNumberPoolItemResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -568,8 +478,8 @@ public interface CustomerInfoServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crm.ChangeNumberPoolItemStatusResponseModel
-     * @throws CustomerInfoServiceV1UnavailableNumberPoolItemBusinessFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1UnavailableNumberPoolItemSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1UnavailableNumberPoolItemBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "UnavailableNumberPoolItem", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/UnavailableNumberPoolItem")
     @WebResult(name = "UnavailableNumberPoolItemResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -586,8 +496,8 @@ public interface CustomerInfoServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crm.DeactivateCustomerContractResponseModel
-     * @throws CustomerInfoServiceV1DeactivateCustomerContractSystemFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1DeactivateCustomerContractBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1DeactivateCustomerContractSystemFaultFaultFaultMessage
      */
     @WebMethod(operationName = "DeactivateCustomerContract", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/DeactivateCustomerContract")
     @WebResult(name = "DeactivateCustomerContractResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -604,8 +514,8 @@ public interface CustomerInfoServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crm.SuspendCustomerContractResponseModel
-     * @throws CustomerInfoServiceV1SuspendCustomerContractBusinessFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1SuspendCustomerContractSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1SuspendCustomerContractBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "SuspendCustomerContract", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/SuspendCustomerContract")
     @WebResult(name = "SuspendCustomerContractResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -622,8 +532,8 @@ public interface CustomerInfoServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crm.ActivateCustomerContractResponseModel
-     * @throws CustomerInfoServiceV1ActivateCustomerContractBusinessFaultFaultFaultMessage
      * @throws CustomerInfoServiceV1ActivateCustomerContractSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1ActivateCustomerContractBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "ActivateCustomerContract", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/ActivateCustomerContract")
     @WebResult(name = "ActivateCustomerContractResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -669,6 +579,435 @@ public interface CustomerInfoServiceV1 {
         @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
         ProcessSuspendedContractsRequestModel request)
         throws CustomerInfoServiceV1ProcessSuspendedContractsBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ProcessSuspendedContractsSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.ProcessStaticIpRequestsResponseModel
+     * @throws CustomerInfoServiceV1ProcessStaticIpRequestsSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1ProcessStaticIpRequestsBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "ProcessStaticIpRequests", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/ProcessStaticIpRequests")
+    @WebResult(name = "ProcessStaticIpRequestsResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "ProcessStaticIpRequests", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ProcessStaticIpRequests")
+    @ResponseWrapper(localName = "ProcessStaticIpRequestsResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ProcessStaticIpRequestsResponse")
+    public ProcessStaticIpRequestsResponseModel processStaticIpRequests(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        ProcessStaticIpRequestsRequestModel request)
+        throws CustomerInfoServiceV1ProcessStaticIpRequestsBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ProcessStaticIpRequestsSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.AssignStaticIpResponseModel
+     * @throws CustomerInfoServiceV1AssignStaticIpBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1AssignStaticIpSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "AssignStaticIp", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/AssignStaticIp")
+    @WebResult(name = "AssignStaticIpResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "AssignStaticIp", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.AssignStaticIp")
+    @ResponseWrapper(localName = "AssignStaticIpResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.AssignStaticIpResponse")
+    public AssignStaticIpResponseModel assignStaticIp(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        AssignStaticIpRequestModel request)
+        throws CustomerInfoServiceV1AssignStaticIpBusinessFaultFaultFaultMessage, CustomerInfoServiceV1AssignStaticIpSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.DeactivateStaticIpResponseModel
+     * @throws CustomerInfoServiceV1DeactivateStaticIpBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1DeactivateStaticIpSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "DeactivateStaticIp", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/DeactivateStaticIp")
+    @WebResult(name = "DeactivateStaticIpResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "DeactivateStaticIp", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeactivateStaticIp")
+    @ResponseWrapper(localName = "DeactivateStaticIpResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeactivateStaticIpResponse")
+    public DeactivateStaticIpResponseModel deactivateStaticIp(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        DeactivateStaticIpRequestModel request)
+        throws CustomerInfoServiceV1DeactivateStaticIpBusinessFaultFaultFaultMessage, CustomerInfoServiceV1DeactivateStaticIpSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.MigratePartyResponseModel
+     * @throws CustomerInfoServiceV1MigratePartyBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1MigratePartySystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "MigrateParty", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/MigrateParty")
+    @WebResult(name = "MigratePartyResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "MigrateParty", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateParty")
+    @ResponseWrapper(localName = "MigratePartyResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigratePartyResponse")
+    public MigratePartyResponseModel migrateParty(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        MigratePartyRequestModel request)
+        throws CustomerInfoServiceV1MigratePartyBusinessFaultFaultFaultMessage, CustomerInfoServiceV1MigratePartySystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.RemoveNumbersFromContractResponseModel
+     * @throws CustomerInfoServiceV1RemoveNumbersFromContractSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1RemoveNumbersFromContractBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "RemoveNumbersFromContract", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/RemoveNumbersFromContract")
+    @WebResult(name = "RemoveNumbersFromContractResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "RemoveNumbersFromContract", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RemoveNumbersFromContract")
+    @ResponseWrapper(localName = "RemoveNumbersFromContractResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RemoveNumbersFromContractResponse")
+    public RemoveNumbersFromContractResponseModel removeNumbersFromContract(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        RemoveNumbersFromContractRequestModel request)
+        throws CustomerInfoServiceV1RemoveNumbersFromContractBusinessFaultFaultFaultMessage, CustomerInfoServiceV1RemoveNumbersFromContractSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.AddNumbersToContractResponseModel
+     * @throws CustomerInfoServiceV1AddNumbersToContractSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1AddNumbersToContractBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "AddNumbersToContract", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/AddNumbersToContract")
+    @WebResult(name = "AddNumbersToContractResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "AddNumbersToContract", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.AddNumbersToContract")
+    @ResponseWrapper(localName = "AddNumbersToContractResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.AddNumbersToContractResponse")
+    public AddNumbersToContractResponseModel addNumbersToContract(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        AddNumbersToContractRequestModel request)
+        throws CustomerInfoServiceV1AddNumbersToContractBusinessFaultFaultFaultMessage, CustomerInfoServiceV1AddNumbersToContractSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.MigrateAccountResponseModel
+     * @throws CustomerInfoServiceV1MigrateAccountSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1MigrateAccountBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "MigrateAccount", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/MigrateAccount")
+    @WebResult(name = "MigrateAccountResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "MigrateAccount", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateAccount")
+    @ResponseWrapper(localName = "MigrateAccountResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateAccountResponse")
+    public MigrateAccountResponseModel migrateAccount(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        MigrateAccountRequestModel request)
+        throws CustomerInfoServiceV1MigrateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1MigrateAccountSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.MigrateContractResponseModel
+     * @throws CustomerInfoServiceV1MigrateContractSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1MigrateContractBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "MigrateContract", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/MigrateContract")
+    @WebResult(name = "MigrateContractResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "MigrateContract", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateContract")
+    @ResponseWrapper(localName = "MigrateContractResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.MigrateContractResponse")
+    public MigrateContractResponseModel migrateContract(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        MigrateContractRequestModel request)
+        throws CustomerInfoServiceV1MigrateContractBusinessFaultFaultFaultMessage, CustomerInfoServiceV1MigrateContractSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.RemoveDopingBoxProductResponseModel
+     * @throws CustomerInfoServiceV1RemoveDopingBoxProductSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1RemoveDopingBoxProductBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "RemoveDopingBoxProduct", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/RemoveDopingBoxProduct")
+    @WebResult(name = "RemoveDopingBoxProductResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "RemoveDopingBoxProduct", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RemoveDopingBoxProduct")
+    @ResponseWrapper(localName = "RemoveDopingBoxProductResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RemoveDopingBoxProductResponse")
+    public RemoveDopingBoxProductResponseModel removeDopingBoxProduct(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        RemoveDopingBoxProductRequestModel request)
+        throws CustomerInfoServiceV1RemoveDopingBoxProductBusinessFaultFaultFaultMessage, CustomerInfoServiceV1RemoveDopingBoxProductSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.RetrieveDopingBoxProductResponseModel
+     * @throws CustomerInfoServiceV1RetrieveDopingBoxProductBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1RetrieveDopingBoxProductSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "RetrieveDopingBoxProduct", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/RetrieveDopingBoxProduct")
+    @WebResult(name = "RetrieveDopingBoxProductResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "RetrieveDopingBoxProduct", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RetrieveDopingBoxProduct")
+    @ResponseWrapper(localName = "RetrieveDopingBoxProductResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.RetrieveDopingBoxProductResponse")
+    public RetrieveDopingBoxProductResponseModel retrieveDopingBoxProduct(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        RetrieveDopingBoxProductRequestModel request)
+        throws CustomerInfoServiceV1RetrieveDopingBoxProductBusinessFaultFaultFaultMessage, CustomerInfoServiceV1RetrieveDopingBoxProductSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.GetAccountPartyCodeResponseModel
+     * @throws CustomerInfoServiceV1GetAccountPartyCodeSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1GetAccountPartyCodeBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "GetAccountPartyCode", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/GetAccountPartyCode")
+    @WebResult(name = "GetAccountPartyCodeResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "GetAccountPartyCode", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.GetAccountPartyCode")
+    @ResponseWrapper(localName = "GetAccountPartyCodeResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.GetAccountPartyCodeResponse")
+    public GetAccountPartyCodeResponseModel getAccountPartyCode(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        GetAccountPartyCodeRequestModel request)
+        throws CustomerInfoServiceV1GetAccountPartyCodeBusinessFaultFaultFaultMessage, CustomerInfoServiceV1GetAccountPartyCodeSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.ActivateAccountResponseModel
+     * @throws CustomerInfoServiceV1ActivateAccountBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1ActivateAccountSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "ActivateAccount", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/ActivateAccount")
+    @WebResult(name = "ActivateAccountResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "ActivateAccount", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ActivateAccount")
+    @ResponseWrapper(localName = "ActivateAccountResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ActivateAccountResponse")
+    public ActivateAccountResponseModel activateAccount(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        ActivateAccountRequestModel request)
+        throws CustomerInfoServiceV1ActivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ActivateAccountSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.SuspendAccountResponseModel
+     * @throws CustomerInfoServiceV1SuspendAccountBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1SuspendAccountSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "SuspendAccount", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/SuspendAccount")
+    @WebResult(name = "SuspendAccountResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "SuspendAccount", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SuspendAccount")
+    @ResponseWrapper(localName = "SuspendAccountResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.SuspendAccountResponse")
+    public SuspendAccountResponseModel suspendAccount(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        SuspendAccountRequestModel request)
+        throws CustomerInfoServiceV1SuspendAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1SuspendAccountSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.DeactivateAccountResponseModel
+     * @throws CustomerInfoServiceV1DeactivateAccountBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1DeactivateAccountSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "DeactivateAccount", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/DeactivateAccount")
+    @WebResult(name = "DeactivateAccountResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "DeactivateAccount", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeactivateAccount")
+    @ResponseWrapper(localName = "DeactivateAccountResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeactivateAccountResponse")
+    public DeactivateAccountResponseModel deactivateAccount(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        DeactivateAccountRequestModel request)
+        throws CustomerInfoServiceV1DeactivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1DeactivateAccountSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.GetContractDocumentsResponseModel
+     * @throws CustomerInfoServiceV1GetContractLegalDocumentsBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1GetContractLegalDocumentsSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "GetContractLegalDocuments", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/GetContractLegalDocuments")
+    @WebResult(name = "GetContractLegalDocumentsResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "GetContractLegalDocuments", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.GetContractLegalDocuments")
+    @ResponseWrapper(localName = "GetContractLegalDocumentsResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.GetContractLegalDocumentsResponse")
+    public GetContractDocumentsResponseModel getContractLegalDocuments(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        GetContractDocumentsRequestModel request)
+        throws CustomerInfoServiceV1GetContractLegalDocumentsBusinessFaultFaultFaultMessage, CustomerInfoServiceV1GetContractLegalDocumentsSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.DeclareDocumentErrorResponseModel
+     * @throws CustomerInfoServiceV1DeclareDocumentErrorBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1DeclareDocumentErrorSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "DeclareDocumentError", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/DeclareDocumentError")
+    @WebResult(name = "DeclareDocumentErrorResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "DeclareDocumentError", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeclareDocumentError")
+    @ResponseWrapper(localName = "DeclareDocumentErrorResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeclareDocumentErrorResponse")
+    public DeclareDocumentErrorResponseModel declareDocumentError(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        DeclareDocumentErrorRequestModel request)
+        throws CustomerInfoServiceV1DeclareDocumentErrorBusinessFaultFaultFaultMessage, CustomerInfoServiceV1DeclareDocumentErrorSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.GetContractTariffChangesResponseModel
+     * @throws CustomerInfoServiceV1GetContractTariffChangesSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1GetContractTariffChangesBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "GetContractTariffChanges", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/GetContractTariffChanges")
+    @WebResult(name = "GetContractTariffChangesResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "GetContractTariffChanges", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.GetContractTariffChanges")
+    @ResponseWrapper(localName = "GetContractTariffChangesResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.GetContractTariffChangesResponse")
+    public GetContractTariffChangesResponseModel getContractTariffChanges(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        GetContractTariffChangesRequestModel request)
+        throws CustomerInfoServiceV1GetContractTariffChangesBusinessFaultFaultFaultMessage, CustomerInfoServiceV1GetContractTariffChangesSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.QueryCustomerStatusResponseModel
+     * @throws CustomerInfoServiceV1QueryCustomerStatusBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1QueryCustomerStatusSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "QueryCustomerStatus", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/QueryCustomerStatus")
+    @WebResult(name = "QueryCustomerStatusResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "QueryCustomerStatus", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.QueryCustomerStatus")
+    @ResponseWrapper(localName = "QueryCustomerStatusResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.QueryCustomerStatusResponse")
+    public QueryCustomerStatusResponseModel queryCustomerStatus(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        QueryCustomerStatusRequestModel request)
+        throws CustomerInfoServiceV1QueryCustomerStatusBusinessFaultFaultFaultMessage, CustomerInfoServiceV1QueryCustomerStatusSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.QueryOpenOrdersForDevicesResponseModel
+     * @throws CustomerInfoServiceV1QueryOpenOrdersForModemsBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1QueryOpenOrdersForModemsSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "QueryOpenOrdersForModems", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/QueryOpenOrdersForModems")
+    @WebResult(name = "QueryOpenOrdersForModemsResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "QueryOpenOrdersForModems", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.QueryOpenOrdersForModems")
+    @ResponseWrapper(localName = "QueryOpenOrdersForModemsResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.QueryOpenOrdersForModemsResponse")
+    public QueryOpenOrdersForDevicesResponseModel queryOpenOrdersForModems(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        QueryOpenOrdersForDevicesRequestModel request)
+        throws CustomerInfoServiceV1QueryOpenOrdersForModemsBusinessFaultFaultFaultMessage, CustomerInfoServiceV1QueryOpenOrdersForModemsSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @throws CustomerInfoServiceV1DeactivateNumbersBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1DeactivateNumbersSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "DeactivateNumbers", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/DeactivateNumbers")
+    @RequestWrapper(localName = "DeactivateNumbers", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeactivateNumbers")
+    @ResponseWrapper(localName = "DeactivateNumbersResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.DeactivateNumbersResponse")
+    public void deactivateNumbers(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        DeactivateNumbersRequestModel request)
+        throws CustomerInfoServiceV1DeactivateNumbersBusinessFaultFaultFaultMessage, CustomerInfoServiceV1DeactivateNumbersSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.NewChurnRequestResponseModel
+     * @throws CustomerInfoServiceV1NewChurnRequestBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1NewChurnRequestSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "NewChurnRequest", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/NewChurnRequest")
+    @WebResult(name = "NewChurnRequestResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "NewChurnRequest", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.NewChurnRequest")
+    @ResponseWrapper(localName = "NewChurnRequestResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.NewChurnRequestResponse")
+    public NewChurnRequestResponseModel newChurnRequest(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        NewChurnRequestRequestModel request)
+        throws CustomerInfoServiceV1NewChurnRequestBusinessFaultFaultFaultMessage, CustomerInfoServiceV1NewChurnRequestSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.NumbersToBeCheckedResponseModel
+     * @throws CustomerInfoServiceV1NumbersToBeCheckedSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1NumbersToBeCheckedBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "NumbersToBeChecked", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/NumbersToBeChecked")
+    @WebResult(name = "NumbersToBeCheckedResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "NumbersToBeChecked", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.NumbersToBeChecked")
+    @ResponseWrapper(localName = "NumbersToBeCheckedResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.NumbersToBeCheckedResponse")
+    public NumbersToBeCheckedResponseModel numbersToBeChecked(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        NumbersToBeCheckedRequestModel request)
+        throws CustomerInfoServiceV1NumbersToBeCheckedBusinessFaultFaultFaultMessage, CustomerInfoServiceV1NumbersToBeCheckedSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.GetNotificationServiceResponseModel
+     * @throws CustomerInfoServiceV1CustomerCancelledSendNotificationSystemFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1CustomerCancelledSendNotificationBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "CustomerCancelledSendNotification", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/CustomerCancelledSendNotification")
+    @WebResult(name = "CustomerCancelledSendNotificationResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "CustomerCancelledSendNotification", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.CustomerCancelledSendNotification")
+    @ResponseWrapper(localName = "CustomerCancelledSendNotificationResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.CustomerCancelledSendNotificationResponse")
+    public GetNotificationServiceResponseModel customerCancelledSendNotification(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        GetNotificationServiceRequestModel request)
+        throws CustomerInfoServiceV1CustomerCancelledSendNotificationBusinessFaultFaultFaultMessage, CustomerInfoServiceV1CustomerCancelledSendNotificationSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crm.ValidateAccountDeactivationResponseModel
+     * @throws CustomerInfoServiceV1ValidateAccountDeactivationBusinessFaultFaultFaultMessage
+     * @throws CustomerInfoServiceV1ValidateAccountDeactivationSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "ValidateAccountDeactivation", action = "/CustomerInfo/Service/v1/CustomerInfoServiceV1/ValidateAccountDeactivation")
+    @WebResult(name = "ValidateAccountDeactivationResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "ValidateAccountDeactivation", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ValidateAccountDeactivation")
+    @ResponseWrapper(localName = "ValidateAccountDeactivationResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crm.ValidateAccountDeactivationResponse")
+    public ValidateAccountDeactivationResponseModel validateAccountDeactivation(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        ValidateAccountDeactivationRequestModel request)
+        throws CustomerInfoServiceV1ValidateAccountDeactivationBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ValidateAccountDeactivationSystemFaultFaultFaultMessage
     ;
 
 }

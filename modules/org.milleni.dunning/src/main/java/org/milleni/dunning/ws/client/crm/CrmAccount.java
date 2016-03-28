@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="Contracts" type="{http://milleni.com/Crm}ArrayOfCrmContract" minOccurs="0"/>
  *         &lt;element name="Id" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid"/>
  *         &lt;element name="ReturnAccount" type="{http://milleni.com/Crm}CrmReturnAccount" minOccurs="0"/>
+ *         &lt;element name="ShipmentAddress" type="{http://milleni.com/Crm}CrmAddress" minOccurs="0"/>
  *         &lt;element name="SoftInvoice" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="SoftInvoiceEmail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -49,6 +50,7 @@ import javax.xml.bind.annotation.XmlType;
     "contracts",
     "id",
     "returnAccount",
+    "shipmentAddress",
     "softInvoice",
     "softInvoiceEmail",
     "status",
@@ -72,6 +74,8 @@ public class CrmAccount {
     protected String id;
     @XmlElementRef(name = "ReturnAccount", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<CrmReturnAccount> returnAccount;
+    @XmlElementRef(name = "ShipmentAddress", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<CrmAddress> shipmentAddress;
     @XmlElement(name = "SoftInvoice")
     protected Boolean softInvoice;
     @XmlElementRef(name = "SoftInvoiceEmail", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
@@ -271,6 +275,30 @@ public class CrmAccount {
      */
     public void setReturnAccount(JAXBElement<CrmReturnAccount> value) {
         this.returnAccount = ((JAXBElement<CrmReturnAccount> ) value);
+    }
+
+    /**
+     * Gets the value of the shipmentAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link CrmAddress }{@code >}
+     *     
+     */
+    public JAXBElement<CrmAddress> getShipmentAddress() {
+        return shipmentAddress;
+    }
+
+    /**
+     * Sets the value of the shipmentAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link CrmAddress }{@code >}
+     *     
+     */
+    public void setShipmentAddress(JAXBElement<CrmAddress> value) {
+        this.shipmentAddress = ((JAXBElement<CrmAddress> ) value);
     }
 
     /**

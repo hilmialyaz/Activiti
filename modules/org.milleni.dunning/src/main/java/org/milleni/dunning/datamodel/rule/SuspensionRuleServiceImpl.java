@@ -95,7 +95,7 @@ public class SuspensionRuleServiceImpl extends AbstractRuleService implements Su
 
 		if (customer.getCustomerGroup() != null) {
 			Long maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_ADSL_SUSPENSION_INVOICE_LIMIT));
-			if (Constants.KURUMSAL.equalsIgnoreCase(customer.getCustomerGroup().getGroupName())) {
+			if (Constants.KURUMSAL.equalsIgnoreCase(customer.getCustomerType().getTypeName())) {
 				maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_SES_SUSPENSION_INVOICE_LIMIT));
 			}
 			if (invoiceAmount == null || invoiceAmount < maxInvoiceLimit)

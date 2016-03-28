@@ -132,9 +132,9 @@
 
 
 	<bean id="jobExecutor" class="org.activiti.engine.impl.jobexecutor.DefaultJobExecutor">
-		<property name="queueSize" value="2" />
-		<property name="corePoolSize" value="2" />
-		<property name="maxPoolSize" value="4" />
+		<property name="queueSize" value="1" />
+		<property name="corePoolSize" value="1" />
+		<property name="maxPoolSize" value="1" />
 		<property name="maxJobsPerAcquisition" value="1" />
 		<property name="waitTimeInMillis" value="10000" />
 		<property name="lockTimeInMillis" value="600000" />

@@ -44,6 +44,7 @@ public interface Constants {
 	String UNPAID = "N";
 	
 	String VAR = "Y";
+	String TAKIP_DISI = "T";
 	String YOK = "N";
 	
 	String AKTIF="a";
@@ -70,6 +71,8 @@ public interface Constants {
 	String processStartStep = "processStartStep";
 	String firstStepNext = "firstStepNext";
 	String lastCompletedTaskUserName = "lastCompletedTaskUserName";
+	String taskStatusFinans = "taskStatusFinans";
+	String takipDisiBirak = "takipDisiBirak";
 	
 
 	// ErrorCodes
@@ -90,6 +93,7 @@ public interface Constants {
 	String DUNNING_PROCESS_MASTER_NOT_FOUND = "DUNNING PROCESS MASTER bulunamadi";
 	String CUSTOMER_DOESNOT_MATCH_RULE = "Musteri Kurala Uymadi";
 	String PAYMENT_RECEIVED = "paymentReceived";
+	String CRM_DEACTIVATION_FAILED = "CrmDeactivationFailed";
 	String SUSPENSION_POSTPONE = "ERR_SUSP";
 	String SUSPENSION_POSTPONE_DESC = "Abone borcu limitin aldında suspend edilemez.";
 	String WARNING_NO_UNPAID_INVOICE= "Musteri Faturasi Yok veya 10TL den Az";
@@ -167,6 +171,7 @@ public interface Constants {
 	
 
 	String WS_COA_ENDPOINT = "dunning.ws.endpoint.coa";
+	String WS_TICKLER_ENDPOINT = "dunning.ws.endpoint.tickler";
 	String WS_MILLENIWS_ENDPOINT = "dunning.ws.endpoint.milleniws";
 	String WS_ONLINETAHSILAT_ENDPOINT = "dunning.ws.endpoint.onlinetahsilat";
 	String WS_CUSTOMER_INFO_ENDPOINT = "dunning.ws.endpoint.customerinfo";
@@ -175,6 +180,8 @@ public interface Constants {
 	String WS_MILLDESK_ENDPOINT = "dunning.ws.endpoint.milldesk";
 	String WS_CALLCENTER_ENDPOINT = "dunning.ws.endpoint.callcenter";
 	String WS_CRM_ACCOUNT_ENDPOINT = "dunning.ws.endpoint.crmaccount";
+	String WS_CRM_FREEZE_ENDPOINT = "dunning.ws.endpoint.crmfreeze";
+	String WS_CRM_CONTACT_ENDPOINT = "dunning.ws.endpoint.crmcontact";
 	
 	String WS_SETTINGS_SMS_APPLICATION = "dunning.ws.settings.smsgw.application";
 	String WS_SETTINGS_SMS_USERID = "dunning.ws.settings.smsgw.userid";
@@ -196,6 +203,10 @@ public interface Constants {
 	String SMS_KUR_IHTAR = "dunning.ws.settings.sms.kurumsal.ihtar";
 	String SMS_KUR_IDARI = "dunning.ws.settings.sms.kurumsal.idari";
 	String SMS_VIP_HATIRLATMA = "dunning.ws.settings.sms.vip.hatirlatma";
+	String SMS_ODEMEBILDIRIM = "dunning.ws.settings.sms.odemebildirim";
+	String SMS_ODEMEGELMEDI = "dunning.ws.settings.sms.odemegelmedi";
+	String SMS_BULUT_HATIRLATMA = "dunning.ws.settings.sms.bulut.hatirlatma";
+	String SMS_BULUT_IHTAR = "dunning.ws.settings.sms.bulut.ihtar";
 	
 	String SMS_MAIL_REPORT = "dunning.ws.settings.sms.rapor";
 	String COA_MAIL_REPORT = "dunning.ws.settings.coa.rapor";
@@ -206,6 +217,8 @@ public interface Constants {
 	String STEP_KUR_SMS_IHTAR ="KUR_SMS_IHTAR";
 	String STEP_KUR_SMS_IDARI ="KUR_SMS_IDARI";
 	String STEP_SMS_VIP_HATIRLATMA ="VIP_SMS_HATIRLATMA";
+	String STEP_BULUT_SMS_HATIRLATMA ="BULUT_SMS_HATIRLATMA";
+	String STEP_BULUT_SMS_IHTAR ="BULUT_SMS_IHTAR";
 	
 	
 	

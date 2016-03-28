@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="Name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Phones" type="{http://schemas.datacontract.org/2004/07/ServiceCatalog.Model.Crm}ArrayOfCrmPhone" minOccurs="0"/>
  *         &lt;element name="Surname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="WebAddress" type="{http://schemas.datacontract.org/2004/07/ServiceCatalog.Model.Crm}ArrayOfCrmWebAddress" minOccurs="0"/>
  *         &lt;element name="WorkPhone" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -48,6 +49,7 @@ import javax.xml.bind.annotation.XmlType;
     "name",
     "phones",
     "surname",
+    "webAddress",
     "workPhone"
 })
 public class CrmContact {
@@ -70,6 +72,8 @@ public class CrmContact {
     protected JAXBElement<ArrayOfCrmPhone> phones;
     @XmlElementRef(name = "Surname", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> surname;
+    @XmlElementRef(name = "WebAddress", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<ArrayOfCrmWebAddress> webAddress;
     @XmlElementRef(name = "WorkPhone", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> workPhone;
 
@@ -287,6 +291,30 @@ public class CrmContact {
      */
     public void setSurname(JAXBElement<String> value) {
         this.surname = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the webAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link ArrayOfCrmWebAddress }{@code >}
+     *     
+     */
+    public JAXBElement<ArrayOfCrmWebAddress> getWebAddress() {
+        return webAddress;
+    }
+
+    /**
+     * Sets the value of the webAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link ArrayOfCrmWebAddress }{@code >}
+     *     
+     */
+    public void setWebAddress(JAXBElement<ArrayOfCrmWebAddress> value) {
+        this.webAddress = ((JAXBElement<ArrayOfCrmWebAddress> ) value);
     }
 
     /**

@@ -2,6 +2,7 @@ package org.milleni.dunning.ws.proxy;
 
 import java.util.List;
 
+import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.milleni.dunning.datamodel.dao.CustomerRepository;
 import org.milleni.dunning.datamodel.model.Customer;
@@ -33,7 +34,7 @@ public interface BpmWsDelegateService {
 	public void ttCrmDeactivateCustomer(DelegateExecution execution);
 	public void ttCrmOperations(DelegateExecution execution, TTSTATUS status);	 
 	public void crmSuspendCustomer(DelegateExecution execution);
-	public void crmDeactivateCustomer(DelegateExecution execution) ;
+	public void crmDeactivateCustomer(DelegateExecution execution) throws Exception;
 	public void sendMessage(Long customerId , DunningProcessDetail detail , String message);
 	public void sendMessageWithStepName(DunningProcessDetail dpDetail);
 	
@@ -68,5 +69,13 @@ public interface BpmWsDelegateService {
 	
 	public void suspendCrmAccount(Long customerId , DunningProcessMaster dpm ,DunningProcessDetail detail); 
 	public void activateCrmAccount(Long customerId , DunningProcessDetail detail); 
-	public void deactivateCrmAccount(Long customerId , DunningProcessDetail detail); 
+	public void deactivateCrmAccount(Long customerId) throws BpmnError; 
+	
+	public void sendOdemeBildirimSms(DelegateExecution execution);	
+	public void sendOdemeGelmediSms(DelegateExecution execution);
+	
+	
+	public org.milleni.dunning.ws.client.customerstatus.ContractServiceResponse wsTtCrmStatus(String processId, TTSTATUS status, Long customerId);
+	public void freezeCustomer(Long customerId) throws Exception;
+	public void unfreezeCustomer(Long customerId) throws Exception;
 }

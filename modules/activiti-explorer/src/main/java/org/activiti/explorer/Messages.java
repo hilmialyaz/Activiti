@@ -499,8 +499,11 @@ public interface Messages {
   String MAIN_MENU_DUNNING_PROCESS_BASLAT = "main.menu.dunningProcess.baslat";
   String MAIN_MENU_DUNNING_PROCESS_BITIR = "main.menu.dunningProcess.bitir";
   String MAIN_MENU_DUNNING_PROCESS_PROCESS_SELECT = "main.menu.dunningProcess.processselect";
+  String MAIN_MENU_DUNNING_PROCESS_TIMING = "main.menu.dunningProcess.timing";
   
   String MAIN_MENU_DUNNING_PROCESS_TASK_OTHER_COMPLETE = "main.menu.dunningProcess.task.complete";
   String MAIN_MENU_DUNNING_PROCESS_TASK_SAVE_TASK = "main.menu.dunningProcess.task.save.task";
+  
+  String DUNNING_STEPCHANGE_SUCCESS = "dunning.stepchange_status";
 
 }

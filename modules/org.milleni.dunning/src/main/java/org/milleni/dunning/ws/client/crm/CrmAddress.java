@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="Name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Neighborhood" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="NeighborhoodCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Shipment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="ShipmentCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Village" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="VillageCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -61,6 +63,8 @@ import javax.xml.bind.annotation.XmlType;
     "name",
     "neighborhood",
     "neighborhoodCode",
+    "shipment",
+    "shipmentCode",
     "village",
     "villageCode"
 })
@@ -96,6 +100,10 @@ public class CrmAddress {
     protected JAXBElement<String> neighborhood;
     @XmlElementRef(name = "NeighborhoodCode", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> neighborhoodCode;
+    @XmlElementRef(name = "Shipment", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<String> shipment;
+    @XmlElementRef(name = "ShipmentCode", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<String> shipmentCode;
     @XmlElementRef(name = "Village", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> village;
     @XmlElementRef(name = "VillageCode", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
@@ -459,6 +467,54 @@ public class CrmAddress {
      */
     public void setNeighborhoodCode(JAXBElement<String> value) {
         this.neighborhoodCode = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the shipment property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getShipment() {
+        return shipment;
+    }
+
+    /**
+     * Sets the value of the shipment property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setShipment(JAXBElement<String> value) {
+        this.shipment = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the shipmentCode property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getShipmentCode() {
+        return shipmentCode;
+    }
+
+    /**
+     * Sets the value of the shipmentCode property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setShipmentCode(JAXBElement<String> value) {
+        this.shipmentCode = ((JAXBElement<String> ) value);
     }
 
     /**

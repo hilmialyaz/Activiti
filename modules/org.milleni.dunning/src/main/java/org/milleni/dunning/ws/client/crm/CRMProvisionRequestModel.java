@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="OrderItemId" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid" minOccurs="0"/>
  *         &lt;element name="OrderRequestCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="OrderRequestId" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid" minOccurs="0"/>
  *       &lt;/sequence>
@@ -31,15 +32,42 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CRMProvisionRequestModel", propOrder = {
+    "orderItemId",
     "orderRequestCode",
     "orderRequestId"
 })
 public class CRMProvisionRequestModel {
 
+    @XmlElement(name = "OrderItemId")
+    protected String orderItemId;
     @XmlElementRef(name = "OrderRequestCode", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> orderRequestCode;
     @XmlElement(name = "OrderRequestId")
     protected String orderRequestId;
+
+    /**
+     * Gets the value of the orderItemId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getOrderItemId() {
+        return orderItemId;
+    }
+
+    /**
+     * Sets the value of the orderItemId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setOrderItemId(String value) {
+        this.orderItemId = value;
+    }
 
     /**
      * Gets the value of the orderRequestCode property.

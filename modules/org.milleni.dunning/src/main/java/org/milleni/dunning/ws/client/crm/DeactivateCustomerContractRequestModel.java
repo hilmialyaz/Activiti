@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="Application" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="ContractCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Document" type="{http://milleni.com/Bpm}DocumentInfo" minOccurs="0"/>
  *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StatusReasonDef" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StatusReasonID" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
@@ -37,6 +38,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "DeactivateCustomerContractRequestModel", propOrder = {
     "application",
     "contractCode",
+    "document",
     "status",
     "statusReasonDef",
     "statusReasonID",
@@ -48,6 +50,8 @@ public class DeactivateCustomerContractRequestModel {
     protected JAXBElement<String> application;
     @XmlElementRef(name = "ContractCode", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> contractCode;
+    @XmlElementRef(name = "Document", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<DocumentInfo> document;
     @XmlElementRef(name = "Status", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> status;
     @XmlElementRef(name = "StatusReasonDef", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
@@ -103,6 +107,30 @@ public class DeactivateCustomerContractRequestModel {
      */
     public void setContractCode(JAXBElement<String> value) {
         this.contractCode = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the document property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link DocumentInfo }{@code >}
+     *     
+     */
+    public JAXBElement<DocumentInfo> getDocument() {
+        return document;
+    }
+
+    /**
+     * Sets the value of the document property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link DocumentInfo }{@code >}
+     *     
+     */
+    public void setDocument(JAXBElement<DocumentInfo> value) {
+        this.document = ((JAXBElement<DocumentInfo> ) value);
     }
 
     /**

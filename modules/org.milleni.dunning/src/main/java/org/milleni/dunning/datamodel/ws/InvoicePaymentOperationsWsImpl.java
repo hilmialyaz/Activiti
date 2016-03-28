@@ -1,13 +1,14 @@
 package org.milleni.dunning.datamodel.ws;
 
-import java.util.List;
-
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import org.activiti.engine.RuntimeService;
-import org.activiti.engine.runtime.Execution;
-import org.activiti.engine.runtime.ProcessInstance;
+import org.milleni.dunning.datamodel.model.Customer;
+import org.milleni.dunning.datamodel.rule.InvoicePaymentRuleService;
+import org.milleni.dunning.datamodel.service.CustomerService;
+import org.milleni.dunning.datamodel.service.DunningProcessService;
+import org.milleni.dunning.datamodel.util.DaoHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -17,19 +18,50 @@ public class InvoicePaymentOperationsWsImpl implements InvoicePaymentOperationsW
 	@Autowired
 	protected transient RuntimeService runtimeService;
 	
+	@Autowired
+	CustomerService customerService;
+	
+	@Autowired
+	InvoicePaymentRuleService invoicePaymentRuleService; 
+	
+	@Autowired
+	DunningProcessService dunningProcessService;
+	
 	
 	@Override
 	@WebMethod
-	public String doSomeWork(String work) {
-		List<ProcessInstance>  processInstances = runtimeService.createProcessInstanceQuery().variableValueEquals("customerId", new Long(1l)).list();
-		for (ProcessInstance processInstance : processInstances) {
-			List<Execution> executions = null;
-			do{
-				executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).signalEventSubscriptionName("invoicePaidSignal").list();
-				if(executions!=null && executions.size()>0)  runtimeService.signalEventReceived("invoicePaidSignal",executions.get(0).getId());
-			}while(executions!=null && executions.size()>0);
+	public InvoicePaymentResponse  paymentReceived(long customerId){
+		InvoicePaymentResponse response = new InvoicePaymentResponse();
+		response.setStatus(Status.NOT_ACTIVATED);
+		
+		Customer customer = customerService.findOne(customerId);		
+		
+		if(customer==null){
+			response.setResponseCode(ResponseCode.BussinessError);
+			response.setResponseDesc("Musteri dunningde bulunamadi.");
+			return response;
 		}
-		return "Hello " + work;
+				
+		boolean customerHasUnpaidBill;
+		try {
+			customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimit(customerId, true);
+		
+			if(!customerHasUnpaidBill){
+				try{
+					dunningProcessService.activateIfSuspend(customerId);
+					response.setStatus(Status.ACTIVATED);
+				}catch(Exception ex){}
+				DaoHelper.getInstance().getProcessSignalService().signalCustomerProcessIfPaymentReceived(customerId);
+			}else{
+				response.setStatus(Status.NOT_ACTIVATED);
+			}
+		} catch (Exception e) {
+			response.setResponseCode(ResponseCode.SystemError);
+			response.setResponseDesc(e.getMessage());
+			return response;					
+		}
+		response.setResponseCode(ResponseCode.Success);
+		return response;
 	}
 
 

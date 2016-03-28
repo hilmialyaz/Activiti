@@ -70,8 +70,7 @@ public class ProcessStepDecisionRulesServiceImpl extends AbstractRuleService imp
 
 		DunningPolicySteps policyStep = defineProcessStep(execution, dunningProcessMaster);
 		
-		Boolean processStartStep = (Boolean) execution.getVariable(Constants.processStartStep);
-		if (processStartStep == null) processStartStep = true;
+		Boolean processStartStep = true;
 		String processStepName = policyStep.getProcessSteps().getStepName();
 		String processStepText = dunningProcessMaster.getProcessLastStepId() != null ? policyStep.getProcessSteps().getStepText() : "";
 		
@@ -198,66 +197,55 @@ public class ProcessStepDecisionRulesServiceImpl extends AbstractRuleService imp
 		}
 
 	}
+	
+	
+	@Transactional(noRollbackFor = { BpmnError.class })
+	public void fireStepDecisionRulesBUGCOZMECE(DelegateExecution execution) throws Exception {
+		Long customerId = (Long) execution.getVariable(Constants.customerId);		
+		Customer customer = customerService.findOne(customerId);
+		if (customer == null) throwNotRetryError(execution, Constants.ERROR, Constants.CUSTOMER_ID_NOT_FOUND);
+
+		DunningProcessMaster dunningProcessMaster = customer.getDunningProcessMaster();
+		if (dunningProcessMaster == null) throwNotRetryError(execution, Constants.ERROR, Constants.DUNNING_PROCESS_MASTER_NOT_FOUND);
+
+		Calendar cal= Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH,10);
+		
+		
+		Date nextStepDate = dunningProcessMaster.getNextStepExecutionDate();
+		if(nextStepDate!=null && nextStepDate.before(new Date())){
+			nextStepDate = cal.getTime();
+		}else{
+			nextStepDate=cal.getTime();
+		}
+		
+		Boolean processStartStep = false;
+		long currentStepId=dunningProcessMaster.getCurrentStepId().getStepId();
+		if(currentStepId==112 || currentStepId==113 || currentStepId==42 //bir 
+				|| currentStepId==114 || currentStepId==79 //kur
+				|| currentStepId==2 || currentStepId==10 || currentStepId==3 || currentStepId==6 || currentStepId==5 //vip
+				|| currentStepId==102 || currentStepId==110 || currentStepId==106 || currentStepId==103				)
+		{
+			processStartStep = true;
+		}
+		
+		String processStepName = dunningProcessMaster.getCurrentStepId().getStepName();
+		String processStepText = dunningProcessMaster.getCurrentStepId().getStepText();
+		
+		
+		Boolean deaktifseAtla = false;
+		Date now = new Date();		
+		Period period = new Period(now.getTime(),nextStepDate.getTime(),PeriodType.dayTime());
+		execution.setVariable(Constants.processWaitTime, period.toString());	
+		execution.setVariable(Constants.processStartStep, processStartStep);
+		execution.setVariable(Constants.processStep, processStepName);
+		execution.setVariable(Constants.processStepName, processStepText);// Son
+		execution.setVariable(Constants.deaktifseAtla, deaktifseAtla);
+
+		dunningProcessMaster.setBpmProcessId(execution.getProcessInstanceId());
+		dunningProcessService.saveDunningProcessMaster(dunningProcessMaster);
+		//deaktivasyon icin ka
+	}
+
 
 }
-
-/*
- * 
- * Date invDueDate =
- * dunningProcessMaster.getDunningInvoiceId().getInvoiceDueDate(); Date now =
- * new Date(); long diffDate = Math.round((now.getTime() - invDueDate.getTime())
- * / 86400000D); long days = 0; DunningPolicySteps nextStep = null; int i = 0;
- * boolean waitForNextStep = false;// o step yapildiysa ve arada ise // beklemek
- * icin int currentStepIndex = -1; for (Object[] obj : policySteps) {
- * DunningPolicySteps dunningPolicySteps = (DunningPolicySteps) obj[0]; days =
- * days +
- * Long.parseLong(dunningPolicySteps.getNextStepWaitDuration().replaceAll(
- * "[^0-9.]", "")); nextStep = dunningPolicySteps;
- * 
- * if (currentStepIndex == -1 && dunningProcessMaster.getProcessLastStepId() !=
- * null && dunningProcessMaster.getProcessLastStepId().getStepId() ==
- * nextStep.getDunningPolicyStepsPK().getStepId()) { currentStepIndex = i; }
- * 
- * i++;
- * 
- * if (days > diffDate) { break; } } // Bekleme gun sayisi hesapla long waitDays
- * = (days - diffDate) < 0 ? 0 : (days - diffDate); // yapılacak adim son adim
- * yani process_finished ise ise beklemeye gerek // yok. if (policySteps.size()
- * == (i + 1)) waitDays = 0; execution.setVariable(Constants.processWaitTime,
- * "P" + waitDays + "D");
- * 
- * // ayni adim tekrar ediliyorsa if
- * (dunningProcessMaster.getProcessLastStepId() != null &&
- * dunningProcessMaster.getProcessLastStepId().getStepId() ==
- * nextStep.getDunningPolicyStepsPK().getStepId()) { //tekrar eden adim son
- * adimsa if (waitDays == 0) execution.setVariable(Constants.processStartStep,
- * true); else execution.setVariable(Constants.processStartStep, false); //Bir
- * sonraki adima geç return (DunningPolicySteps) policySteps.get(i)[0]; } else {
- * //hesaplanan adım yapılmasi gereken adim degilse. if
- * (dunningProcessMaster.getProcessLastStepId() != null &&
- * nextStep.getDunningPolicyStepsPK().getStepId() != ((DunningPolicySteps)
- * policySteps.get(currentStepIndex +
- * 1)[0]).getDunningPolicyStepsPK().getStepId()) { // farzedelim sot+300 de adam
- * geldi. Bir sonraki adım neyse onu // yap.Bekleme süresini normal olarak gir
- * execution.setVariable(Constants.processStartStep, true);
- * execution.setVariable(Constants.processWaitTime, ((DunningPolicySteps)
- * policySteps.get(currentStepIndex + 1)[0]).getNextStepWaitDuration()); return
- * (DunningPolicySteps) policySteps.get(currentStepIndex + 1)[0]; } }
- * 
- * /* Manual baslamada ilk step yapılmış olabilir. coa1 coa2 daha once basilmis
- * sms atmaya 3 gun var.Normalde processWaitTime 3 gun ama step coa2 olur. Coa2
- * manual yapilmiş ise step sms e setlenip 3 gun beklenir. 3 gun sonra tekrar
- * aynı kontrole girdiginde adım sms ve bekleme suresi de bir sonraki adım
- * olarak atanır.
- */
-/*
- * Boolean firstStepNext = (Boolean)
- * execution.getVariable(Constants.firstStepNext); if (firstStepNext != null &&
- * firstStepNext && policySteps.size() > i) {
- * execution.setVariable(Constants.processStartStep, false);
- * execution.setVariable(Constants.firstStepNext, false); return
- * (DunningPolicySteps) policySteps.get(i)[0]; }
- * execution.setVariable(Constants.processStartStep, true);
- * 
- * return nextStep;
- */

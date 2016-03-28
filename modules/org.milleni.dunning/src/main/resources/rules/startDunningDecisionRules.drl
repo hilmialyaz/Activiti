@@ -89,7 +89,7 @@ then
 end 
 
 rule "Vip Customer  Group"
-salience 100
+salience 119
 when
  res : ExecutionResult(resultCode==0)	
  cus : Customer()
@@ -100,8 +100,20 @@ then
 	update(res);
 end
 
+
+rule "Bulut Customer  Group"
+salience 115
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer()
+ cusGroup : CustomerGroup( groupName.toLowerCase() matches ".*bulut(.*)*" )
+then
+	res = setReturnVariables(res,"FL103_BulutDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+
 rule "Vip Customer Contract"
-salience 45
+salience 113
 when
  res : ExecutionResult(resultCode==0)	
  cus : Customer(contractType!=null &&  contractType matches ".*-VOIP-(.*)*")
@@ -111,8 +123,27 @@ then
 end
 
 
+
+
+
+
+
+
+rule "Kurumsal CustomerType"
+salience 75
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer( customerType.getTypeId()==2)
+then
+	System.out.println("Kurumsal grooup");
+	res = setReturnVariables(res,"FL301_KurumsalSesDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
+
+
+
 rule "Bireysel Customer"
-salience 50
+salience 74
 when
  res : ExecutionResult(resultCode==0)	
  cus : Customer(contractType!=null &&  contractType matches ".*-ADSL-(.*)*" )
@@ -124,7 +155,7 @@ end
 
 
 rule "Kurumsal Customer"
-salience 45
+salience 73
 when
  res : ExecutionResult(resultCode==0)	
  cus : Customer(contractType!=null &&  contractType matches ".*-PSTN-(.*)*")
@@ -135,17 +166,6 @@ then
 end
 
 
-
-rule "Kurumsal CustomerType"
-salience 40
-when
- res : ExecutionResult(resultCode==0)	
- cus : Customer( customerType.getTypeId()==2)
-then
-	System.out.println("Kurumsal grooup");
-	res = setReturnVariables(res,"FL301_KurumsalSesDunningProcess",1,drools.getRule().getName());
-	update(res);
-end
 
 rule "Bireysel CustomerType"
 salience 35

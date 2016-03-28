@@ -47,7 +47,8 @@
 	<jaxws:endpoint id="invoicePaymentWs" implementor="#invoicePaymentOperations"
 		address="/invoicePaymentOperations" />
 
-
+	<jaxws:endpoint id="invoiceWs" implementor="#invoiceOperations"
+		address="/invoiceOperationsWs" />
 
 	<bean id="daoHelper" class="org.milleni.dunning.datamodel.util.DaoHelper"
 		factory-method="getInstance">
@@ -55,6 +56,10 @@
 
 	<bean id="invoicePaymentOperations"
 		class="org.milleni.dunning.datamodel.ws.InvoicePaymentOperationsWsImpl"></bean>
+		
+	
+ 	<bean id="invoiceOperations"
+		class="org.milleni.dunning.datamodel.ws.InvoiceOperationsWsImpl"></bean>	
 
 
 	<jaxws:client id="milInternal"
@@ -66,7 +71,7 @@
 		serviceClass="org.milleni.dunning.ws.client.customerservice.CustomerInfoServiceSoap"
 		address="http://localhost:8328/CustomerInfoService.asmx" />
 
-
+   
 
 	<jaxws:client id="coaService"
 		serviceClass="org.milleni.dunning.ws.client.coa.COASoap"
@@ -99,7 +104,15 @@
 	<jaxws:client id="crmCustomerService"
 		serviceClass="org.milleni.dunning.ws.client.crm.CustomerInfoServiceV1"		/>
 		
-		
+	 
+	 <jaxws:client id="freezeService"
+		serviceClass="org.milleni.dunning.ws.client.freezexdsl.IFreezeDunningService"		address="http://localhost:7636/DunningFreezeService.svc" />	
 		
 
+	<jaxws:client id="notificationService"
+		serviceClass="org.milleni.dunning.ws.client.notif.INotificationServiceV1"		address="http://192.168.2.88:8230/NotificationService/NotificationServiceV1.svc" />	
+		
+	<jaxws:client id="crmContactService" serviceClass="org.milleni.dunning.ws.client.crmcontact.ContactServiceV1"/>
+			
+	<jaxws:client id="crmAccountService" serviceClass="org.milleni.dunning.ws.client.crmaccountcoa.AccountServiceV1"/>	
 </beans>

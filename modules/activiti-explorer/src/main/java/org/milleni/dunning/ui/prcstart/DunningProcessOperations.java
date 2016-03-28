@@ -32,6 +32,9 @@ public class DunningProcessOperations extends AbstractTablePage {
 	protected I18nManager i18nManager;
 	protected String managementId;
 	protected Table menuTable;
+	
+	
+	
 
 	public DunningProcessOperations() {
 		ExplorerApp.get().setCurrentUriFragment(new UriFragment(AdministrationNavigator.MANAGEMENT_URI_PART));
@@ -66,6 +69,9 @@ public class DunningProcessOperations extends AbstractTablePage {
 		menuTable.addItem(new String[] { i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_BASLAT) }, 0);
 		menuTable.addItem(new String[] { i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_PROCESS_SELECT) }, 1);
 		menuTable.addItem(new String[] { i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_BITIR) }, 2);
+		menuTable.addItem(new String[] { i18nManager.getMessage(Messages.MAIN_MENU_DUNNING_PROCESS_TIMING) }, 3);
+		menuTable.addItem(new String[] { "Task Listele" }, 4);
+		menuTable.addItem(new String[] { "Task Tamamla" }, 5);
 
 		// Listener to change right panel when clicked on a user
 		menuTable.addListener(new Property.ValueChangeListener() {
@@ -80,9 +86,16 @@ public class DunningProcessOperations extends AbstractTablePage {
 					} else if ("1".equals(event.getProperty().getValue().toString())) {
 						setDetailComponent(new StepSelectStartDunningProcessPanel());
 					} else if ("2".equals(event.getProperty().getValue().toString())) {
-						setDetailComponent(new BulkDunningProcessFinishPanel());
+						setDetailComponent(new BulkDunningProcessFinishPanel());					
+					} else if ("3".equals(event.getProperty().getValue().toString())) {
+						setDetailComponent(new DunningProcessTimingOperationsPanel());
+					}else if ("4".equals(event.getProperty().getValue().toString())) {
+						setDetailComponent(new TaskViewPanel());
+					}else if ("5".equals(event.getProperty().getValue().toString())) {
+						setDetailComponent(new CompleteFinansTaskPanel());
 					}
-
+					
+					
 					// Update URL
 					ExplorerApp.get().setCurrentUriFragment(new UriFragment(AdministrationNavigator.MANAGEMENT_URI_PART, event.getProperty().getValue().toString()));
 				} else {

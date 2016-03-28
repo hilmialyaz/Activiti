@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="ModelName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Ouid" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="SerialNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="State" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StockName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -42,6 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "modelName",
     "ouid",
     "serialNumber",
+    "state",
     "stockName"
 })
 public class StockItem {
@@ -58,6 +60,8 @@ public class StockItem {
     protected JAXBElement<String> ouid;
     @XmlElementRef(name = "SerialNumber", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> serialNumber;
+    @XmlElementRef(name = "State", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<String> state;
     @XmlElementRef(name = "StockName", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> stockName;
 
@@ -203,6 +207,30 @@ public class StockItem {
      */
     public void setSerialNumber(JAXBElement<String> value) {
         this.serialNumber = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the state property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getState() {
+        return state;
+    }
+
+    /**
+     * Sets the value of the state property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setState(JAXBElement<String> value) {
+        this.state = ((JAXBElement<String> ) value);
     }
 
     /**

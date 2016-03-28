@@ -29,7 +29,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="MainProductType" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="MigrateInfo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Partner" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="PartnerCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Products" type="{http://milleni.com/Crm}ArrayOfCrmProduct" minOccurs="0"/>
+ *         &lt;element name="SalesPerson" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="SalesPersonIdentityId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="StatusChangeDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="StatusReason" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -51,7 +54,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "mainProductType",
     "migrateInfo",
     "partner",
+    "partnerCode",
     "products",
+    "salesPerson",
+    "salesPersonIdentityId",
     "status",
     "statusChangeDate",
     "statusReason"
@@ -75,8 +81,14 @@ public class CrmContract {
     protected JAXBElement<String> migrateInfo;
     @XmlElementRef(name = "Partner", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> partner;
+    @XmlElementRef(name = "PartnerCode", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<String> partnerCode;
     @XmlElementRef(name = "Products", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<ArrayOfCrmProduct> products;
+    @XmlElementRef(name = "SalesPerson", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<String> salesPerson;
+    @XmlElementRef(name = "SalesPersonIdentityId", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<String> salesPersonIdentityId;
     @XmlElement(name = "Status")
     protected Integer status;
     @XmlElement(name = "StatusChangeDate")
@@ -278,6 +290,30 @@ public class CrmContract {
     }
 
     /**
+     * Gets the value of the partnerCode property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getPartnerCode() {
+        return partnerCode;
+    }
+
+    /**
+     * Sets the value of the partnerCode property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setPartnerCode(JAXBElement<String> value) {
+        this.partnerCode = ((JAXBElement<String> ) value);
+    }
+
+    /**
      * Gets the value of the products property.
      * 
      * @return
@@ -299,6 +335,54 @@ public class CrmContract {
      */
     public void setProducts(JAXBElement<ArrayOfCrmProduct> value) {
         this.products = ((JAXBElement<ArrayOfCrmProduct> ) value);
+    }
+
+    /**
+     * Gets the value of the salesPerson property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getSalesPerson() {
+        return salesPerson;
+    }
+
+    /**
+     * Sets the value of the salesPerson property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setSalesPerson(JAXBElement<String> value) {
+        this.salesPerson = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the salesPersonIdentityId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getSalesPersonIdentityId() {
+        return salesPersonIdentityId;
+    }
+
+    /**
+     * Sets the value of the salesPersonIdentityId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setSalesPersonIdentityId(JAXBElement<String> value) {
+        this.salesPersonIdentityId = ((JAXBElement<String> ) value);
     }
 
     /**

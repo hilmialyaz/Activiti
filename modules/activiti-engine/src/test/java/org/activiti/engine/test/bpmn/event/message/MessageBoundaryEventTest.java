@@ -38,9 +38,7 @@ public class MessageBoundaryEventTest extends PluggableActivitiTestCase {
     Task userTask = taskService.createTaskQuery().singleResult();
     assertNotNull(userTask);
     
-    Execution execution = runtimeService.createExecutionQuery()
-      .messageEventSubscriptionName("messageName")
-      .singleResult();
+    Execution execution = runtimeService.createExecutionQuery().processInstanceId("").messageEventSubscriptionName("messageName").singleResult();
     assertNotNull(execution);
     
     // 1. case: message received cancels the task

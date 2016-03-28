@@ -41,7 +41,7 @@ public interface DunningProcessService {
 	public void manualyFinishedProcessMaster(DelegateExecution execution) ;
 	public void errorProcessDetail(Long dpDetailId) ;
 	public void setCustomerInYasalTakip(DelegateExecution execution);
-	
+	public boolean activateIfSuspend(Long customerId);
 	
 	
 }

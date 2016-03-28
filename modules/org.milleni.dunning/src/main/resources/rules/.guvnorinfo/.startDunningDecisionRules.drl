@@ -1,6 +1,6 @@
-#Wed Apr 30 09:17:24 EEST 2014
+#Mon Jan 11 00:51:11 EET 2016
 filename=startDunningDecisionRules.drl
-revision=24
-lastmodified=\u00C7ar, 30 Nis 2014 09\:17\:23 EEST
+revision=31
+lastmodified=Pzt, 11 Oca 2016 00\:51\:10 EET
 repository=http\://192.168.2.138\:8085/guvnor/org.drools.guvnor.Guvnor/webdav/
 fullpath=http\://192.168.2.138\:8085/guvnor/org.drools.guvnor.Guvnor/webdav/packages/org.milleni.dunning.datamodel.startuprules/startDunningDecisionRules.drl

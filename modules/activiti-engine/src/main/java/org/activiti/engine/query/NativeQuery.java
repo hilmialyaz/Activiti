@@ -16,6 +16,7 @@ package org.activiti.engine.query;
 import java.util.List;
 
 import org.activiti.engine.ActivitiException;
+import org.activiti.engine.impl.interceptor.CommandContext;
 
 /**
  * Describes basic methods for doing native queries
@@ -54,4 +55,6 @@ public interface NativeQuery<T extends NativeQuery< ? , ? >, U extends Object> {
   
   /** Executes the query and get a list of entities as the result. */
   List<U> listPage(int firstResult, int maxResults);
+  
+  Object execute(CommandContext commandContext);
 }
