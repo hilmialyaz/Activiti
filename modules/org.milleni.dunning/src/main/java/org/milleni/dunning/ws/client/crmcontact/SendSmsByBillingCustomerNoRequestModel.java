@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SendSmsByBillingCustomerNoRequestModel", propOrder = {
     "billingCustomerNo",
+    "dayTime",
     "originator",
     "smsSenderApplication",
     "smsText"
@@ -42,6 +43,8 @@ public class SendSmsByBillingCustomerNoRequestModel {
 
     @XmlElementRef(name = "BillingCustomerNo", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> billingCustomerNo;
+    @XmlElement(name = "DayTime")
+    protected Boolean dayTime;
     @XmlElementRef(name = "Originator", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> originator;
     @XmlElement(name = "SmsSenderApplication")
@@ -81,6 +84,21 @@ public class SendSmsByBillingCustomerNoRequestModel {
      *     {@link JAXBElement }{@code <}{@link String }{@code >}
      *     
      */
+    public Boolean isDayTime() {
+        return dayTime;
+    }
+
+    /**
+     * Sets the value of the dayTime property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDayTime(Boolean value) {
+        this.dayTime = value;
+    }
     public JAXBElement<String> getOriginator() {
         return originator;
     }

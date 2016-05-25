@@ -90,6 +90,19 @@ public class ProcessStepDecisionRulesServiceImpl extends AbstractRuleService imp
 		execution.setVariable(Constants.processStepName, processStepText);// Son
 		execution.setVariable(Constants.deaktifseAtla, deaktifseAtla);
 
+		if(processStartStep &&  Constants.DEACTIVATION.equalsIgnoreCase(processStepText) && !Constants.DEAKTIF.equalsIgnoreCase(customer.getStatus())){
+			int canIDeactivate =0;
+			int procParam =0;
+			//dunningProcessMasterRepository.canIDeactivateCustomer(customerId,canIDeactivate,procParam);
+			canIDeactivate = dunningProcessMasterRepository.canIDeactivateCustomerFunc(customerId);
+			if(canIDeactivate==0){
+				processWaitTime = "P20D";
+				processStartStep=false;
+				execution.setVariable(Constants.processWaitTime, processWaitTime);// ruledan gelen
+				execution.setVariable(Constants.processStartStep, processStartStep);
+			}
+		}
+		
 		if (processStartStep) {
 			DunningProcessDetail detail = dunningProcessService.createDunningProcessDetail(dunningProcessMaster, policyStep.getProcessSteps());
 			dunningProcessMaster.setCurrentStepId(detail.getProcessStepId());
@@ -149,7 +162,9 @@ public class ProcessStepDecisionRulesServiceImpl extends AbstractRuleService imp
 		// Buradan assaya gecmez		 
 		 */
 	}
-
+	
+	
+	
 	public void defineNextProcessStep(DelegateExecution execution, DunningProcessMaster dunningProcessMaster, DunningPolicySteps policyStep) {
 		dunningProcessMaster.setNextStepExecutionDate(DateTime.now().plus(Period.parse((String) execution.getVariable(Constants.processWaitTime))).toDate());
 		ProcessSteps dps = dunningPolicyRepository.retrieveNextSeqnumDunningPolicyStep(dunningProcessMaster.getDunningPolicyId().getPolicyId(), policyStep.getSeqNum()+1);

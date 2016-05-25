@@ -47,6 +47,7 @@ public interface Constants {
 	String TAKIP_DISI = "T";
 	String YOK = "N";
 	
+	String DEAKTIF="d";
 	String AKTIF="a";
 	String SUSPEND="s";
 	String NOT_CHECK_STATUS="notCheckStatus";
@@ -197,6 +198,8 @@ public interface Constants {
 	int COA_ANNOUNCE_SUSPEND = 2;
 
 	String SMS_BIR_HATIRLATMA = "dunning.ws.settings.sms.bireysel.hatirlatma";
+	String BIR_SMS_HATIRLATMA1 = "dunning.ws.settings.sms.bireysel.hatirlatma1";
+	String BIR_SMS_HATIRLATMA2 = "dunning.ws.settings.sms.bireysel.hatirlatma2";
 	String SMS_BIR_IHTAR = "dunning.ws.settings.sms.bireysel.ihtar";
 	String SMS_IPTAL = "dunning.ws.settings.sms.iptal";
 	String SMS_KUR_HATIRLATMA = "dunning.ws.settings.sms.kurumsal.hatirlatma";
@@ -207,11 +210,14 @@ public interface Constants {
 	String SMS_ODEMEGELMEDI = "dunning.ws.settings.sms.odemegelmedi";
 	String SMS_BULUT_HATIRLATMA = "dunning.ws.settings.sms.bulut.hatirlatma";
 	String SMS_BULUT_IHTAR = "dunning.ws.settings.sms.bulut.ihtar";
+	String SMS_SUSPEND_SONRASI = "dunning.ws.settings.sms.suspendsonrasi";
 	
 	String SMS_MAIL_REPORT = "dunning.ws.settings.sms.rapor";
 	String COA_MAIL_REPORT = "dunning.ws.settings.coa.rapor";
 	
 	String STEP_BIR_SMS_HATIRLATMA ="BIR_SMS_HATIRLATMA";
+	String STEP_BIR_SMS_HATIRLATMA1 ="BIR_SMS_HATIRLATMA1";
+	String STEP_BIR_SMS_HATIRLATMA2 ="BIR_SMS_HATIRLATMA2";
 	String STEP_BIR_SMS_IHTAR ="BIR_SMS_IHTAR";
 	String STEP_KUR_SMS_HATIRLATMA ="KUR_SMS_HATIRLATMA";
 	String STEP_KUR_SMS_IHTAR ="KUR_SMS_IHTAR";
@@ -260,5 +266,5 @@ public interface Constants {
 	String talepStatus = "NOT";
 	
 	
-	
+	String DEACTIVATION="Deaktivasyon";
 }

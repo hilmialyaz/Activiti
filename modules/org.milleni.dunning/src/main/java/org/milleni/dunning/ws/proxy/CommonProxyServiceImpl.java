@@ -229,6 +229,14 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 
 	public String sendSms(String number, String message, String originator, Long customerId) {
 
+		return sendSmsBase(message, originator, customerId,false);
+	}
+
+	public String sendSms(String number, String message, String originator, Long customerId,boolean dayTime) {
+
+		return sendSmsBase(message, originator, customerId,dayTime);
+	}
+	public String sendSmsBase(String message, String originator, Long customerId,boolean dayTime) {
 		((BindingProvider) crmContactService).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, dunningProperties.getProperty(Constants.WS_CRM_CONTACT_ENDPOINT));
 
 		SendSmsByBillingCustomerNoRequestModel request = new SendSmsByBillingCustomerNoRequestModel();
@@ -238,32 +246,12 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 		request.setBillingCustomerNo(fact.createSendSmsByBillingCustomerNoRequestModelBillingCustomerNo(customerId.toString()));
 		request.setOriginator(fact.createSendSmsByBillingCustomerNoRequestModelOriginator(originator));
 		request.setSmsText(fact.createSendSmsByBillingCustomerNoRequestModelSmsText(message));
-
+		request.setDayTime(dayTime);
 		try {
 			crmContactService.sendSmsByBillingCustomerNo(request);
 		} catch (Exception e) {
 			return "105|" + e.getMessage().toString();
-		}
-
-		/*
-		 * SendImediateSmsToCustomerRequestModel req = new
-		 * SendImediateSmsToCustomerRequestModel();
-		 * req.setApplication(SmsSenderApplication.DUNNING);
-		 * req.setMessage(message); req.setCustomerId(new
-		 * BigDecimal(customerId).intValueExact()); req.setMobile(number);
-		 * req.setSender(originator); ((BindingProvider)
-		 * notificationService).getRequestContext
-		 * ().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
-		 * dunningProperties.getProperty(Constants.WS_SMSGW_ENDPOINT)); try {
-		 * notificationService.sendImediateSmsToCustomer(req); } catch (
-		 * INotificationServiceV1SendImediateSmsToCustomerBusinessFaultFaultFaultMessage
-		 * e) { if( e.getFaultInfo()!=null) return
-		 * "105"+e.getFaultInfo().getDetail().toString(); } catch (
-		 * INotificationServiceV1SendImediateSmsToCustomerSystemFaultFaultFaultMessage
-		 * e) { if( e.getFaultInfo()!=null) return
-		 * "105"+e.getFaultInfo().getDetail().toString(); }catch (Exception e) {
-		 * return "105"+e.getMessage().toString(); }
-		 */
+		}	
 		return "basarili";
 	}
 

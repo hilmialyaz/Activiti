@@ -77,4 +77,14 @@ public interface DunningPolicyRepository extends BaseRepository<DunningPolicy, L
 	  @Cacheable("constants.cache")
 	  @Query("SELECT dpds  FROM  DunningProcessDetailStatus dpds")
 	  List<DunningProcessDetailStatus> retrieveAllDunningProcessDetailStatus();
+	  
+	  
+	  
+//	  @Query("select dunning_migration.dbo.DunningDayOfStep(?1)")
+//	  int getStepSotPlusExecutionDayCount(String stepName);
+	  
+	  
+
+	  
+	  
 }

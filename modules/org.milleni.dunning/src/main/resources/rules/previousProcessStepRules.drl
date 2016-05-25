@@ -74,6 +74,8 @@ rule 'Musteri Deaktifse Bazi Adimlarda Atla'
 		$res : ExecutionResult(resultCode == 0 , processStep in (
 		'BIR_COA_HATIRLATMA',
 		'BIR_COA_IHTAR',
+		'BIR_SMS_HATIRLATMA1',
+		'BIR_SMS_HATIRLATMA2',
 		'BIR_SUSPEND',
 		'BIR_SUSPEND_TAHSILAT_ARAMASI',
 		'BIR_TT_SUSPENSION',		

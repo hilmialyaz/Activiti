@@ -28,6 +28,7 @@ public interface CommonProxySerivce {
 	public ServiceResponse sendCoaAnnounce(Long customerId, int announceType);
 	public FaturaDetayi retrievePaymentInfo(Long customerId);
 	public String sendSms(String number,String message, String originator,Long customerId);
+	public String sendSms(String number, String message, String originator, Long customerId,boolean dayTime); 
 	public ArrayOfAcikKalem retrieveAcikkalemPaymentInfo(Long customerId);
 	public String addQuickTickler(Long customerId,String sNeden,String sTalepKonusu,String sAltDurum,String sStatus,String sMessage);
 	public int getTicklerCount(Long customerId) ;

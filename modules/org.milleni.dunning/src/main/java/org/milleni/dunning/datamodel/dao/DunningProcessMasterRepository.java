@@ -84,6 +84,15 @@ public interface DunningProcessMasterRepository extends BaseRepository<DunningPr
       )
 	  int  updateDunningProcessSteps(long dunningPolicyId , long stepId, Date nextStartDate, Date nextEndDate, Date nextStepStartDate,long nextStepId , int count,String userName);
 	  
+	  
+	  @Transactional(readOnly = true)
+	  @Query( nativeQuery = true, value ="{call  CanIDeactivateCustomerProc(?1,?2) } ")
+	  void canIDeactivateCustomer(Long customerId,int canIDeactivate,int procParam);
+	  
+	  
+	  @Transactional(readOnly = true)
+	  @Query( nativeQuery = true, value ="select  dunning_migration.dbo.CanIDeactivateCustomer(?) ")
+	  int canIDeactivateCustomerFunc(Long customerId);
 	  /*
 	  @Transactional(readOnly = false)
 	  @Query(nativeQuery = true, value ="EXEC updateDPMWithJob @policyId = 2, @nextStepId = 39, @nextStartDate = N'2014-07-15 16:52:32.513', @nextEndDate = N'2014-07-26 16:52:32.513', @nextDueDate = N'2014-07-19 16:52:32.513', @nextExecStepId = 39 "

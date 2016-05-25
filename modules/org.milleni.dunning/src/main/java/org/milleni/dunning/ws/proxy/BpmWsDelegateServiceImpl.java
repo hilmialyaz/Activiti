@@ -193,6 +193,12 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		String message = null;
 		if (Constants.STEP_BIR_SMS_HATIRLATMA.equals(dpDetail.getProcessStepId().getStepName()))
 			message = dunningProperties.getProperty(Constants.SMS_BIR_HATIRLATMA);
+		
+		if (Constants.STEP_BIR_SMS_HATIRLATMA1.equals(dpDetail.getProcessStepId().getStepName()))
+			message = dunningProperties.getProperty(Constants.BIR_SMS_HATIRLATMA1);
+		
+		if (Constants.STEP_BIR_SMS_HATIRLATMA2.equals(dpDetail.getProcessStepId().getStepName()))
+			message = dunningProperties.getProperty(Constants.BIR_SMS_HATIRLATMA2);
 
 		if (Constants.STEP_BIR_SMS_IHTAR.equals(dpDetail.getProcessStepId().getStepName()))
 			message = dunningProperties.getProperty(Constants.SMS_BIR_IHTAR);
@@ -652,6 +658,17 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 			}
 			commonProxyService.suspendCrmAccount(customerId);
 			setDpDetailSuccess(detail);
+			try{
+				String message = dunningProperties.getProperty(Constants.SMS_SUSPEND_SONRASI);
+				Object[] params = new Object[] { String.valueOf(customerId), invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId) };
+				String msg = MessageFormat.format(message, params);
+				String originator = dunningProperties.getProperty(Constants.WS_SETTINGS_SMS_ORIGINATOR_MILLENICOM);
+				if (customer.getContractType() != null && customer.getContractType().indexOf("ADSL") > 0)
+					originator = dunningProperties.getProperty(Constants.WS_SETTINGS_SMS_ORIGINATOR_ADSL);
+				
+				commonProxyService.sendSms("", msg, originator,customerId,true);
+			}catch(Exception ee){}
+			
 		} catch (Exception ex) {
 			if(ex instanceof BpmnError){
 				throw (BpmnError)ex;

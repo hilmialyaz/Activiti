@@ -1,6 +1,6 @@
-#Wed Aug 06 17:54:08 EEST 2014
+#Wed Apr 13 14:37:07 EEST 2016
 filename=previousProcessStepRules.drl
-revision=27
-lastmodified=\u00C7ar, 06 A\u011Fu 2014 17\:54\:09 EEST
+revision=28
+lastmodified=\u00C7ar, 13 Nis 2016 14\:37\:06 EEST
 repository=http\://192.168.2.138\:8085/guvnor/org.drools.guvnor.Guvnor/webdav/
 fullpath=http\://192.168.2.138\:8085/guvnor/org.drools.guvnor.Guvnor/webdav/packages/org.milleni.dunning.datamodel.processsteprules/previousProcessStepRules.drl
