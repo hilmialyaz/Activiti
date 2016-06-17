@@ -25,11 +25,110 @@ public interface AccountServiceV1 {
 
     /**
      * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crmaccountcoa.UpdateContactInfoResponseModel
+     * @throws AccountServiceV1UpdateContactInfoSystemFaultFaultFaultMessage
+     * @throws AccountServiceV1UpdateContactInfoBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "UpdateContactInfo", action = "/CustomerInfo/Service/v1/AccountServiceV1/UpdateContactInfo")
+    @WebResult(name = "UpdateContactInfoResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "UpdateContactInfo", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.UpdateContactInfo")
+    @ResponseWrapper(localName = "UpdateContactInfoResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.UpdateContactInfoResponse")
+    public UpdateContactInfoResponseModel updateContactInfo(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        UpdateContactInfoRequestModel request)
+        throws AccountServiceV1UpdateContactInfoBusinessFaultFaultFaultMessage, AccountServiceV1UpdateContactInfoSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @throws AccountServiceV1AddCreditCardOrderBusinessFaultFaultFaultMessage
+     * @throws AccountServiceV1AddCreditCardOrderSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "AddCreditCardOrder", action = "/CustomerInfo/Service/v1/AccountServiceV1/AddCreditCardOrder")
+    @RequestWrapper(localName = "AddCreditCardOrder", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.AddCreditCardOrder")
+    @ResponseWrapper(localName = "AddCreditCardOrderResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.AddCreditCardOrderResponse")
+    public void addCreditCardOrder(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        AddCreditCardOrderRequestModel request)
+        throws AccountServiceV1AddCreditCardOrderBusinessFaultFaultFaultMessage, AccountServiceV1AddCreditCardOrderSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @throws AccountServiceV1RemoveCreditCardOrderBusinessFaultFaultFaultMessage
+     * @throws AccountServiceV1RemoveCreditCardOrderSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "RemoveCreditCardOrder", action = "/CustomerInfo/Service/v1/AccountServiceV1/RemoveCreditCardOrder")
+    @RequestWrapper(localName = "RemoveCreditCardOrder", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.RemoveCreditCardOrder")
+    @ResponseWrapper(localName = "RemoveCreditCardOrderResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.RemoveCreditCardOrderResponse")
+    public void removeCreditCardOrder(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        RemoveCreditCardOrderRequestModel request)
+        throws AccountServiceV1RemoveCreditCardOrderBusinessFaultFaultFaultMessage, AccountServiceV1RemoveCreditCardOrderSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @throws AccountServiceV1ChangeBillingAddressSystemFaultFaultFaultMessage
+     * @throws AccountServiceV1ChangeBillingAddressBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "ChangeBillingAddress", action = "/CustomerInfo/Service/v1/AccountServiceV1/ChangeBillingAddress")
+    @RequestWrapper(localName = "ChangeBillingAddress", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.ChangeBillingAddress")
+    @ResponseWrapper(localName = "ChangeBillingAddressResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.ChangeBillingAddressResponse")
+    public void changeBillingAddress(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        ChangeBillingAddressRequestModel request)
+        throws AccountServiceV1ChangeBillingAddressBusinessFaultFaultFaultMessage, AccountServiceV1ChangeBillingAddressSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crmaccountcoa.GetCreditCardOrderResponseModel
+     * @throws AccountServiceV1GetCreditCardOrderSystemFaultFaultFaultMessage
+     * @throws AccountServiceV1GetCreditCardOrderBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "GetCreditCardOrder", action = "/CustomerInfo/Service/v1/AccountServiceV1/GetCreditCardOrder")
+    @WebResult(name = "GetCreditCardOrderResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "GetCreditCardOrder", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.GetCreditCardOrder")
+    @ResponseWrapper(localName = "GetCreditCardOrderResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.GetCreditCardOrderResponse")
+    public GetCreditCardOrderResponseModel getCreditCardOrder(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        GetCreditCardOrderRequestModel request)
+        throws AccountServiceV1GetCreditCardOrderBusinessFaultFaultFaultMessage, AccountServiceV1GetCreditCardOrderSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crmaccountcoa.GetCreditCardOrderHistoryResponseModel
+     * @throws AccountServiceV1GetCreditCardOrderHistorySystemFaultFaultFaultMessage
+     * @throws AccountServiceV1GetCreditCardOrderHistoryBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "GetCreditCardOrderHistory", action = "/CustomerInfo/Service/v1/AccountServiceV1/GetCreditCardOrderHistory")
+    @WebResult(name = "GetCreditCardOrderHistoryResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "GetCreditCardOrderHistory", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.GetCreditCardOrderHistory")
+    @ResponseWrapper(localName = "GetCreditCardOrderHistoryResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.GetCreditCardOrderHistoryResponse")
+    public GetCreditCardOrderHistoryResponseModel getCreditCardOrderHistory(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        GetCreditCardOrderHistoryRequestModel request)
+        throws AccountServiceV1GetCreditCardOrderHistoryBusinessFaultFaultFaultMessage, AccountServiceV1GetCreditCardOrderHistorySystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
      * @param req
      * @return
      *     returns org.milleni.dunning.ws.client.crmaccountcoa.SendAnnounceByBillingCustomerNoResponseModel
-     * @throws AccountServiceV1SendIhtarAnnounceByBillingCustomerIdBusinessFaultFaultFaultMessage
      * @throws AccountServiceV1SendIhtarAnnounceByBillingCustomerIdSystemFaultFaultFaultMessage
+     * @throws AccountServiceV1SendIhtarAnnounceByBillingCustomerIdBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "SendIhtarAnnounceByBillingCustomerId", action = "/CustomerInfo/Service/v1/AccountServiceV1/SendIhtarAnnounceByBillingCustomerId")
     @WebResult(name = "SendIhtarAnnounceByBillingCustomerIdResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -39,6 +138,54 @@ public interface AccountServiceV1 {
         @WebParam(name = "req", targetNamespace = "/CustomerInfo/Service/v1")
         SendAnnounceByBillingCustomerNoRequestModel req)
         throws AccountServiceV1SendIhtarAnnounceByBillingCustomerIdBusinessFaultFaultFaultMessage, AccountServiceV1SendIhtarAnnounceByBillingCustomerIdSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestResponseModel
+     * @throws AccountServiceV1AddDeactivationRequestSystemFaultFaultFaultMessage
+     * @throws AccountServiceV1AddDeactivationRequestBusinessFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "AddDeactivationRequest", action = "/CustomerInfo/Service/v1/AccountServiceV1/AddDeactivationRequest")
+    @WebResult(name = "AddDeactivationRequestResult", targetNamespace = "/CustomerInfo/Service/v1")
+    @RequestWrapper(localName = "AddDeactivationRequest", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequest")
+    @ResponseWrapper(localName = "AddDeactivationRequestResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestResponse")
+    public AddDeactivationRequestResponseModel addDeactivationRequest(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        AddDeactivationRequestToAccountRequestModel request)
+        throws AccountServiceV1AddDeactivationRequestBusinessFaultFaultFaultMessage, AccountServiceV1AddDeactivationRequestSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @throws AccountServiceV1AddSoftInvoiceBusinessFaultFaultFaultMessage
+     * @throws AccountServiceV1AddSoftInvoiceSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "AddSoftInvoice", action = "/CustomerInfo/Service/v1/AccountServiceV1/AddSoftInvoice")
+    @RequestWrapper(localName = "AddSoftInvoice", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.AddSoftInvoice")
+    @ResponseWrapper(localName = "AddSoftInvoiceResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.AddSoftInvoiceResponse")
+    public void addSoftInvoice(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        AddSoftInvoiceRequestModel request)
+        throws AccountServiceV1AddSoftInvoiceBusinessFaultFaultFaultMessage, AccountServiceV1AddSoftInvoiceSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @throws AccountServiceV1RemoveSoftInvoiceBusinessFaultFaultFaultMessage
+     * @throws AccountServiceV1RemoveSoftInvoiceSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "RemoveSoftInvoice", action = "/CustomerInfo/Service/v1/AccountServiceV1/RemoveSoftInvoice")
+    @RequestWrapper(localName = "RemoveSoftInvoice", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.RemoveSoftInvoice")
+    @ResponseWrapper(localName = "RemoveSoftInvoiceResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmaccountcoa.RemoveSoftInvoiceResponse")
+    public void removeSoftInvoice(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        RemoveSoftInvoiceRequestModel request)
+        throws AccountServiceV1RemoveSoftInvoiceBusinessFaultFaultFaultMessage, AccountServiceV1RemoveSoftInvoiceSystemFaultFaultFaultMessage
     ;
 
 }

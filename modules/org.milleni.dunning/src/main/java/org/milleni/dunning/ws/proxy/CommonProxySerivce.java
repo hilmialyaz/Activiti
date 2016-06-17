@@ -12,6 +12,7 @@ import org.milleni.dunning.ws.client.crm.CustomerInfoServiceV1SuspendAccountBusi
 import org.milleni.dunning.ws.client.crm.CustomerInfoServiceV1SuspendAccountSystemFaultFaultFaultMessage;
 import org.milleni.dunning.ws.client.crm.DeactivateAccountResponseModel;
 import org.milleni.dunning.ws.client.crm.SuspendAccountResponseModel;
+import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestResponseModel;
 import org.milleni.dunning.ws.client.customerservice.TeconCustomerInfoResponse;
 import org.milleni.dunning.ws.client.customerstatus.STATUS;
 import org.milleni.dunning.ws.client.customerstatus.STATUSREASON;
@@ -49,6 +50,7 @@ public interface CommonProxySerivce {
 	
 	public SuspendAccountResponseModel suspendCrmAccount(Long customerId) throws CustomerInfoServiceV1SuspendAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1SuspendAccountSystemFaultFaultFaultMessage ;
 	public DeactivateAccountResponseModel deactivateCrmAccount(Long customerId) throws CustomerInfoServiceV1DeactivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1DeactivateAccountSystemFaultFaultFaultMessage ;
+	public AddDeactivationRequestResponseModel addDeactivationRequest(Long customerId) throws Exception;
 	public ActivateAccountResponseModel activateCrmAccount(Long customerId) throws CustomerInfoServiceV1ActivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ActivateAccountSystemFaultFaultFaultMessage ;
 	public ServiceResponse createTickler(Long customerId, String customerName,boolean isIndividual, String sMessage) ;
 }

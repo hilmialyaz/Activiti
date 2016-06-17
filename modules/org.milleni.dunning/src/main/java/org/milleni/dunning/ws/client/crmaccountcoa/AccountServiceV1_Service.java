@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.1
  * 
  */
-@WebServiceClient(name = "AccountServiceV1", targetNamespace = "/CustomerInfo/Service/v1", wsdlLocation = "http://localhost:60133/AccountServiceV1.svc?singleWSDL")
+@WebServiceClient(name = "AccountServiceV1", targetNamespace = "/CustomerInfo/Service/v1", wsdlLocation = "http://192.168.2.88:8230/CustomerInfoService/AccountServiceV1.svc?singlewsdl")
 public class AccountServiceV1_Service
     extends Service
 {
@@ -30,9 +30,9 @@ public class AccountServiceV1_Service
         try {
             URL baseUrl;
             baseUrl = org.milleni.dunning.ws.client.crmaccountcoa.AccountServiceV1_Service.class.getResource(".");
-            url = new URL(baseUrl, "http://localhost:60133/AccountServiceV1.svc?singleWSDL");
+            url = new URL(baseUrl, "http://192.168.2.88:8230/CustomerInfoService/AccountServiceV1.svc?singlewsdl");
         } catch (MalformedURLException e) {
-            logger.warning("Failed to create URL for the wsdl Location: 'http://localhost:60133/AccountServiceV1.svc?singleWSDL', retrying as a local file");
+            logger.warning("Failed to create URL for the wsdl Location: 'http://192.168.2.88:8230/CustomerInfoService/AccountServiceV1.svc?singlewsdl', retrying as a local file");
             logger.warning(e.getMessage());
         }
         ACCOUNTSERVICEV1_WSDL_LOCATION = url;

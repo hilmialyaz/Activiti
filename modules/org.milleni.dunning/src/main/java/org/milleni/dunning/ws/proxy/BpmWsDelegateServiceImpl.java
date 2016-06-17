@@ -231,6 +231,14 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 
 	public void sendMessage(Long customerId, DunningProcessDetail detail, String message) {
 		Customer customer = customerService.findOne(customerId);
+		
+		if (Constants.STEP_BIR_SMS_IHTAR.equals(detail.getProcessStepId().getStepName()) || Constants.STEP_KUR_SMS_IHTAR.equals(detail.getProcessStepId().getStepName())){
+			if(customer.getContractType()!=null && customer.getContractType().indexOf("ADSL")>0){
+				message = dunningProperties.getProperty(Constants.SMS_IHTAR_ACKAPA_20);
+			}else{
+				message = dunningProperties.getProperty(Constants.SMS_IHTAR_ACKAPA_10);
+			}
+		}
 
 		Object[] params = new Object[] { String.valueOf(customerId), invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId) };
 		String msg = MessageFormat.format(message, params);
@@ -707,7 +715,7 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void deactivateCrmAccount(Long customerId) throws BpmnError{
 		try {
-			commonProxyService.deactivateCrmAccount(customerId);
+			commonProxyService.addDeactivationRequest(customerId);
 		} catch (Exception ex) {
 			throw new BpmnError(Constants.CRM_DEACTIVATION_FAILED, ex.getMessage());
 		}

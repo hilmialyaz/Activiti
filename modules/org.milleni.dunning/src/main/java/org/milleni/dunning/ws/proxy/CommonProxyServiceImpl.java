@@ -32,6 +32,10 @@ import org.milleni.dunning.ws.client.crm.SuspendAccountRequestModel;
 import org.milleni.dunning.ws.client.crm.SuspendAccountResponseModel;
 import org.milleni.dunning.ws.client.crmaccountcoa.AccountServiceV1;
 import org.milleni.dunning.ws.client.crmaccountcoa.AccountServiceV1SendIhtarAnnounceByBillingCustomerIdBusinessFaultFaultFaultMessage;
+import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequest;
+import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestResponse;
+import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestResponseModel;
+import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestToAccountRequestModel;
 import org.milleni.dunning.ws.client.crmaccountcoa.SendAnnounceByBillingCustomerNoRequestModel;
 import org.milleni.dunning.ws.client.crmcontact.ContactServiceV1;
 import org.milleni.dunning.ws.client.crmcontact.SendSmsByBillingCustomerNo;
@@ -341,6 +345,22 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 		request.setWillBeSentToTT(true);
 		return crmCustomerService.deactivateAccount(request);
 	}
+	
+	public AddDeactivationRequestResponseModel addDeactivationRequest(Long customerId) throws Exception  {
+		((BindingProvider) crmAccountService).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, dunningProperties.getProperty(Constants.WS_COA_ENDPOINT));
+		org.milleni.dunning.ws.client.crmaccountcoa.ObjectFactory fact = new org.milleni.dunning.ws.client.crmaccountcoa.ObjectFactory();
+		AddDeactivationRequestToAccountRequestModel request = fact.createAddDeactivationRequestToAccountRequestModel();
+		request.setApplicationName("Dunning");
+		request.setBillingCustomerNumber(String.valueOf(customerId));
+		request.setReason("Borçtan Deaktivasyon");
+		request.setReasonId(905l);
+		request.setSendSms(true);
+		request.setSendToBilling(true);
+		request.setSendToNetwork(true);
+		request.setSendToTT(true);
+		return crmAccountService.addDeactivationRequest(request);		
+	}
+
 
 	public ActivateAccountResponseModel activateCrmAccount(Long customerId) throws CustomerInfoServiceV1ActivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ActivateAccountSystemFaultFaultFaultMessage {
 		((BindingProvider) crmCustomerService).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, dunningProperties.getProperty(Constants.WS_CRM_ACCOUNT_ENDPOINT));

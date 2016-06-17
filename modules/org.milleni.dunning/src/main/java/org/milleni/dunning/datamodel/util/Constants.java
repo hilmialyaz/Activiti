@@ -201,6 +201,9 @@ public interface Constants {
 	String BIR_SMS_HATIRLATMA1 = "dunning.ws.settings.sms.bireysel.hatirlatma1";
 	String BIR_SMS_HATIRLATMA2 = "dunning.ws.settings.sms.bireysel.hatirlatma2";
 	String SMS_BIR_IHTAR = "dunning.ws.settings.sms.bireysel.ihtar";
+	String SMS_IHTAR_ACKAPA_20 = "dunning.ws.settings.sms.ihtar.acmakapama20";
+	String SMS_IHTAR_ACKAPA_10 = "dunning.ws.settings.sms.ihtar.acmakapama10";
+
 	String SMS_IPTAL = "dunning.ws.settings.sms.iptal";
 	String SMS_KUR_HATIRLATMA = "dunning.ws.settings.sms.kurumsal.hatirlatma";
 	String SMS_KUR_IHTAR = "dunning.ws.settings.sms.kurumsal.ihtar";
