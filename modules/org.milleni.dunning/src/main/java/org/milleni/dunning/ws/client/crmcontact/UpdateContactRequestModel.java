@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="CrmUserId" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid" minOccurs="0"/>
  *         &lt;element name="Email" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Fax" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="IpAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="MobilePhone" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Surname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -47,6 +48,7 @@ import javax.xml.bind.annotation.XmlType;
     "crmUserId",
     "email",
     "fax",
+    "ipAddress",
     "mobilePhone",
     "name",
     "surname",
@@ -68,6 +70,8 @@ public class UpdateContactRequestModel {
     protected JAXBElement<String> email;
     @XmlElementRef(name = "Fax", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> fax;
+    @XmlElementRef(name = "IpAddress", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> ipAddress;
     @XmlElementRef(name = "MobilePhone", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> mobilePhone;
     @XmlElementRef(name = "Name", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
@@ -223,6 +227,30 @@ public class UpdateContactRequestModel {
      */
     public void setFax(JAXBElement<String> value) {
         this.fax = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the ipAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getIpAddress() {
+        return ipAddress;
+    }
+
+    /**
+     * Sets the value of the ipAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setIpAddress(JAXBElement<String> value) {
+        this.ipAddress = ((JAXBElement<String> ) value);
     }
 
     /**

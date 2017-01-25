@@ -300,11 +300,11 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 		
 		if(Constants.SUSPEND.equalsIgnoreCase(customer.getStatus())){
 			bpmWsDelegateService.activateCrmAccount(customerId, null);
-				if(customer.getContractType()!=null && customer.getContractType().indexOf("ADSL")>0 ){
-				try{
-					bpmWsDelegateService.ttCrmUnfreezeCustomer(execution);
-				}catch(Exception ex){}
-			}
+//				if(customer.getContractType()!=null && customer.getContractType().indexOf("ADSL")>0 ){
+//				try{
+//					bpmWsDelegateService.ttCrmUnfreezeCustomer(execution);
+//				}catch(Exception ex){}
+//			}
 		}
 	}
 
@@ -315,12 +315,12 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 		Customer customer= customerService.updateCustomerStatusFromTecon("", customerId);		
 		if(Constants.SUSPEND.equalsIgnoreCase(customer.getStatus())){
 				bpmWsDelegateService.activateCrmAccount(customerId, null);
-				if(customer.getContractType()!=null && customer.getContractType().indexOf("ADSL")>0 ){
-					try {
-						bpmWsDelegateService.unfreezeCustomer(customerId);
-					} catch (Exception e) {						
-					}
-				}
+//				if(customer.getContractType()!=null && customer.getContractType().indexOf("ADSL")>0 ){
+//					try {
+//						bpmWsDelegateService.unfreezeCustomer(customerId);
+//					} catch (Exception e) {						
+//					}
+//				}
 			return true;
 		}
 		return false;

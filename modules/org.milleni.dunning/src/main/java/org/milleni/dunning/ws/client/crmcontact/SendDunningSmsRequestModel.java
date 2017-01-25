@@ -10,20 +10,19 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for SendSmsByBillingCustomerNoRequestModel complex type.
+ * <p>Java class for SendDunningSmsRequestModel complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="SendSmsByBillingCustomerNoRequestModel">
+ * &lt;complexType name="SendDunningSmsRequestModel">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="BillingCustomerNo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="DayTime" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="Originator" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Debit" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="SmsCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="SmsSenderApplication" type="{http://milleni.com/Common/Notification}SmsSenderApplication" minOccurs="0"/>
- *         &lt;element name="SmsText" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,25 +32,22 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SendSmsByBillingCustomerNoRequestModel", propOrder = {
+@XmlType(name = "SendDunningSmsRequestModel", propOrder = {
     "billingCustomerNo",
-    "dayTime",
-    "originator",
-    "smsSenderApplication",
-    "smsText"
+    "debit",
+    "smsCode",
+    "smsSenderApplication"
 })
-public class SendSmsByBillingCustomerNoRequestModel {
+public class SendDunningSmsRequestModel {
 
     @XmlElementRef(name = "BillingCustomerNo", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> billingCustomerNo;
-    @XmlElement(name = "DayTime")
-    protected Boolean dayTime;
-    @XmlElementRef(name = "Originator", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
-    protected JAXBElement<String> originator;
+    @XmlElementRef(name = "Debit", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> debit;
+    @XmlElementRef(name = "SmsCode", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> smsCode;
     @XmlElement(name = "SmsSenderApplication")
     protected SmsSenderApplication smsSenderApplication;
-    @XmlElementRef(name = "SmsText", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
-    protected JAXBElement<String> smsText;
 
     /**
      * Gets the value of the billingCustomerNo property.
@@ -78,51 +74,51 @@ public class SendSmsByBillingCustomerNoRequestModel {
     }
 
     /**
-     * Gets the value of the dayTime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isDayTime() {
-        return dayTime;
-    }
-
-    /**
-     * Sets the value of the dayTime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setDayTime(Boolean value) {
-        this.dayTime = value;
-    }
-
-    /**
-     * Gets the value of the originator property.
+     * Gets the value of the debit property.
      * 
      * @return
      *     possible object is
      *     {@link JAXBElement }{@code <}{@link String }{@code >}
      *     
      */
-    public JAXBElement<String> getOriginator() {
-        return originator;
+    public JAXBElement<String> getDebit() {
+        return debit;
     }
 
     /**
-     * Sets the value of the originator property.
+     * Sets the value of the debit property.
      * 
      * @param value
      *     allowed object is
      *     {@link JAXBElement }{@code <}{@link String }{@code >}
      *     
      */
-    public void setOriginator(JAXBElement<String> value) {
-        this.originator = ((JAXBElement<String> ) value);
+    public void setDebit(JAXBElement<String> value) {
+        this.debit = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the smsCode property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getSmsCode() {
+        return smsCode;
+    }
+
+    /**
+     * Sets the value of the smsCode property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setSmsCode(JAXBElement<String> value) {
+        this.smsCode = ((JAXBElement<String> ) value);
     }
 
     /**
@@ -147,30 +143,6 @@ public class SendSmsByBillingCustomerNoRequestModel {
      */
     public void setSmsSenderApplication(SmsSenderApplication value) {
         this.smsSenderApplication = value;
-    }
-
-    /**
-     * Gets the value of the smsText property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
-    public JAXBElement<String> getSmsText() {
-        return smsText;
-    }
-
-    /**
-     * Sets the value of the smsText property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
-    public void setSmsText(JAXBElement<String> value) {
-        this.smsText = ((JAXBElement<String> ) value);
     }
 
 }

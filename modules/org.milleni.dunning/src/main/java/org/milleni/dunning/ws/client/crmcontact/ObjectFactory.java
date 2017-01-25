@@ -28,6 +28,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _SendSmsByBillingCustomerNoResponseSendSmsByBillingCustomerNoResult_QNAME = new QName("/CustomerInfo/Service/v1", "SendSmsByBillingCustomerNoResult");
     private final static QName _SystemFault_QNAME = new QName("http://milleni.com/technical/Fault", "SystemFault");
     private final static QName _AnyURI_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "anyURI");
     private final static QName _DateTime_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "dateTime");
@@ -45,6 +46,7 @@ public class ObjectFactory {
     private final static QName _UpdateContactResponseModel_QNAME = new QName("/CustomerInfo/Service/v1", "UpdateContactResponseModel");
     private final static QName _UpdateContactError_QNAME = new QName("/CustomerInfo/Service/v1", "UpdateContactError");
     private final static QName _Boolean_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "boolean");
+    private final static QName _SendDunningSmsRequestModel_QNAME = new QName("/CustomerInfo/Service/v1", "SendDunningSmsRequestModel");
     private final static QName _UnsignedByte_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "unsignedByte");
     private final static QName _AnyType_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "anyType");
     private final static QName _ApproveNotificationEnum_QNAME = new QName("/CustomerInfo/Service/v1", "ApproveNotificationEnum");
@@ -60,8 +62,20 @@ public class ObjectFactory {
     private final static QName _SmsSenderApplication_QNAME = new QName("http://milleni.com/Common/Notification", "SmsSenderApplication");
     private final static QName _UnsignedLong_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "unsignedLong");
     private final static QName _UpdateContactRequestModel_QNAME = new QName("/CustomerInfo/Service/v1", "UpdateContactRequestModel");
-    private final static QName _UpdateContactResponseModelErrorMessage_QNAME = new QName("/CustomerInfo/Service/v1", "ErrorMessage");
-    private final static QName _SendSmsByBillingCustomerNoRequest_QNAME = new QName("/CustomerInfo/Service/v1", "request");
+    private final static QName _UpdateContactInfoResponseUpdateContactInfoResult_QNAME = new QName("/CustomerInfo/Service/v1", "UpdateContactInfoResult");
+    private final static QName _UpdateContactInfoRequest_QNAME = new QName("/CustomerInfo/Service/v1", "request");
+    private final static QName _SendDunningSmsRequestModelBillingCustomerNo_QNAME = new QName("/CustomerInfo/Service/v1", "BillingCustomerNo");
+    private final static QName _SendDunningSmsRequestModelSmsCode_QNAME = new QName("/CustomerInfo/Service/v1", "SmsCode");
+    private final static QName _SendDunningSmsRequestModelDebit_QNAME = new QName("/CustomerInfo/Service/v1", "Debit");
+    private final static QName _UpdateContactRequestModelName_QNAME = new QName("/CustomerInfo/Service/v1", "Name");
+    private final static QName _UpdateContactRequestModelWorkPhone_QNAME = new QName("/CustomerInfo/Service/v1", "WorkPhone");
+    private final static QName _UpdateContactRequestModelEmail_QNAME = new QName("/CustomerInfo/Service/v1", "Email");
+    private final static QName _UpdateContactRequestModelWebAddress_QNAME = new QName("/CustomerInfo/Service/v1", "WebAddress");
+    private final static QName _UpdateContactRequestModelFax_QNAME = new QName("/CustomerInfo/Service/v1", "Fax");
+    private final static QName _UpdateContactRequestModelIpAddress_QNAME = new QName("/CustomerInfo/Service/v1", "IpAddress");
+    private final static QName _UpdateContactRequestModelSurname_QNAME = new QName("/CustomerInfo/Service/v1", "Surname");
+    private final static QName _UpdateContactRequestModelMobilePhone_QNAME = new QName("/CustomerInfo/Service/v1", "MobilePhone");
+    private final static QName _UpdateContactRequestModelTitle_QNAME = new QName("/CustomerInfo/Service/v1", "Title");
     private final static QName _BaseFaultSIID_QNAME = new QName("http://milleni.com/technical/Fault", "SIID");
     private final static QName _BaseFaultActor_QNAME = new QName("http://milleni.com/technical/Fault", "Actor");
     private final static QName _BaseFaultDetail_QNAME = new QName("http://milleni.com/technical/Fault", "Detail");
@@ -70,17 +84,7 @@ public class ObjectFactory {
     private final static QName _BaseFaultParameters_QNAME = new QName("http://milleni.com/technical/Fault", "Parameters");
     private final static QName _SendSmsByBillingCustomerNoRequestModelSmsText_QNAME = new QName("/CustomerInfo/Service/v1", "SmsText");
     private final static QName _SendSmsByBillingCustomerNoRequestModelOriginator_QNAME = new QName("/CustomerInfo/Service/v1", "Originator");
-    private final static QName _SendSmsByBillingCustomerNoRequestModelBillingCustomerNo_QNAME = new QName("/CustomerInfo/Service/v1", "BillingCustomerNo");
-    private final static QName _UpdateContactRequestModelName_QNAME = new QName("/CustomerInfo/Service/v1", "Name");
-    private final static QName _UpdateContactRequestModelWorkPhone_QNAME = new QName("/CustomerInfo/Service/v1", "WorkPhone");
-    private final static QName _UpdateContactRequestModelEmail_QNAME = new QName("/CustomerInfo/Service/v1", "Email");
-    private final static QName _UpdateContactRequestModelWebAddress_QNAME = new QName("/CustomerInfo/Service/v1", "WebAddress");
-    private final static QName _UpdateContactRequestModelFax_QNAME = new QName("/CustomerInfo/Service/v1", "Fax");
-    private final static QName _UpdateContactRequestModelSurname_QNAME = new QName("/CustomerInfo/Service/v1", "Surname");
-    private final static QName _UpdateContactRequestModelMobilePhone_QNAME = new QName("/CustomerInfo/Service/v1", "MobilePhone");
-    private final static QName _UpdateContactRequestModelTitle_QNAME = new QName("/CustomerInfo/Service/v1", "Title");
-    private final static QName _SendSmsByBillingCustomerNoResponseSendSmsByBillingCustomerNoResult_QNAME = new QName("/CustomerInfo/Service/v1", "SendSmsByBillingCustomerNoResult");
-    private final static QName _UpdateContactInfoResponseUpdateContactInfoResult_QNAME = new QName("/CustomerInfo/Service/v1", "UpdateContactInfoResult");
+    private final static QName _UpdateContactResponseModelErrorMessage_QNAME = new QName("/CustomerInfo/Service/v1", "ErrorMessage");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.milleni.dunning.ws.client.crmcontact
@@ -90,19 +94,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link UpdateContactResponseModel }
+     * Create an instance of {@link UpdateContactInfo }
      * 
      */
-    public UpdateContactResponseModel createUpdateContactResponseModel() {
-        return new UpdateContactResponseModel();
-    }
-
-    /**
-     * Create an instance of {@link SendSmsByBillingCustomerNo }
-     * 
-     */
-    public SendSmsByBillingCustomerNo createSendSmsByBillingCustomerNo() {
-        return new SendSmsByBillingCustomerNo();
+    public UpdateContactInfo createUpdateContactInfo() {
+        return new UpdateContactInfo();
     }
 
     /**
@@ -114,11 +110,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SystemFault }
+     * Create an instance of {@link SendDunningSmsResponse }
      * 
      */
-    public SystemFault createSystemFault() {
-        return new SystemFault();
+    public SendDunningSmsResponse createSendDunningSmsResponse() {
+        return new SendDunningSmsResponse();
+    }
+
+    /**
+     * Create an instance of {@link UpdateContactRequestModel }
+     * 
+     */
+    public UpdateContactRequestModel createUpdateContactRequestModel() {
+        return new UpdateContactRequestModel();
+    }
+
+    /**
+     * Create an instance of {@link SendSmsByBillingCustomerNoResponseModel }
+     * 
+     */
+    public SendSmsByBillingCustomerNoResponseModel createSendSmsByBillingCustomerNoResponseModel() {
+        return new SendSmsByBillingCustomerNoResponseModel();
     }
 
     /**
@@ -138,35 +150,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SendSmsByBillingCustomerNoResponseModel }
+     * Create an instance of {@link SendDunningSms }
      * 
      */
-    public SendSmsByBillingCustomerNoResponseModel createSendSmsByBillingCustomerNoResponseModel() {
-        return new SendSmsByBillingCustomerNoResponseModel();
-    }
-
-    /**
-     * Create an instance of {@link ArrayOfstring }
-     * 
-     */
-    public ArrayOfstring createArrayOfstring() {
-        return new ArrayOfstring();
-    }
-
-    /**
-     * Create an instance of {@link UpdateContactRequestModel }
-     * 
-     */
-    public UpdateContactRequestModel createUpdateContactRequestModel() {
-        return new UpdateContactRequestModel();
-    }
-
-    /**
-     * Create an instance of {@link UpdateContactInfo }
-     * 
-     */
-    public UpdateContactInfo createUpdateContactInfo() {
-        return new UpdateContactInfo();
+    public SendDunningSms createSendDunningSms() {
+        return new SendDunningSms();
     }
 
     /**
@@ -183,6 +171,55 @@ public class ObjectFactory {
      */
     public UpdateContactInfoResponse createUpdateContactInfoResponse() {
         return new UpdateContactInfoResponse();
+    }
+
+    /**
+     * Create an instance of {@link SystemFault }
+     * 
+     */
+    public SystemFault createSystemFault() {
+        return new SystemFault();
+    }
+
+    /**
+     * Create an instance of {@link SendDunningSmsRequestModel }
+     * 
+     */
+    public SendDunningSmsRequestModel createSendDunningSmsRequestModel() {
+        return new SendDunningSmsRequestModel();
+    }
+
+    /**
+     * Create an instance of {@link ArrayOfstring }
+     * 
+     */
+    public ArrayOfstring createArrayOfstring() {
+        return new ArrayOfstring();
+    }
+
+    /**
+     * Create an instance of {@link UpdateContactResponseModel }
+     * 
+     */
+    public UpdateContactResponseModel createUpdateContactResponseModel() {
+        return new UpdateContactResponseModel();
+    }
+
+    /**
+     * Create an instance of {@link SendSmsByBillingCustomerNo }
+     * 
+     */
+    public SendSmsByBillingCustomerNo createSendSmsByBillingCustomerNo() {
+        return new SendSmsByBillingCustomerNo();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendSmsByBillingCustomerNoResponseModel }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "SendSmsByBillingCustomerNoResult", scope = SendSmsByBillingCustomerNoResponse.class)
+    public JAXBElement<SendSmsByBillingCustomerNoResponseModel> createSendSmsByBillingCustomerNoResponseSendSmsByBillingCustomerNoResult(SendSmsByBillingCustomerNoResponseModel value) {
+        return new JAXBElement<SendSmsByBillingCustomerNoResponseModel>(_SendSmsByBillingCustomerNoResponseSendSmsByBillingCustomerNoResult_QNAME, SendSmsByBillingCustomerNoResponseModel.class, SendSmsByBillingCustomerNoResponse.class, value);
     }
 
     /**
@@ -339,6 +376,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendDunningSmsRequestModel }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "SendDunningSmsRequestModel")
+    public JAXBElement<SendDunningSmsRequestModel> createSendDunningSmsRequestModel(SendDunningSmsRequestModel value) {
+        return new JAXBElement<SendDunningSmsRequestModel>(_SendDunningSmsRequestModel_QNAME, SendDunningSmsRequestModel.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Short }{@code >}}
      * 
      */
@@ -474,21 +520,129 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateContactResponseModel }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "ErrorMessage", scope = UpdateContactResponseModel.class)
-    public JAXBElement<String> createUpdateContactResponseModelErrorMessage(String value) {
-        return new JAXBElement<String>(_UpdateContactResponseModelErrorMessage_QNAME, String.class, UpdateContactResponseModel.class, value);
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "UpdateContactInfoResult", scope = UpdateContactInfoResponse.class)
+    public JAXBElement<UpdateContactResponseModel> createUpdateContactInfoResponseUpdateContactInfoResult(UpdateContactResponseModel value) {
+        return new JAXBElement<UpdateContactResponseModel>(_UpdateContactInfoResponseUpdateContactInfoResult_QNAME, UpdateContactResponseModel.class, UpdateContactInfoResponse.class, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SendSmsByBillingCustomerNoRequestModel }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateContactRequestModel }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "request", scope = SendSmsByBillingCustomerNo.class)
-    public JAXBElement<SendSmsByBillingCustomerNoRequestModel> createSendSmsByBillingCustomerNoRequest(SendSmsByBillingCustomerNoRequestModel value) {
-        return new JAXBElement<SendSmsByBillingCustomerNoRequestModel>(_SendSmsByBillingCustomerNoRequest_QNAME, SendSmsByBillingCustomerNoRequestModel.class, SendSmsByBillingCustomerNo.class, value);
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "request", scope = UpdateContactInfo.class)
+    public JAXBElement<UpdateContactRequestModel> createUpdateContactInfoRequest(UpdateContactRequestModel value) {
+        return new JAXBElement<UpdateContactRequestModel>(_UpdateContactInfoRequest_QNAME, UpdateContactRequestModel.class, UpdateContactInfo.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "BillingCustomerNo", scope = SendDunningSmsRequestModel.class)
+    public JAXBElement<String> createSendDunningSmsRequestModelBillingCustomerNo(String value) {
+        return new JAXBElement<String>(_SendDunningSmsRequestModelBillingCustomerNo_QNAME, String.class, SendDunningSmsRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "SmsCode", scope = SendDunningSmsRequestModel.class)
+    public JAXBElement<String> createSendDunningSmsRequestModelSmsCode(String value) {
+        return new JAXBElement<String>(_SendDunningSmsRequestModelSmsCode_QNAME, String.class, SendDunningSmsRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Debit", scope = SendDunningSmsRequestModel.class)
+    public JAXBElement<String> createSendDunningSmsRequestModelDebit(String value) {
+        return new JAXBElement<String>(_SendDunningSmsRequestModelDebit_QNAME, String.class, SendDunningSmsRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Name", scope = UpdateContactRequestModel.class)
+    public JAXBElement<String> createUpdateContactRequestModelName(String value) {
+        return new JAXBElement<String>(_UpdateContactRequestModelName_QNAME, String.class, UpdateContactRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "WorkPhone", scope = UpdateContactRequestModel.class)
+    public JAXBElement<String> createUpdateContactRequestModelWorkPhone(String value) {
+        return new JAXBElement<String>(_UpdateContactRequestModelWorkPhone_QNAME, String.class, UpdateContactRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Email", scope = UpdateContactRequestModel.class)
+    public JAXBElement<String> createUpdateContactRequestModelEmail(String value) {
+        return new JAXBElement<String>(_UpdateContactRequestModelEmail_QNAME, String.class, UpdateContactRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "WebAddress", scope = UpdateContactRequestModel.class)
+    public JAXBElement<String> createUpdateContactRequestModelWebAddress(String value) {
+        return new JAXBElement<String>(_UpdateContactRequestModelWebAddress_QNAME, String.class, UpdateContactRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Fax", scope = UpdateContactRequestModel.class)
+    public JAXBElement<String> createUpdateContactRequestModelFax(String value) {
+        return new JAXBElement<String>(_UpdateContactRequestModelFax_QNAME, String.class, UpdateContactRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "IpAddress", scope = UpdateContactRequestModel.class)
+    public JAXBElement<String> createUpdateContactRequestModelIpAddress(String value) {
+        return new JAXBElement<String>(_UpdateContactRequestModelIpAddress_QNAME, String.class, UpdateContactRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Surname", scope = UpdateContactRequestModel.class)
+    public JAXBElement<String> createUpdateContactRequestModelSurname(String value) {
+        return new JAXBElement<String>(_UpdateContactRequestModelSurname_QNAME, String.class, UpdateContactRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "MobilePhone", scope = UpdateContactRequestModel.class)
+    public JAXBElement<String> createUpdateContactRequestModelMobilePhone(String value) {
+        return new JAXBElement<String>(_UpdateContactRequestModelMobilePhone_QNAME, String.class, UpdateContactRequestModel.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Title", scope = UpdateContactRequestModel.class)
+    public JAXBElement<String> createUpdateContactRequestModelTitle(String value) {
+        return new JAXBElement<String>(_UpdateContactRequestModelTitle_QNAME, String.class, UpdateContactRequestModel.class, value);
     }
 
     /**
@@ -569,106 +723,34 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "BillingCustomerNo", scope = SendSmsByBillingCustomerNoRequestModel.class)
     public JAXBElement<String> createSendSmsByBillingCustomerNoRequestModelBillingCustomerNo(String value) {
-        return new JAXBElement<String>(_SendSmsByBillingCustomerNoRequestModelBillingCustomerNo_QNAME, String.class, SendSmsByBillingCustomerNoRequestModel.class, value);
+        return new JAXBElement<String>(_SendDunningSmsRequestModelBillingCustomerNo_QNAME, String.class, SendSmsByBillingCustomerNoRequestModel.class, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Name", scope = UpdateContactRequestModel.class)
-    public JAXBElement<String> createUpdateContactRequestModelName(String value) {
-        return new JAXBElement<String>(_UpdateContactRequestModelName_QNAME, String.class, UpdateContactRequestModel.class, value);
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "ErrorMessage", scope = UpdateContactResponseModel.class)
+    public JAXBElement<String> createUpdateContactResponseModelErrorMessage(String value) {
+        return new JAXBElement<String>(_UpdateContactResponseModelErrorMessage_QNAME, String.class, UpdateContactResponseModel.class, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendSmsByBillingCustomerNoRequestModel }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "WorkPhone", scope = UpdateContactRequestModel.class)
-    public JAXBElement<String> createUpdateContactRequestModelWorkPhone(String value) {
-        return new JAXBElement<String>(_UpdateContactRequestModelWorkPhone_QNAME, String.class, UpdateContactRequestModel.class, value);
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "request", scope = SendSmsByBillingCustomerNo.class)
+    public JAXBElement<SendSmsByBillingCustomerNoRequestModel> createSendSmsByBillingCustomerNoRequest(SendSmsByBillingCustomerNoRequestModel value) {
+        return new JAXBElement<SendSmsByBillingCustomerNoRequestModel>(_UpdateContactInfoRequest_QNAME, SendSmsByBillingCustomerNoRequestModel.class, SendSmsByBillingCustomerNo.class, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendDunningSmsRequestModel }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Email", scope = UpdateContactRequestModel.class)
-    public JAXBElement<String> createUpdateContactRequestModelEmail(String value) {
-        return new JAXBElement<String>(_UpdateContactRequestModelEmail_QNAME, String.class, UpdateContactRequestModel.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "WebAddress", scope = UpdateContactRequestModel.class)
-    public JAXBElement<String> createUpdateContactRequestModelWebAddress(String value) {
-        return new JAXBElement<String>(_UpdateContactRequestModelWebAddress_QNAME, String.class, UpdateContactRequestModel.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Fax", scope = UpdateContactRequestModel.class)
-    public JAXBElement<String> createUpdateContactRequestModelFax(String value) {
-        return new JAXBElement<String>(_UpdateContactRequestModelFax_QNAME, String.class, UpdateContactRequestModel.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Surname", scope = UpdateContactRequestModel.class)
-    public JAXBElement<String> createUpdateContactRequestModelSurname(String value) {
-        return new JAXBElement<String>(_UpdateContactRequestModelSurname_QNAME, String.class, UpdateContactRequestModel.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "MobilePhone", scope = UpdateContactRequestModel.class)
-    public JAXBElement<String> createUpdateContactRequestModelMobilePhone(String value) {
-        return new JAXBElement<String>(_UpdateContactRequestModelMobilePhone_QNAME, String.class, UpdateContactRequestModel.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "Title", scope = UpdateContactRequestModel.class)
-    public JAXBElement<String> createUpdateContactRequestModelTitle(String value) {
-        return new JAXBElement<String>(_UpdateContactRequestModelTitle_QNAME, String.class, UpdateContactRequestModel.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateContactRequestModel }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "request", scope = UpdateContactInfo.class)
-    public JAXBElement<UpdateContactRequestModel> createUpdateContactInfoRequest(UpdateContactRequestModel value) {
-        return new JAXBElement<UpdateContactRequestModel>(_SendSmsByBillingCustomerNoRequest_QNAME, UpdateContactRequestModel.class, UpdateContactInfo.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SendSmsByBillingCustomerNoResponseModel }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "SendSmsByBillingCustomerNoResult", scope = SendSmsByBillingCustomerNoResponse.class)
-    public JAXBElement<SendSmsByBillingCustomerNoResponseModel> createSendSmsByBillingCustomerNoResponseSendSmsByBillingCustomerNoResult(SendSmsByBillingCustomerNoResponseModel value) {
-        return new JAXBElement<SendSmsByBillingCustomerNoResponseModel>(_SendSmsByBillingCustomerNoResponseSendSmsByBillingCustomerNoResult_QNAME, SendSmsByBillingCustomerNoResponseModel.class, SendSmsByBillingCustomerNoResponse.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateContactResponseModel }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "UpdateContactInfoResult", scope = UpdateContactInfoResponse.class)
-    public JAXBElement<UpdateContactResponseModel> createUpdateContactInfoResponseUpdateContactInfoResult(UpdateContactResponseModel value) {
-        return new JAXBElement<UpdateContactResponseModel>(_UpdateContactInfoResponseUpdateContactInfoResult_QNAME, UpdateContactResponseModel.class, UpdateContactInfoResponse.class, value);
+    @XmlElementDecl(namespace = "/CustomerInfo/Service/v1", name = "request", scope = SendDunningSms.class)
+    public JAXBElement<SendDunningSmsRequestModel> createSendDunningSmsRequest(SendDunningSmsRequestModel value) {
+        return new JAXBElement<SendDunningSmsRequestModel>(_UpdateContactInfoRequest_QNAME, SendDunningSmsRequestModel.class, SendDunningSms.class, value);
     }
 
 }

@@ -13,6 +13,7 @@ import org.milleni.dunning.ws.client.crm.CustomerInfoServiceV1SuspendAccountSyst
 import org.milleni.dunning.ws.client.crm.DeactivateAccountResponseModel;
 import org.milleni.dunning.ws.client.crm.SuspendAccountResponseModel;
 import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestResponseModel;
+import org.milleni.dunning.ws.client.crmcontact.SmsCode;
 import org.milleni.dunning.ws.client.customerservice.TeconCustomerInfoResponse;
 import org.milleni.dunning.ws.client.customerstatus.STATUS;
 import org.milleni.dunning.ws.client.customerstatus.STATUSREASON;
@@ -28,8 +29,7 @@ import org.milleni.dunning.ws.client.tahsilat.ArrayOfAcikKalem;
 public interface CommonProxySerivce {
 	public ServiceResponse sendCoaAnnounce(Long customerId, int announceType);
 	public FaturaDetayi retrievePaymentInfo(Long customerId);
-	public String sendSms(String number,String message, String originator,Long customerId);
-	public String sendSms(String number, String message, String originator, Long customerId,boolean dayTime); 
+	public String sendSms(Long customerId,String debit , String smsCode);
 	public ArrayOfAcikKalem retrieveAcikkalemPaymentInfo(Long customerId);
 	public String addQuickTickler(Long customerId,String sNeden,String sTalepKonusu,String sAltDurum,String sStatus,String sMessage);
 	public int getTicklerCount(Long customerId) ;

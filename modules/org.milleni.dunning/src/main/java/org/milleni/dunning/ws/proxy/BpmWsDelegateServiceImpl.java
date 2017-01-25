@@ -36,6 +36,7 @@ import org.milleni.dunning.ws.client.callcenter.Invoice;
 import org.milleni.dunning.ws.client.coa.ServiceResponse;
 import org.milleni.dunning.ws.client.crm.CustomerInfoServiceV1SuspendAccountBusinessFaultFaultFaultMessage;
 import org.milleni.dunning.ws.client.crm.CustomerInfoServiceV1SuspendAccountSystemFaultFaultFaultMessage;
+import org.milleni.dunning.ws.client.crmcontact.SmsCode;
 import org.milleni.dunning.ws.client.customerstatus.ContractServiceResponse;
 import org.milleni.dunning.ws.client.customerstatus.ContractStatus;
 import org.milleni.dunning.ws.client.customerstatus.STATUS;
@@ -158,30 +159,30 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	}
 
 	public void sendBireyselSmsHatirlatma(DelegateExecution execution) {
-		sendSms(execution, dunningProperties.getProperty(Constants.SMS_BIR_HATIRLATMA));
+		//sendSms(execution, dunningProperties.getProperty(Constants.SMS_BIR_HATIRLATMA));
 	}
 
 	public void sendBireyselSmsIhtar(DelegateExecution execution) {
-		sendSms(execution, dunningProperties.getProperty(Constants.SMS_BIR_IHTAR));
+		//sendSms(execution, dunningProperties.getProperty(Constants.SMS_BIR_IHTAR));
 	}
 
 	public void sendIptalBildirimSms(DelegateExecution execution) {
-		sendSms(execution, dunningProperties.getProperty(Constants.SMS_IPTAL));
+		//sendSms(execution, dunningProperties.getProperty(Constants.SMS_IPTAL));
 	}
 	
 	public void sendOdemeBildirimSms(DelegateExecution execution) {
-		sendSms(execution, dunningProperties.getProperty(Constants.SMS_ODEMEBILDIRIM));
+		//sendSms(execution, dunningProperties.getProperty(Constants.SMS_ODEMEBILDIRIM));
 	}
 	
 	public void sendOdemeGelmediSms(DelegateExecution execution) {
-		sendSms(execution, dunningProperties.getProperty(Constants.SMS_ODEMEGELMEDI));
+		//sendSms(execution, dunningProperties.getProperty(Constants.SMS_ODEMEGELMEDI));
 	}
 
 	public void sendSms(DelegateExecution execution, String message) {
 		DunningProcessDetail detail = dunningProcessService.getCurrentProcessDetail(execution);
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		Customer customer = customerService.findOne(customerId);
-		sendMessage(customerId, detail, message);
+		sendMessage(customerId, detail);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -189,68 +190,26 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		if (dpDetail.getProcessStepId() == null)
 			return;
 
-		String stepName = dpDetail.getProcessStepId().getStepName();
-		String message = null;
-		if (Constants.STEP_BIR_SMS_HATIRLATMA.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.SMS_BIR_HATIRLATMA);
-		
-		if (Constants.STEP_BIR_SMS_HATIRLATMA1.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.BIR_SMS_HATIRLATMA1);
-		
-		if (Constants.STEP_BIR_SMS_HATIRLATMA2.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.BIR_SMS_HATIRLATMA2);
-
-		if (Constants.STEP_BIR_SMS_IHTAR.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.SMS_BIR_IHTAR);
-
-		if (Constants.STEP_KUR_SMS_HATIRLATMA.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.SMS_KUR_HATIRLATMA);
-
-		if (Constants.STEP_KUR_SMS_IHTAR.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.SMS_KUR_IHTAR);
-
-		if (Constants.STEP_KUR_SMS_IDARI.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.SMS_KUR_IDARI);
-
-		if (Constants.STEP_BULUT_SMS_HATIRLATMA.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.SMS_BULUT_HATIRLATMA);
-
-		if (Constants.STEP_BULUT_SMS_IHTAR.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.SMS_BULUT_IHTAR);
-
-		
-		if (Constants.STEP_SMS_VIP_HATIRLATMA.equals(dpDetail.getProcessStepId().getStepName()))
-			message = dunningProperties.getProperty(Constants.SMS_VIP_HATIRLATMA);
-
-		if (StringUtils.hasText(message) && dpDetail.getProcessId() != null && dpDetail.getProcessId().getCustomerId() != null && dpDetail.getProcessId().getCustomerId().getCustomerId() != null)
-			sendMessage(dpDetail.getProcessId().getCustomerId().getCustomerId(), dpDetail, message);
-
+		if (dpDetail.getProcessId() != null && dpDetail.getProcessId().getCustomerId() != null && dpDetail.getProcessId().getCustomerId().getCustomerId() != null)
+			sendMessage(dpDetail.getProcessId().getCustomerId().getCustomerId(), dpDetail);
 	}
-
+	
 	public static final String MSISDN_FORMAT_REGEXP = "5[0-9]{9}";
 
-	public void sendMessage(Long customerId, DunningProcessDetail detail, String message) {
+	public void sendMessage(Long customerId, DunningProcessDetail detail) {
 		Customer customer = customerService.findOne(customerId);
-		
-		if (Constants.STEP_BIR_SMS_IHTAR.equals(detail.getProcessStepId().getStepName()) || Constants.STEP_KUR_SMS_IHTAR.equals(detail.getProcessStepId().getStepName())){
-			if(customer.getContractType()!=null && customer.getContractType().indexOf("ADSL")>0){
-				message = dunningProperties.getProperty(Constants.SMS_IHTAR_ACKAPA_20);
-			}else{
-				message = dunningProperties.getProperty(Constants.SMS_IHTAR_ACKAPA_10);
-			}
-		}
+		String dpdStepName = detail.getProcessStepId().getStepName();
+//		if (Constants.STEP_BIR_SMS_IHTAR.equals(dpdStepName) || Constants.STEP_KUR_SMS_IHTAR.equals(dpdStepName)){
+//			if(customer.getContractType()!=null && customer.getContractType().indexOf("ADSL")>0){
+//				message = dunningProperties.getProperty(Constants.SMS_IHTAR_ACKAPA_20);
+//			}else{
+//				message = dunningProperties.getProperty(Constants.SMS_IHTAR_ACKAPA_10);
+//			}
+//		}
 
-		Object[] params = new Object[] { String.valueOf(customerId), invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId) };
-		String msg = MessageFormat.format(message, params);
-		// dunningProcessService.addDunningProcessDetailLogs(detail,
-		// Constants.SMS, msg);
-		String msisdn = getCustomerValidMsisdn(customer);
-		
-		String originator = dunningProperties.getProperty(Constants.WS_SETTINGS_SMS_ORIGINATOR_MILLENICOM);
-		if (customer.getContractType() != null && customer.getContractType().indexOf("ADSL") > 0)
-			originator = dunningProperties.getProperty(Constants.WS_SETTINGS_SMS_ORIGINATOR_ADSL);
-
-		String response = commonProxyService.sendSms(msisdn, msg, originator,customerId);
+	
+		String debit = invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId).toString();
+		String response = commonProxyService.sendSms(customerId,debit,dpdStepName);
 
 		if (response != null && detail != null) {// 103|Erisim izniniz yok
 													// hatası gelebilir.
@@ -261,7 +220,7 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 				detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.ERROR));
 				addReturnLog(detail, key, logValue, Constants.STEP_SMS);
 			} else {
-				addReturnLog(detail, msisdn, msg, Constants.STEP_SMS);
+				addReturnLog(detail, "", "", Constants.STEP_SMS);
 				detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.SUCCESS));
 			}
 			dunningProcessService.saveDunningProcessDetail(detail);
@@ -367,17 +326,22 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	}
 
 	public void ttCrmFreezeCustomer(DelegateExecution execution) {
+		LOGGER.error("freezeCustomer kaldirilmasina ragmen freeze girdi.");
+		/*
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		DunningProcessDetail detail = dunningProcessService.getCurrentProcessDetail(execution);
 		try {
-			freezeCustomer(customerId);
+			//freezeCustomer(customerId);
+			
 		} catch (Exception e) {
 			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.ERROR));
 			dunningProcessService.saveDunningProcessDetail(detail);
 		}
+		*/
 	}
 
 	public void ttCrmUnfreezeCustomer(DelegateExecution execution) {
+		/*
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		DunningProcessDetail detail = dunningProcessService.getCurrentProcessDetail(execution);
 		try {
@@ -386,6 +350,9 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.ERROR));
 			dunningProcessService.saveDunningProcessDetail(detail);
 		}
+		*/
+		LOGGER.error("ttCrmUnfreezeCustomer kaldirilmasina ragmen freeze girdi.");
+
 	}
 
 	public void ttCrmDeactivateCustomer(DelegateExecution execution) {
@@ -427,15 +394,18 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	}
 	
 	public void freezeCustomer(Long customerId) throws Exception{
-		try{
-			commonProxyService.freezeCustomer(customerId);
-		}catch(Exception ex){
-			LOGGER.error("freezeCustomer:"+ex);
-		}
+		LOGGER.error("freezeCustomer freezeCustomer kaldirilmasina ragmen freeze girdi.");
+//		try{
+//			commonProxyService.freezeCustomer(customerId);
+//		}catch(Exception ex){
+//			LOGGER.error("freezeCustomer:"+ex);
+//		}
 	}
 	
 	public void unfreezeCustomer(Long customerId) throws Exception{
-			commonProxyService.unfreezeCustomer(customerId);
+		LOGGER.error("unfreezeCustomer unfreezeCustomer  kaldirilmasina ragmen freeze girdi.");
+
+		//commonProxyService.unfreezeCustomer(customerId);
 	}
 
 	public void crmSuspendCustomer(DelegateExecution execution) {
@@ -582,23 +552,23 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	}	
 	
 	public void retrieveCustomerAggreement(DelegateExecution execution) {
-		Long customerId = (Long) execution.getVariable(Constants.customerId);
-		customerService.retrieveCustomerAggreement(execution.getProcessInstanceId(), customerId);
+//		Long customerId = (Long) execution.getVariable(Constants.customerId);
+//		customerService.retrieveCustomerAggreement(execution.getProcessInstanceId(), customerId);
 	}
 
 	public void retrieveCustomerHasCdr(DelegateExecution execution) {
-		Long customerId = (Long) execution.getVariable(Constants.customerId);
-		customerService.retrieveCustomerHasCdr(execution.getProcessInstanceId(), customerId);
+//		Long customerId = (Long) execution.getVariable(Constants.customerId);
+//		customerService.retrieveCustomerHasCdr(execution.getProcessInstanceId(), customerId);
 	}
 
 	public void retrieveCustomerTaksitCount(DelegateExecution execution) {
-		Long customerId = (Long) execution.getVariable(Constants.customerId);
-		customerService.retrieveCustomerTaksitCount(execution.getProcessInstanceId(), customerId);
+//		Long customerId = (Long) execution.getVariable(Constants.customerId);
+//		customerService.retrieveCustomerTaksitCount(execution.getProcessInstanceId(), customerId);
 	}
 
 	public void retrieveCustomerTicklerCount(DelegateExecution execution) {
-		Long customerId = (Long) execution.getVariable(Constants.customerId);
-		customerService.retrieveCustomerTicklerCount(execution.getProcessInstanceId(), customerId);
+//		Long customerId = (Long) execution.getVariable(Constants.customerId);
+//		customerService.retrieveCustomerTicklerCount(execution.getProcessInstanceId(), customerId);
 	}
 
 	/*
@@ -667,14 +637,9 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 			commonProxyService.suspendCrmAccount(customerId);
 			setDpDetailSuccess(detail);
 			try{
-				String message = dunningProperties.getProperty(Constants.SMS_SUSPEND_SONRASI);
-				Object[] params = new Object[] { String.valueOf(customerId), invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId) };
-				String msg = MessageFormat.format(message, params);
-				String originator = dunningProperties.getProperty(Constants.WS_SETTINGS_SMS_ORIGINATOR_MILLENICOM);
-				if (customer.getContractType() != null && customer.getContractType().indexOf("ADSL") > 0)
-					originator = dunningProperties.getProperty(Constants.WS_SETTINGS_SMS_ORIGINATOR_ADSL);
-				
-				commonProxyService.sendSms("", msg, originator,customerId,true);
+				String debit = invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId).toString();
+				String dpdStepName = detail.getProcessStepId().getStepName();
+				commonProxyService.sendSms(customerId, debit , dpdStepName  );
 			}catch(Exception ee){}
 			
 		} catch (Exception ex) {

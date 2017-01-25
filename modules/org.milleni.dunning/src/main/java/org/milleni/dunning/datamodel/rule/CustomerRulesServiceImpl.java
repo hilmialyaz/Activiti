@@ -90,8 +90,11 @@ public class CustomerRulesServiceImpl extends AbstractRuleService implements Cus
 	@Transactional
 	public void updateCustomerInfoWithDetails(DelegateExecution execution) {
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
-		if(customerId!=null)
-			customerService.updateCustomerInfoFromTecon(execution.getProcessInstanceId(),customerId,true);
+		if(customerId!=null){
+			Customer customer = customerService.findOne(customerId);
+			if(customer==null)
+				customerService.updateCustomerInfoFromTecon(execution.getProcessInstanceId(),customerId,true);
+		}
 		else
 			throwNotRetryError(execution,Constants.ERROR,Constants.CUSTOMER_ID_NOT_FOUND);
 	}

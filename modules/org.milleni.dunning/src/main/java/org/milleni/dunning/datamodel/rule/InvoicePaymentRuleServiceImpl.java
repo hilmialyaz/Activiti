@@ -112,10 +112,13 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 		if(invoiceAmount==null || invoiceAmount==0)
 			return false;
 		
+		Long maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_INVOICE_LIMIT));
+		if(invoiceAmount<maxInvoiceLimit)
+			return false;
+		
 		Customer customer= customerService.updateCustomerStatusFromTecon("", customerId);
 		
 		if(Constants.AKTIF.equalsIgnoreCase(customer.getStatus())){
-			Long maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_INVOICE_LIMIT));
 			if(invoiceAmount>maxInvoiceLimit){
 				List<CustomerInvoices> invoiceList = invoiceRepository.getCustomerUnpaidInvoices(customerId);
 				if(invoiceList!=null && invoiceList.size()==1){
@@ -134,8 +137,8 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 			List<CustomerInvoices> invoiceList = invoiceRepository.getCustomerUnpaidInvoices(customerId);
 			if(invoiceList!=null && invoiceList.size()==1){
 				CustomerInvoices inv = invoiceList.get(0);
-				Long maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_ADSL_SUSPENSION_INVOICE_LIMIT));
-				if(invoiceAmount<maxInvoiceLimit){
+				Long maxSuspensionInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_ADSL_SUSPENSION_INVOICE_LIMIT));
+				if(invoiceAmount<maxSuspensionInvoiceLimit){
 					return false;
 				}else{
 					Date now = new Date();
@@ -143,7 +146,9 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 						return false;
 					}
 				}				
-			}	
+			}else if(invoiceList==null || invoiceList.size()==0){
+				return false;
+			}
 		}
 		System.out.println("dsd");
 		return true;

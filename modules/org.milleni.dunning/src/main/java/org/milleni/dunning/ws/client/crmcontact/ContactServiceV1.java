@@ -46,8 +46,8 @@ public interface ContactServiceV1 {
      * @param request
      * @return
      *     returns org.milleni.dunning.ws.client.crmcontact.SendSmsByBillingCustomerNoResponseModel
-     * @throws ContactServiceV1SendSmsByBillingCustomerNoBusinessFaultFaultFaultMessage
      * @throws ContactServiceV1SendSmsByBillingCustomerNoSystemFaultFaultFaultMessage
+     * @throws ContactServiceV1SendSmsByBillingCustomerNoBusinessFaultFaultFaultMessage
      */
     @WebMethod(operationName = "SendSmsByBillingCustomerNo", action = "/CustomerInfo/Service/v1/ContactServiceV1/SendSmsByBillingCustomerNo")
     @WebResult(name = "SendSmsByBillingCustomerNoResult", targetNamespace = "/CustomerInfo/Service/v1")
@@ -57,6 +57,21 @@ public interface ContactServiceV1 {
         @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
         SendSmsByBillingCustomerNoRequestModel request)
         throws ContactServiceV1SendSmsByBillingCustomerNoBusinessFaultFaultFaultMessage, ContactServiceV1SendSmsByBillingCustomerNoSystemFaultFaultFaultMessage
+    ;
+
+    /**
+     * 
+     * @param request
+     * @throws ContactServiceV1SendDunningSmsBusinessFaultFaultFaultMessage
+     * @throws ContactServiceV1SendDunningSmsSystemFaultFaultFaultMessage
+     */
+    @WebMethod(operationName = "SendDunningSms", action = "/CustomerInfo/Service/v1/ContactServiceV1/SendDunningSms")
+    @RequestWrapper(localName = "SendDunningSms", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmcontact.SendDunningSms")
+    @ResponseWrapper(localName = "SendDunningSmsResponse", targetNamespace = "/CustomerInfo/Service/v1", className = "org.milleni.dunning.ws.client.crmcontact.SendDunningSmsResponse")
+    public void sendDunningSms(
+        @WebParam(name = "request", targetNamespace = "/CustomerInfo/Service/v1")
+        SendDunningSmsRequestModel request)
+        throws ContactServiceV1SendDunningSmsBusinessFaultFaultFaultMessage, ContactServiceV1SendDunningSmsSystemFaultFaultFaultMessage
     ;
 
 }

@@ -38,8 +38,10 @@ import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestRespons
 import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestToAccountRequestModel;
 import org.milleni.dunning.ws.client.crmaccountcoa.SendAnnounceByBillingCustomerNoRequestModel;
 import org.milleni.dunning.ws.client.crmcontact.ContactServiceV1;
+import org.milleni.dunning.ws.client.crmcontact.SendDunningSmsRequestModel;
 import org.milleni.dunning.ws.client.crmcontact.SendSmsByBillingCustomerNo;
 import org.milleni.dunning.ws.client.crmcontact.SendSmsByBillingCustomerNoRequestModel;
+import org.milleni.dunning.ws.client.crmcontact.SmsCode;
 import org.milleni.dunning.ws.client.customerservice.CustomerInfoServiceSoap;
 import org.milleni.dunning.ws.client.customerservice.TeconCustomerInfoResponse;
 import org.milleni.dunning.ws.client.customerstatus.CustomerStatusOperationsSoap;
@@ -231,28 +233,22 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 		return customerInfoService.retrieveCustomerCdr(guid, customerId.longValue());
 	}
 
-	public String sendSms(String number, String message, String originator, Long customerId) {
 
-		return sendSmsBase(message, originator, customerId,false);
+	public String sendSms(Long customerId,String debit , String code) {
+		return sendSmsBase(customerId, debit , code );
 	}
-
-	public String sendSms(String number, String message, String originator, Long customerId,boolean dayTime) {
-
-		return sendSmsBase(message, originator, customerId,dayTime);
-	}
-	public String sendSmsBase(String message, String originator, Long customerId,boolean dayTime) {
+	
+	public String sendSmsBase(Long customerId,String debit , String code) {
 		((BindingProvider) crmContactService).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, dunningProperties.getProperty(Constants.WS_CRM_CONTACT_ENDPOINT));
 
-		SendSmsByBillingCustomerNoRequestModel request = new SendSmsByBillingCustomerNoRequestModel();
+		SendDunningSmsRequestModel request = new SendDunningSmsRequestModel();
 		org.milleni.dunning.ws.client.crmcontact.ObjectFactory fact = new org.milleni.dunning.ws.client.crmcontact.ObjectFactory();
-
 		request.setSmsSenderApplication(org.milleni.dunning.ws.client.crmcontact.SmsSenderApplication.DUNNING);
-		request.setBillingCustomerNo(fact.createSendSmsByBillingCustomerNoRequestModelBillingCustomerNo(customerId.toString()));
-		request.setOriginator(fact.createSendSmsByBillingCustomerNoRequestModelOriginator(originator));
-		request.setSmsText(fact.createSendSmsByBillingCustomerNoRequestModelSmsText(message));
-		request.setDayTime(dayTime);
+		request.setBillingCustomerNo(fact.createSendSmsByBillingCustomerNoRequestModelBillingCustomerNo(customerId.toString()));		
+		request.setDebit(fact.createSendDunningSmsRequestModelDebit(debit));
+		request.setSmsCode(fact.createSendDunningSmsRequestModelSmsCode(code));
 		try {
-			crmContactService.sendSmsByBillingCustomerNo(request);
+			crmContactService.sendDunningSms(request);
 		} catch (Exception e) {
 			return "105|" + e.getMessage().toString();
 		}	

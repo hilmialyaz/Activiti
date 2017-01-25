@@ -10,8 +10,8 @@ import javax.xml.ws.WebFault;
  * Generated source version: 2.1
  * 
  */
-@WebFault(name = "SystemFault", targetNamespace = "http://milleni.com/technical/Fault")
-public class ContatServiceV1UpdateContactInfoSystemFaultFaultFaultMessage
+@WebFault(name = "BusinessFault", targetNamespace = "http://milleni.com/technical/Fault")
+public class ContactServiceV1SendDunningSmsBusinessFaultFaultFaultMessage
     extends Exception
 {
 
@@ -19,14 +19,14 @@ public class ContatServiceV1UpdateContactInfoSystemFaultFaultFaultMessage
      * Java type that goes as soapenv:Fault detail element.
      * 
      */
-    private SystemFault faultInfo;
+    private BusinessFault faultInfo;
 
     /**
      * 
      * @param message
      * @param faultInfo
      */
-    public ContatServiceV1UpdateContactInfoSystemFaultFaultFaultMessage(String message, SystemFault faultInfo) {
+    public ContactServiceV1SendDunningSmsBusinessFaultFaultFaultMessage(String message, BusinessFault faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
     }
@@ -37,7 +37,7 @@ public class ContatServiceV1UpdateContactInfoSystemFaultFaultFaultMessage
      * @param faultInfo
      * @param cause
      */
-    public ContatServiceV1UpdateContactInfoSystemFaultFaultFaultMessage(String message, SystemFault faultInfo, Throwable cause) {
+    public ContactServiceV1SendDunningSmsBusinessFaultFaultFaultMessage(String message, BusinessFault faultInfo, Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }
@@ -45,9 +45,9 @@ public class ContatServiceV1UpdateContactInfoSystemFaultFaultFaultMessage
     /**
      * 
      * @return
-     *     returns fault bean: org.milleni.dunning.ws.client.crmcontact.SystemFault
+     *     returns fault bean: org.milleni.dunning.ws.client.crmcontact.BusinessFault
      */
-    public SystemFault getFaultInfo() {
+    public BusinessFault getFaultInfo() {
         return faultInfo;
     }
 

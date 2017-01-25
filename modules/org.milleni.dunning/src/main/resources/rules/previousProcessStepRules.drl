@@ -181,12 +181,7 @@ rule 'adim Deaktivasyon ise Ayin Son is gunune  at'
 		calendar.set(Calendar.DATE,maxDay);
 		System.out.println("maxDay"+maxDay);
 		
-		if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-			maxDay--;
-		}
-		if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-			maxDay=maxDay-2;
-		}
+		maxDay=maxDay-2;		
 		System.out.println("maxDay"+maxDay);
 		Calendar calendarNow = Calendar.getInstance();
 		int now = calendarNow.get(Calendar.DAY_OF_MONTH);

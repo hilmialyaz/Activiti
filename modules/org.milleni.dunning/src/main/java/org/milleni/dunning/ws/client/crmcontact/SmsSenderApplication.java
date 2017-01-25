@@ -31,6 +31,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="DUNNING"/>
  *     &lt;enumeration value="BILLING"/>
  *     &lt;enumeration value="CRM-THK-CHURN"/>
+ *     &lt;enumeration value="REPORTING"/>
+ *     &lt;enumeration value="ACS"/>
+ *     &lt;enumeration value="NETWORK_DSL"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -57,7 +60,10 @@ public enum SmsSenderApplication {
     DUNNING("DUNNING"),
     BILLING("BILLING"),
     @XmlEnumValue("CRM-THK-CHURN")
-    CRM_THK_CHURN("CRM-THK-CHURN");
+    CRM_THK_CHURN("CRM-THK-CHURN"),
+    REPORTING("REPORTING"),
+    ACS("ACS"),
+    NETWORK_DSL("NETWORK_DSL");
     private final String value;
 
     SmsSenderApplication(String v) {
