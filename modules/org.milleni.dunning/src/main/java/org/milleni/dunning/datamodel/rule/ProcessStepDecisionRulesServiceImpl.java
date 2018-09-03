@@ -90,7 +90,7 @@ public class ProcessStepDecisionRulesServiceImpl extends AbstractRuleService imp
 		execution.setVariable(Constants.processStepName, processStepText);// Son
 		execution.setVariable(Constants.deaktifseAtla, deaktifseAtla);
 
-		if(processStartStep &&  Constants.DEACTIVATION.equalsIgnoreCase(processStepText) && !Constants.DEAKTIF.equalsIgnoreCase(customer.getStatus())){
+		if(processStartStep && processStepText.toLowerCase().indexOf(Constants.DEACTIVATION.toLowerCase())>=0 && !Constants.DEAKTIF.equalsIgnoreCase(customer.getStatus())){
 			int canIDeactivate =0;
 			int procParam =0;
 			//dunningProcessMasterRepository.canIDeactivateCustomer(customerId,canIDeactivate,procParam);
@@ -102,6 +102,13 @@ public class ProcessStepDecisionRulesServiceImpl extends AbstractRuleService imp
 				execution.setVariable(Constants.processStartStep, processStartStep);
 			}
 		}
+		
+		if(!processStartStep &&   processStepText.toLowerCase().indexOf(Constants.DEACTIVATION.toLowerCase())>=0 && Constants.DEAKTIF.equalsIgnoreCase(customer.getStatus())){
+			processStartStep=true;
+			deaktifseAtla =true;
+			execution.setVariable(Constants.deaktifseAtla, deaktifseAtla);
+		}
+		
 		
 		if (processStartStep) {
 			DunningProcessDetail detail = dunningProcessService.createDunningProcessDetail(dunningProcessMaster, policyStep.getProcessSteps());

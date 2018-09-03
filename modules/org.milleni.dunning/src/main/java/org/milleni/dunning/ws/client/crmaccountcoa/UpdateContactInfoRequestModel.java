@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="ApproveNotification" type="{/CustomerInfo/Service/v1}ApproveNotificationEnum" minOccurs="0"/>
  *         &lt;element name="BillingCustomerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Email" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="IpAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="MobilePhone" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -38,6 +39,7 @@ import javax.xml.bind.annotation.XmlType;
     "approveNotification",
     "billingCustomerId",
     "email",
+    "ipAddress",
     "mobilePhone"
 })
 public class UpdateContactInfoRequestModel {
@@ -50,6 +52,8 @@ public class UpdateContactInfoRequestModel {
     protected String billingCustomerId;
     @XmlElementRef(name = "Email", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> email;
+    @XmlElementRef(name = "IpAddress", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> ipAddress;
     @XmlElementRef(name = "MobilePhone", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> mobilePhone;
 
@@ -147,6 +151,30 @@ public class UpdateContactInfoRequestModel {
      */
     public void setEmail(JAXBElement<String> value) {
         this.email = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the ipAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getIpAddress() {
+        return ipAddress;
+    }
+
+    /**
+     * Sets the value of the ipAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setIpAddress(JAXBElement<String> value) {
+        this.ipAddress = ((JAXBElement<String> ) value);
     }
 
     /**

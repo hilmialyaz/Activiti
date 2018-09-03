@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for UpdateContactInfoResponseModel complex type.
+ * <p>Java class for RemoveCreditCardOrderResponseModel complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="UpdateContactInfoResponseModel">
+ * &lt;complexType name="RemoveCreditCardOrderResponseModel">
  *   &lt;complexContent>
  *     &lt;extension base="{http://schemas.datacontract.org/2004/07/ServiceCatalog.Model}BaseResponseModel">
  *       &lt;sequence>
@@ -25,8 +25,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UpdateContactInfoResponseModel")
-public class UpdateContactInfoResponseModel
+@XmlType(name = "RemoveCreditCardOrderResponseModel")
+public class RemoveCreditCardOrderResponseModel
     extends BaseResponseModel
 {
 

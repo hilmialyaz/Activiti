@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="AddDeactivationRequestResult" type="{/CustomerInfo/Service/v1}AddDeactivationRequestResponseModel" minOccurs="0"/>
+ *         &lt;element name="AddDeactivationRequestResult" type="{/CustomerInfo/Service/v1}AddProcessResponseModel" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,17 +36,17 @@ import javax.xml.bind.annotation.XmlType;
 public class AddDeactivationRequestResponse {
 
     @XmlElementRef(name = "AddDeactivationRequestResult", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
-    protected JAXBElement<AddDeactivationRequestResponseModel> addDeactivationRequestResult;
+    protected JAXBElement<AddProcessResponseModel> addDeactivationRequestResult;
 
     /**
      * Gets the value of the addDeactivationRequestResult property.
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link AddDeactivationRequestResponseModel }{@code >}
+     *     {@link JAXBElement }{@code <}{@link AddProcessResponseModel }{@code >}
      *     
      */
-    public JAXBElement<AddDeactivationRequestResponseModel> getAddDeactivationRequestResult() {
+    public JAXBElement<AddProcessResponseModel> getAddDeactivationRequestResult() {
         return addDeactivationRequestResult;
     }
 
@@ -55,11 +55,11 @@ public class AddDeactivationRequestResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link AddDeactivationRequestResponseModel }{@code >}
+     *     {@link JAXBElement }{@code <}{@link AddProcessResponseModel }{@code >}
      *     
      */
-    public void setAddDeactivationRequestResult(JAXBElement<AddDeactivationRequestResponseModel> value) {
-        this.addDeactivationRequestResult = ((JAXBElement<AddDeactivationRequestResponseModel> ) value);
+    public void setAddDeactivationRequestResult(JAXBElement<AddProcessResponseModel> value) {
+        this.addDeactivationRequestResult = ((JAXBElement<AddProcessResponseModel> ) value);
     }
 
 }

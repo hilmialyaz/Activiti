@@ -69,7 +69,7 @@ public interface BpmWsDelegateService {
 	
 	public void suspendCrmAccount(Long customerId , DunningProcessMaster dpm ,DunningProcessDetail detail); 
 	public void activateCrmAccount(Long customerId , DunningProcessDetail detail); 
-	public void deactivateCrmAccount(Long customerId) throws BpmnError; 
+	public void deactivateCrmAccount(Long customerId,String reason) throws BpmnError; 
 	
 	public void sendOdemeBildirimSms(DelegateExecution execution);	
 	public void sendOdemeGelmediSms(DelegateExecution execution);

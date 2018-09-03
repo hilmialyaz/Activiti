@@ -18,6 +18,7 @@ import org.milleni.dunning.datamodel.dao.CustomerInvoicesRepository;
 import org.milleni.dunning.datamodel.model.Customer;
 import org.milleni.dunning.datamodel.model.CustomerInvoices;
 import org.milleni.dunning.datamodel.model.DunningProcessDetail;
+import org.milleni.dunning.datamodel.model.DunningProcessMaster;
 import org.milleni.dunning.datamodel.service.CustomerService;
 import org.milleni.dunning.datamodel.service.DunningProcessService;
 import org.milleni.dunning.datamodel.util.Constants;
@@ -92,8 +93,17 @@ public class SuspensionRuleServiceImpl extends AbstractRuleService implements Su
 		}
 
 		Double invoiceAmount = invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId);
-
+		DunningProcessMaster dpMaster = customer.getDunningProcessMaster();
+		if(dpMaster!=null && dpMaster.getDunningPolicyId()!=null && Constants.yeniAktivasyonYabanciDunning.equals(dpMaster.getDunningPolicyId().getPolicyName())){
+			return;
+		}
+		
 		if (customer.getCustomerGroup() != null) {
+			
+			if(customer.getCustomerGroup().getGroupName().toLowerCase().contains("kamu")){
+				throwBpmError(execution, Constants.NOT_RETRY_ERROR, Constants.WARNING, Constants.KAMU_SUSPEND_OLMAMALI);
+			}
+			
 			Long maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_ADSL_SUSPENSION_INVOICE_LIMIT));
 			if (Constants.KURUMSAL.equalsIgnoreCase(customer.getCustomerType().getTypeName())) {
 				maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_SES_SUSPENSION_INVOICE_LIMIT));

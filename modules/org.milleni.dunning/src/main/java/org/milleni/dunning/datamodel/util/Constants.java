@@ -2,6 +2,12 @@ package org.milleni.dunning.datamodel.util;
 
 public interface Constants {
 	
+	String yabanciDunning="FL401_YabanciAdslDunningProcess";
+	String yeniAktivasyonYabanciDunning="FL402_YeniYabanciAdslDunningProcess";
+
+	String bireyselDunning ="FL201_BireyselAdslDunningProcess";
+	
+	
 	String applicationName = "Dunning";
 	String user = "User";
 	
@@ -25,7 +31,10 @@ public interface Constants {
 	String PAID_AND_FINISHED = "P";
 	String MANUAL_FINISHED = "MF";
 	String SKIPPED = "SK";
-	
+	String NOT_EXECUTED_4PAYMENT = "NAFP";
+	String UNDER_LIMIT_SKIPPED = "ULSK";
+	String FINISHED_UNDER_LIMIT = "ULF";
+
 	String DROOLS_URL = "dunning.path.link.drools";
 	/*
 	 * Detail status
@@ -97,6 +106,7 @@ public interface Constants {
 	String CRM_DEACTIVATION_FAILED = "CrmDeactivationFailed";
 	String SUSPENSION_POSTPONE = "ERR_SUSP";
 	String SUSPENSION_POSTPONE_DESC = "Abone borcu limitin aldında suspend edilemez.";
+	String KAMU_SUSPEND_OLMAMALI = "Kamu abonesi olarak girmeli ve suspend olamaz";
 	String WARNING_NO_UNPAID_INVOICE= "Musteri Faturasi Yok veya 10TL den Az";
 	String CrmAccountNotFound = "ACCOUNT_NOT_FOUND";
 
@@ -270,4 +280,6 @@ public interface Constants {
 	
 	
 	String DEACTIVATION="Deaktivasyon";
+	static String YENI_YABANCI_DEACTIVATION_REASON ="Yabancı Yeni Müşteri – İlk Fatura Ödememe";
+	static String DEACTIVATION_REASON ="Borçtan Deaktivasyon";
 }

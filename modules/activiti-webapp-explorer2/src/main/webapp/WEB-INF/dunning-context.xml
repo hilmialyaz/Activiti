@@ -71,7 +71,7 @@
 		serviceClass="org.milleni.dunning.ws.client.customerservice.CustomerInfoServiceSoap"
 		address="http://localhost:8328/CustomerInfoService.asmx" />
 
-   
+
 
 	<jaxws:client id="coaService"
 		serviceClass="org.milleni.dunning.ws.client.coa.COASoap"
@@ -104,15 +104,13 @@
 	<jaxws:client id="crmCustomerService"
 		serviceClass="org.milleni.dunning.ws.client.crm.CustomerInfoServiceV1"		/>
 		
-	 
-	 <jaxws:client id="freezeService"
+	<jaxws:client id="freezeService"
 		serviceClass="org.milleni.dunning.ws.client.freezexdsl.IFreezeDunningService"		address="http://localhost:7636/DunningFreezeService.svc" />	
-		
-
+			
 	<jaxws:client id="notificationService"
 		serviceClass="org.milleni.dunning.ws.client.notif.INotificationServiceV1"		address="http://192.168.2.88:8230/NotificationService/NotificationServiceV1.svc" />	
 		
 	<jaxws:client id="crmContactService" serviceClass="org.milleni.dunning.ws.client.crmcontact.ContactServiceV1"/>
-			
 	<jaxws:client id="crmAccountService" serviceClass="org.milleni.dunning.ws.client.crmaccountcoa.AccountServiceV1"/>	
+	<jaxws:client id="ttsService" serviceClass="org.milleni.dunning.ws.client.tts.ITTSServiceV1"		/>	
 </beans>

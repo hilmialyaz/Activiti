@@ -29,15 +29,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DocumentInfo", namespace = "http://milleni.com/Bpm", propOrder = {
+@XmlType(name = "DocumentInfo", propOrder = {
     "code",
     "url"
 })
 public class DocumentInfo {
 
-    @XmlElementRef(name = "Code", namespace = "http://milleni.com/Bpm", type = JAXBElement.class)
+    @XmlElementRef(name = "Code", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> code;
-    @XmlElementRef(name = "Url", namespace = "http://milleni.com/Bpm", type = JAXBElement.class)
+    @XmlElementRef(name = "Url", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> url;
 
     /**

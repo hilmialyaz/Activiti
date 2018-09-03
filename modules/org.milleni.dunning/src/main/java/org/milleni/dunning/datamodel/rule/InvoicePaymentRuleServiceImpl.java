@@ -47,7 +47,7 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 
 	@Autowired
 	CustomerService customerService;
-
+	
 	@Autowired
 	CommonProxySerivce commonProxyService;
 	
@@ -81,7 +81,7 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 	
 	@Transactional(readOnly = true, noRollbackFor = { BpmnError.class })
 	public void checkInvoicePaymentStatusWithCustomerId(Long customerId ) throws Exception {
-		boolean customerHasUnpaidBill = customerHasUnpaidBillInLimit(customerId,true);
+		boolean customerHasUnpaidBill = customerHasUnpaidBillInLimitNewTx(customerId,true);
 		if(!customerHasUnpaidBill)
 			throw new BpmnError(Constants.PAYMENT_RECEIVED, "Fatura Odemesi Gerceklesti.");
 	}
@@ -92,7 +92,7 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 		DunningProcessDetail detail = dunningProcessDetailRepository.findOne(detailId);
 		Long customerId = detail.getProcessId().getCustomerId().getCustomerId();
 		
-		boolean customerHasUnpaidBill = customerHasUnpaidBillInLimit(customerId,true);
+		boolean customerHasUnpaidBill = customerHasUnpaidBillInLimitNewTx(customerId,true);
 		if(!customerHasUnpaidBill)
 			throw new BpmnError(Constants.PAYMENT_RECEIVED, "Fatura Odemesi Gerceklesti.");
 	}
@@ -102,9 +102,10 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 		bpmWsDelegateService.retrieveSapPaymentStatus(customerId);
 	}
 	
-	
-	
-	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public boolean customerHasUnpaidBillInLimitNewTx(Long customerId,boolean checkSap) throws Exception{
+		return customerHasUnpaidBillInLimit(customerId, checkSap);
+	}
 	
 	public boolean customerHasUnpaidBillInLimit(Long customerId,boolean checkSap) throws Exception{
 		if(checkSap) bpmWsDelegateService.retrieveSapPaymentStatus(customerId);
@@ -115,7 +116,7 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 		Long maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_INVOICE_LIMIT));
 		if(invoiceAmount<maxInvoiceLimit)
 			return false;
-		
+		/*
 		Customer customer= customerService.updateCustomerStatusFromTecon("", customerId);
 		
 		if(Constants.AKTIF.equalsIgnoreCase(customer.getStatus())){
@@ -133,24 +134,30 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 			}else{
 				return false;
 			}
-		}if(Constants.SUSPEND.equalsIgnoreCase(customer.getStatus())){
+		}
+		if(Constants.SUSPEND.equalsIgnoreCase(customer.getStatus())){
 			List<CustomerInvoices> invoiceList = invoiceRepository.getCustomerUnpaidInvoices(customerId);
 			if(invoiceList!=null && invoiceList.size()==1){
 				CustomerInvoices inv = invoiceList.get(0);
 				Long maxSuspensionInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_ADSL_SUSPENSION_INVOICE_LIMIT));
 				if(invoiceAmount<maxSuspensionInvoiceLimit){
 					return false;
-				}else{
+				}
+				/*
+				else{
+					
 					Date now = new Date();
 					if(inv.getInvoiceDueDate()!=null && (now.getTime()-inv.getInvoiceDueDate().getTime())<(1000 * 60 * 60 * 24 * 10)){
 						return false;
 					}
-				}				
+				}
+						
 			}else if(invoiceList==null || invoiceList.size()==0){
 				return false;
 			}
+			
 		}
-		System.out.println("dsd");
+		*/
 		return true;
 	}
 	

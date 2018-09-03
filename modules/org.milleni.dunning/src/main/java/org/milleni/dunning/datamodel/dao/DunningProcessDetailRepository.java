@@ -61,5 +61,10 @@ public interface DunningProcessDetailRepository extends BaseRepository<DunningPr
 	  @Query("update DunningProcessDetail dpd set dpd.status='R', dpd.statusDate=?2 where dpd.processDetailId in (?1)")
 	  int updateDetailNotificationToRunning(List<Long> detail ,Date now);
 	  
+	  @Transactional(propagation = Propagation.REQUIRES_NEW)
+	  @Modifying
+	  @Query("update DunningProcessDetail dpd set dpd.status='S', dpd.statusDate=?2 where dpd.processDetailId in (?1)")
+	  int updateDetailNotificationToSuccess(List<Long> detail ,Date now);
+	  
 
 }

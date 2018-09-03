@@ -1,13 +1,18 @@
 package org.milleni.dunning.datamodel.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import javax.persistence.LockModeType;
 
 import org.milleni.dunning.datamodel.model.Customer;
 import org.milleni.dunning.datamodel.model.DunningProcessDetail;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -28,7 +33,15 @@ public interface CustomerRepository extends BaseRepository<Customer, Long> , Jpa
 	Object[] findByTheCustomerById(Long  customerId);
 	
 	
+	@Modifying
+	@Query("update Customer cu set cu.status=?2, cu.lastStatusUpdateDate=?3 where cu.customerId =?1")
+	int updateCustomerStatus(long customerId,String status ,Date now); 
 	
+	
+	@Transactional(readOnly = true)
+	@Lock(LockModeType.PESSIMISTIC_READ)
+	@Query("SELECT c FROM Customer c WHERE c.customerId =?1")
+	Customer findOneReadOnly(Long  customerId);
 	
 	@Transactional(readOnly = true)
 	@Query(nativeQuery = true, value="SELECT * FROM CUSTOMER CU WHERE CU.CUSTOMER_ID in (?1) ")

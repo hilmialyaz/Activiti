@@ -11,7 +11,7 @@ import javax.xml.ws.WebFault;
  * 
  */
 @WebFault(name = "SystemFault", targetNamespace = "http://milleni.com/technical/Fault")
-public class AccountServiceV1RemoveCreditCardOrderSystemFaultFaultFaultMessage
+public class AccountServiceV1AddDeactivationRequestThenProcessSystemFaultFaultFaultMessage
     extends Exception
 {
 
@@ -26,7 +26,7 @@ public class AccountServiceV1RemoveCreditCardOrderSystemFaultFaultFaultMessage
      * @param message
      * @param faultInfo
      */
-    public AccountServiceV1RemoveCreditCardOrderSystemFaultFaultFaultMessage(String message, SystemFault faultInfo) {
+    public AccountServiceV1AddDeactivationRequestThenProcessSystemFaultFaultFaultMessage(String message, SystemFault faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
     }
@@ -37,7 +37,7 @@ public class AccountServiceV1RemoveCreditCardOrderSystemFaultFaultFaultMessage
      * @param faultInfo
      * @param cause
      */
-    public AccountServiceV1RemoveCreditCardOrderSystemFaultFaultFaultMessage(String message, SystemFault faultInfo, Throwable cause) {
+    public AccountServiceV1AddDeactivationRequestThenProcessSystemFaultFaultFaultMessage(String message, SystemFault faultInfo, Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }

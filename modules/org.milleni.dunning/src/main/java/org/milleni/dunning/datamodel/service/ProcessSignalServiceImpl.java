@@ -68,12 +68,24 @@ public class ProcessSignalServiceImpl implements ProcessSignalService {
 					}
 				}
 			}else{
-				Customer customer = customerService.findOne(customerId);
+				Customer customer = customerService.findOneReadOnly(customerId);
 				List<DunningProcessMaster> dunningPMasters = dunningProcessMasterRepository.findDunningProcessMastersByStatus(customerId, Constants.RUNNING);
 				for (DunningProcessMaster runningIns : dunningPMasters) {
 					runningIns.setStatus(dunningProcessMasterRepository.getProcessStatus(Constants.ERROR));
 					runningIns.setStatusDesc("BPM bitmis ama master surece yansimamis");
+					
+					List<ProcessInstance> processes = runtimeService.createProcessInstanceQuery().processInstanceId(runningIns.getBpmProcessId()).list();
+					for (ProcessInstance processInstance : processes) {
+						List<Execution> executions = null;
+						executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).messageEventSubscriptionName(Constants.messagePaymentReceived).list();
+						if (executions.size() > 0) {
+							//startProcessForPaymentReceived(customerId);
+							//return;
+							runtimeService.messageEventReceived(Constants.messagePaymentReceived, executions.get(0).getId());
+						}
+					}
 				}
+				 
 				dunningProcessMasterRepository.save(dunningPMasters);
 			}
 		} catch (Exception ex) {

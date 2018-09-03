@@ -127,10 +127,10 @@ public class Customer extends BaseModel implements Serializable {
 	@Size(max = 50)
 	@Column(name = "UPDATE_USER")
 	private String updateUser;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId",fetch=FetchType.LAZY)
 	private Collection<DunningProcessMaster> dunningProcessMasterCollection;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId",fetch=FetchType.LAZY)
 	private Collection<CustomerInvoices> customerInvoicesCollection;
 
 	@JoinColumn(name = "CUSTOMER_TYPE", referencedColumnName = "TYPE_ID")

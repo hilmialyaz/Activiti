@@ -11,7 +11,7 @@
     <sendTask id="sendMail" activiti:type="mail">
       <extensionElements>
         <activiti:field name="to">
-          <activiti:string>kermit@activiti.org</activiti:string>
+          <activiti:string>hilmi.alyaz@milleni.com.tr</activiti:string>
         </activiti:field>
         <activiti:field name="subject">
           <activiti:string>Hello Kermit!</activiti:string>

@@ -33,6 +33,8 @@ public interface DunningPolicyRepository extends BaseRepository<DunningPolicy, L
 	  @Cacheable("constants.cache")
 	  @Query("select x from DunningPolicy x where x.policyId = (SELECT max(d.policyId) FROM DunningPolicy d WHERE d.policyName = ?1 and d.validFrom<=?2 and (validTo is null or validTo>?2))")
 	  DunningPolicy findDunningPolicyByName(String  policyName,Date now);
+	  
+	 
 	
 	  
 	  @Query("SELECT dps  FROM DunningProcessMaster dpm, DunningPolicy dpo , DunningPolicySteps dps	where  dps.dunningPolicyStepsPK.policyId = dpm.dunningPolicyId    and dps.dunningPolicyStepsPK.policyId=dpo.policyId    and dpm.processId=?1 and dps.seqNum>?2  order by dps.seqNum")

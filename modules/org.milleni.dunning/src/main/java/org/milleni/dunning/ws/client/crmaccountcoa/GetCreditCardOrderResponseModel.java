@@ -16,11 +16,11 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="GetCreditCardOrderResponseModel">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{http://schemas.datacontract.org/2004/07/ServiceCatalog.Model}BaseResponseModel">
  *       &lt;sequence>
  *         &lt;element name="CreditCardOrder" type="{http://milleni.com/Payment}CreditCardOrder" minOccurs="0"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -31,7 +31,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "GetCreditCardOrderResponseModel", propOrder = {
     "creditCardOrder"
 })
-public class GetCreditCardOrderResponseModel {
+public class GetCreditCardOrderResponseModel
+    extends BaseResponseModel
+{
 
     @XmlElementRef(name = "CreditCardOrder", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<CreditCardOrder> creditCardOrder;

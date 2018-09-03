@@ -13,6 +13,9 @@ public interface InvoicePaymentRuleService {
 	public void checkInvoicePaymentStatus(DelegateExecution execution)  throws Exception;
 	public void checkSapPaymentStatus(DelegateExecution execution) throws Exception ;
 	public boolean customerHasUnpaidBillInLimit(Long customerId,boolean checkSap) throws Exception;
+	
+	public boolean customerHasUnpaidBillInLimitNewTx(Long customerId,boolean checkSap) throws Exception;
+	
 	public CustomerInvoices getCustomersFirstUnpaidInvoice(Long customerId);
 	public Double getCustomerUnpaidTotalInvoiceAmountBeforeSot(Long customerId);
 	public void checkInvoicePaymentStatusWithCustomerId(Long customerId ) throws Exception;

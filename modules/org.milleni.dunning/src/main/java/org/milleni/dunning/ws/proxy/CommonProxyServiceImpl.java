@@ -34,7 +34,6 @@ import org.milleni.dunning.ws.client.crmaccountcoa.AccountServiceV1;
 import org.milleni.dunning.ws.client.crmaccountcoa.AccountServiceV1SendIhtarAnnounceByBillingCustomerIdBusinessFaultFaultFaultMessage;
 import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequest;
 import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestResponse;
-import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestResponseModel;
 import org.milleni.dunning.ws.client.crmaccountcoa.AddDeactivationRequestToAccountRequestModel;
 import org.milleni.dunning.ws.client.crmaccountcoa.SendAnnounceByBillingCustomerNoRequestModel;
 import org.milleni.dunning.ws.client.crmcontact.ContactServiceV1;
@@ -80,6 +79,7 @@ import org.milleni.dunning.ws.client.tts.RequestPriorityEnum;
 import org.milleni.dunning.ws.client.tts.TTSServiceV1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.milleni.dunning.ws.client.crmaccountcoa.AddProcessResponseModel;
 
 @Service(value = "commonProxyService")
 public class CommonProxyServiceImpl implements CommonProxySerivce {
@@ -202,7 +202,7 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 			dat.setSubState(fac.createRequestDataSubState("Seçiniz"));
 			dat.setSubject(fac.createRequestDataSubject("Tahsilat"));
 			dat.setCallCenter(fac.createRequestDataCallCenter("Call Center A"));
-			dat.setChannel(RequestChannelEnum.CALLCENTER);
+			dat.setChannel(RequestChannelEnum.INBOUND);
 			
 			model.setRequestData(dat);
 			ttsService.createTickler(model);
@@ -342,18 +342,25 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 		return crmCustomerService.deactivateAccount(request);
 	}
 	
-	public AddDeactivationRequestResponseModel addDeactivationRequest(Long customerId) throws Exception  {
+	public AddProcessResponseModel addDeactivationRequest(Long customerId,String reason) throws Exception  {
 		((BindingProvider) crmAccountService).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, dunningProperties.getProperty(Constants.WS_COA_ENDPOINT));
 		org.milleni.dunning.ws.client.crmaccountcoa.ObjectFactory fact = new org.milleni.dunning.ws.client.crmaccountcoa.ObjectFactory();
 		AddDeactivationRequestToAccountRequestModel request = fact.createAddDeactivationRequestToAccountRequestModel();
 		request.setApplicationName("Dunning");
 		request.setBillingCustomerNumber(String.valueOf(customerId));
-		request.setReason("Borçtan Deaktivasyon");
+		request.setReason(Constants.DEACTIVATION_REASON);
 		request.setReasonId(905l);
+		if(reason!=null)
+			request.setReason(reason);		
+		
+		
+		if(Constants.YENI_YABANCI_DEACTIVATION_REASON.equals(request.getReason()))
+			request.setReasonId(1012l);
+		
 		request.setSendSms(true);
 		request.setSendToBilling(true);
 		request.setSendToNetwork(true);
-		request.setSendToTT(true);
+		request.setSendToOperator(true);
 		return crmAccountService.addDeactivationRequest(request);		
 	}
 

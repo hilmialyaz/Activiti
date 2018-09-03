@@ -1,9 +1,11 @@
 
 package org.milleni.dunning.ws.client.crmaccountcoa;
 
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -20,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="ApplicationName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="BillingCustomerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="CrmUserId" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid" minOccurs="0"/>
+ *         &lt;element name="IpAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,7 +35,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "RemoveSoftInvoiceRequestModel", propOrder = {
     "applicationName",
     "billingCustomerId",
-    "crmUserId"
+    "crmUserId",
+    "ipAddress"
 })
 public class RemoveSoftInvoiceRequestModel {
 
@@ -42,6 +46,8 @@ public class RemoveSoftInvoiceRequestModel {
     protected String billingCustomerId;
     @XmlElement(name = "CrmUserId")
     protected String crmUserId;
+    @XmlElementRef(name = "IpAddress", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> ipAddress;
 
     /**
      * Gets the value of the applicationName property.
@@ -113,6 +119,30 @@ public class RemoveSoftInvoiceRequestModel {
      */
     public void setCrmUserId(String value) {
         this.crmUserId = value;
+    }
+
+    /**
+     * Gets the value of the ipAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getIpAddress() {
+        return ipAddress;
+    }
+
+    /**
+     * Sets the value of the ipAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setIpAddress(JAXBElement<String> value) {
+        this.ipAddress = ((JAXBElement<String> ) value);
     }
 
 }

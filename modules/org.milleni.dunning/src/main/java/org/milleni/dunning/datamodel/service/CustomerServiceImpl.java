@@ -100,6 +100,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer findOne(Long id) {
 		return customerRepository.findOne(id);
 	}
+	
+	public Customer findOneReadOnly(Long id) {
+		return customerRepository.findOneReadOnly(id);
+	}
 
 	public int findByExampleRowCount(Customer customer) {
 		Criteria criteria = getCustomerExampleCriteria(customer);
@@ -126,9 +130,9 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void updateCustomerInfoFromTecon(String guid,Long customerId,boolean contractDetails) {
+	public void updateCustomerInfoFromTecon(String guid, Long customerId, boolean contractDetails) {
 		Customer customer = this.findOne(customerId);
-		TeconCustomerInfoResponse response = commonProxyService.retrieveExternalCustomerInfo(guid,customerId,contractDetails);
+		TeconCustomerInfoResponse response = commonProxyService.retrieveExternalCustomerInfo(guid, customerId, contractDetails);
 		if (response != null && response.getResultCode() == 0 && response.getCustomer() != null) {
 			TeconCustomerInfo teconCustomerInfo = response.getCustomer();
 			if (customer == null)
@@ -137,7 +141,7 @@ public class CustomerServiceImpl implements CustomerService {
 			customer.setStatus(teconCustomerInfo.getStatus());
 			CustomerGroup group = customerGroupRepository.findOne((long) teconCustomerInfo.getCustomerGroupId());
 			if (group == null) {
-				group = new CustomerGroup((long) teconCustomerInfo.getCustomerGroupId(), teconCustomerInfo.getCustomerGroup());				
+				group = new CustomerGroup((long) teconCustomerInfo.getCustomerGroupId(), teconCustomerInfo.getCustomerGroup());
 				customer.setCustomerGroup(group);
 				customerGroupRepository.save(group);
 			}
@@ -145,11 +149,11 @@ public class CustomerServiceImpl implements CustomerService {
 			// customer.setCustomerType(new CustomerT)
 			Iterable<CustomerType> customerTypes = this.listAllCustomerTypes();
 			for (CustomerType customerType : customerTypes) {
-				if(customerType.getTypeName().equalsIgnoreCase(teconCustomerInfo.getRegisterType())){
+				if (customerType.getTypeName().equalsIgnoreCase(teconCustomerInfo.getRegisterType())) {
 					customer.setCustomerType(customerType);
 				}
 			}
-			
+
 			if (teconCustomerInfo.getActivationDate() != null)
 				customer.setActivationDate(teconCustomerInfo.getActivationDate().toGregorianCalendar().getTime());
 
@@ -163,92 +167,98 @@ public class CustomerServiceImpl implements CustomerService {
 			customer.setTel2(teconCustomerInfo.getTel2());
 			customer.setMobil(teconCustomerInfo.getMobil());
 			customer.setFax(teconCustomerInfo.getFax());
-			if(teconCustomerInfo.getContractType()!=null)	customer.setContractType(teconCustomerInfo.getContractType());
+			if (teconCustomerInfo.getContractType() != null)
+				customer.setContractType(teconCustomerInfo.getContractType());
 			if (teconCustomerInfo.getFirstCdrDate() != null)
 				customer.setFirstCdrDate(teconCustomerInfo.getFirstCdrDate().toGregorianCalendar().getTime());
 			customer.setLastStatusUpdateDate(new Date());
 			customer.setRegisterNumber(teconCustomerInfo.getRegisterNumber());
 			this.saveCustomer(customer);
-		}else{
-			throw new RuntimeException(response.getResultCode()+" "+response.getResultDescription());
+		} else {
+			throw new RuntimeException(response.getResultCode() + " " + response.getResultDescription());
 		}
 	}
-
+	
+	
+	
+	public Customer updateCustomerStatusFromTeconCurrentTx(String guid, Long customerId) {
+		return updateCustomerStatusFromTecon(guid,customerId);
+	}
 	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public Customer updateCustomerStatusFromTecon(String guid,Long customerId) {
+	public Customer updateCustomerStatusFromTecon(String guid, Long customerId) {
 		Customer customer = this.findOne(customerId);
-		if(customer==null)
-			throw new RuntimeException(customerId+" "+Constants.CUSTOMER_ID_NOT_FOUND);
-		TeconCustomerInfoResponse response = commonProxyService.retrieveExternalCustomerStatus(guid,customerId);
+		if (customer == null)
+			throw new RuntimeException(customerId + " " + Constants.CUSTOMER_ID_NOT_FOUND);
+		TeconCustomerInfoResponse response = commonProxyService.retrieveExternalCustomerStatus(guid, customerId);
 		if (response != null && response.getResultCode() == 0 && response.getCustomer() != null) {
-			TeconCustomerInfo teconCustomerInfo = response.getCustomer();			
-			customer.setStatus(teconCustomerInfo.getStatus());			
-			customer.setLastStatusUpdateDate(new Date());
-			this.saveCustomer(customer);
-		}else{
-			throw new RuntimeException(response.getResultCode()+" "+response.getResultDescription());
+			TeconCustomerInfo teconCustomerInfo = response.getCustomer();
+			if (teconCustomerInfo.getStatus() != null && !teconCustomerInfo.getStatus().equals(customer.getStatus())) {
+
+				System.out.println("TESTxc d:" + customerId);
+				this.updateCustomerStatus(customer.getCustomerId(),teconCustomerInfo.getStatus());				
+				customer.setStatus(teconCustomerInfo.getStatus());
+				customer.setLastStatusUpdateDate(new Date());
+			}
+			
+		} else {
+			throw new RuntimeException(response.getResultCode() + " " + response.getResultDescription());
 		}
 		return customer;
 	}
-	 
-	public List<Customer> listCustomerByCustomerIdList(Set<Long> customerIds){
-		if(customerIds.size()==0)
+
+	public List<Customer> listCustomerByCustomerIdList(Set<Long> customerIds) {
+		if (customerIds.size() == 0)
 			return null;
 		return customerRepository.listCustomerByCustomerIdList(customerIds);
 	}
-	
-	public void retrieveCustomerAggreement(String guid,Long customerId) {
+
+	public void retrieveCustomerAggreement(String guid, Long customerId) {
 		Customer customer = this.findOne(customerId);
-		int response = commonProxyService.retrieveCustomerAgreementDocumentCount(guid,customerId);
-		if(response==0){
+		int response = commonProxyService.retrieveCustomerAgreementDocumentCount(guid, customerId);
+		if (response == 0) {
 			customer.setSozlesme(Constants.YOK);
-		}else{
+		} else {
 			customer.setSozlesme(Constants.VAR);
 		}
 		this.saveCustomer(customer);
 	}
-	
-	public CustomerGroup getCustomerGroup(Long customerGroupId){
+
+	public CustomerGroup getCustomerGroup(Long customerGroupId) {
 		return customerGroupRepository.findOne(customerGroupId);
 	}
-	
-	
-	
-	
-	public void retrieveCustomerTaksitCount(String guid,Long customerId) {
+
+	public void retrieveCustomerTaksitCount(String guid, Long customerId) {
 		Customer customer = this.findOne(customerId);
-		int response = commonProxyService.retrieveCustomerTaksitCount(guid,customerId);
+		int response = commonProxyService.retrieveCustomerTaksitCount(guid, customerId);
 		customer.setTaksitSayisi(response);
 		customerRepository.save(customer);
 	}
-	
-	
-	public void retrieveCustomerTicklerCount(String guid,Long customerId) {
+
+	public void retrieveCustomerTicklerCount(String guid, Long customerId) {
 		Customer customer = this.findOne(customerId);
-		if(customer.getFirstCdrDate()!=null)
+		if (customer.getFirstCdrDate() != null)
 			return;
-		int openTicklerCount = commonProxyService.getTicklerCount(customerId);	
+		int openTicklerCount = commonProxyService.getTicklerCount(customerId);
 		customer.setSikayetSayisi(openTicklerCount);
 		customerRepository.save(customer);
 	}
-	
-	public void retrieveCustomerHasCdr(String guid,Long customerId) {
+
+	public void retrieveCustomerHasCdr(String guid, Long customerId) {
 		Customer customer = this.findOne(customerId);
-		boolean hasCdr = commonProxyService.retrieveCustomerHasCdr(guid,customerId);
-		if(hasCdr){
-			Calendar cal =  GregorianCalendar.getInstance();
+		boolean hasCdr = commonProxyService.retrieveCustomerHasCdr(guid, customerId);
+		if (hasCdr) {
+			Calendar cal = GregorianCalendar.getInstance();
 			cal.set(Calendar.YEAR, 1900);
 			customer.setFirstCdrDate(cal.getTime());
 			customerRepository.save(customer);
 		}
 	}
-	
+
 	public Iterable<CustomerType> listAllCustomerTypes() {
 		return customerTypeRepository.findAll();
 	}
 
-	
 	public Iterable<CustomerGroup> listAllCustomerGroups() {
 		return customerGroupRepository.findAll();
 	}
@@ -259,6 +269,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 	public void saveCustomer(Customer customer) {
 		customerRepository.save(customer);
+	}
+
+	public void updateCustomerStatus(long customerId,String status) {
+		customerRepository.updateCustomerStatus(customerId, status, new Date());
 	}
 
 	@Override

@@ -110,8 +110,16 @@ public class HobimDataServiceImpl implements HobimDataService {
 		List<Object[]> dpDetails = dunningProcessDetailRepository.findNotificationStateDunningProcessDetail(stepName, new PageRequest(0,maxRetrieveInOneExecution));
 		
 		List<Long> objects = new ArrayList<Long>();
-		for (Object[] obj : dpDetails) 	objects.add(((DunningProcessDetail)obj[0]).getProcessDetailId());			
-		if(objects.size()>0) dunningProcessDetailRepository.updateDetailNotificationToRunning(objects,new Date());
+		for (Object[] obj : dpDetails) 	
+			objects.add(((DunningProcessDetail)obj[0]).getProcessDetailId());
+		
+		if(objects.size()>0){
+			List<List<Long>> parts = chopped(objects,1000);
+			for (List<Long> part : parts) {
+				dunningProcessDetailRepository.updateDetailNotificationToRunning(part,new Date());
+			}
+		}
+		List<Long> feedDetails = new ArrayList<Long>();
 		
 		Customer customer =null;
 		for (Object[] obj : dpDetails) {
@@ -122,8 +130,10 @@ public class HobimDataServiceImpl implements HobimDataService {
 				currentDetailId = dpDetail.getProcessDetailId();
 				
 				boolean customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimit(customer.getCustomerId(), true);
-				if (customerHasUnpaidBill)
+				if (customerHasUnpaidBill){
 					feedLetterData(customer, dpDetail);
+					feedDetails.add(dpDetail.getProcessDetailId());
+				}
 				else
 					processSignalService.signalCustomerProcessIfPaymentReceived(customer.getCustomerId());
 			} catch (Exception e) {
@@ -133,10 +143,28 @@ public class HobimDataServiceImpl implements HobimDataService {
 		}
 		
 		if (sbMain.toString().length() > 0) {
-			writeToFile(execution, stepName);			
+			writeToFile(execution, stepName);
+			
+			if(feedDetails.size()>0){
+				List<List<Long>> parts = chopped(feedDetails,1000);
+				for (List<Long> part : parts) {
+					dunningProcessDetailRepository.updateDetailNotificationToSuccess(part,new Date());
+				}
+			}
 		}
 	}
 
+	static <T> List<List<T>> chopped(List<T> list, final int L) {
+	    List<List<T>> parts = new ArrayList<List<T>>();
+	    final int N = list.size();
+	    for (int i = 0; i < N; i += L) {
+	        parts.add(new ArrayList<T>(
+	            list.subList(i, Math.min(N, i + L)))
+	        );
+	    }
+	    return parts;
+	}
+	
 	public void feedLetterData(Customer customer, DunningProcessDetail dpDetail) {
 		//DecimalFormat df = new DecimalFormat("#0,##");
 		NumberFormat df = NumberFormat.getNumberInstance(new Locale("tr-TR")); 
@@ -163,8 +191,8 @@ public class HobimDataServiceImpl implements HobimDataService {
 			}
 		}
 		sLine.append(unpaidInvoiceCount + "|" + sLineInv + df.format(totalAmount)+"|" +aDate+ "|" +bDate+"|"+customer.getStatus() );
-		dpDetail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.SUCCESS));
-		dunningProcessService.saveDunningProcessDetail(dpDetail);
+		//dpDetail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.SUCCESS));
+		//dunningProcessService.saveDunningProcessDetail(dpDetail);
 		sbMain.append(sLine + "\n");
 	}
 	

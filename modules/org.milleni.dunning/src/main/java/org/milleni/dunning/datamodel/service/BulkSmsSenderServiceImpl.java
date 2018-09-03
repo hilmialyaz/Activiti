@@ -15,6 +15,7 @@ import org.milleni.dunning.datamodel.dao.CustomerTypesRepository;
 import org.milleni.dunning.datamodel.dao.DunningProcessDetailRepository;
 import org.milleni.dunning.datamodel.model.Customer;
 import org.milleni.dunning.datamodel.model.DunningProcessDetail;
+import org.milleni.dunning.datamodel.model.DunningProcessDetailStatus;
 import org.milleni.dunning.datamodel.model.DunningProcessMaster;
 import org.milleni.dunning.datamodel.rule.InvoicePaymentRuleService;
 import org.milleni.dunning.datamodel.util.Constants;
@@ -78,7 +79,7 @@ public class BulkSmsSenderServiceImpl implements BulkSmsSenderService {
 				DunningProcessMaster dpMaster = (DunningProcessMaster) obj[1];
 				Customer customer = (Customer) obj[2];
 				currentDetailId = dpDetail.getProcessDetailId();
-				boolean customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimit(customer.getCustomerId(), true);
+				boolean customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimitNewTx(customer.getCustomerId(), true);
 				if (customerHasUnpaidBill) {
 					bpmWsDelegateService.sendMessageWithStepName(dpDetail);
 					if (Constants.SUCCESS.equals(dpDetail.getStatus().getId()))
@@ -88,6 +89,7 @@ public class BulkSmsSenderServiceImpl implements BulkSmsSenderService {
 				} else {
 					processSignalService.signalCustomerProcessIfPaymentReceived(customer.getCustomerId());
 					notSendPaymentReason++;
+					dpDetail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.NOT_EXECUTED_4PAYMENT));
 				}
 			} catch (Exception e) {
 				failedSmsMessages++;

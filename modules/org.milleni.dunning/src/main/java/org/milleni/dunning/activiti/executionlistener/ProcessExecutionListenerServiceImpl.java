@@ -30,7 +30,7 @@ public class ProcessExecutionListenerServiceImpl implements ProcessExecutionList
 	
 	public void processEvent(DelegateExecution execution) {
 		StringBuffer logString = new StringBuffer();
-		logString.append( "PROCESS"+execution.getEventName()+": eid:"+execution.getId()+"|pid:"+execution.getProcessInstanceId()+"|pn:"+execution.getProcessDefinitionId()+"|act:"+execution.getCurrentActivityId()+"|var:"); 
+		logString.append( "PROCESS:"+execution.getEventName()+": eid:"+execution.getId()+"|pid:"+execution.getProcessInstanceId()+"|pn:"+execution.getProcessDefinitionId()+"|act:"+execution.getCurrentActivityId()+"|var:"); 
 		Set<String> variableNames = execution.getVariableNames();
 		for (String variableName : variableNames) {
 			logString.append(variableName + " :" + execution.getVariable(variableName)+ " - ");

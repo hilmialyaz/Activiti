@@ -10,8 +10,8 @@ import javax.xml.ws.WebFault;
  * Generated source version: 2.1
  * 
  */
-@WebFault(name = "BusinessFault", targetNamespace = "http://milleni.com/technical/Fault")
-public class AccountServiceV1RemoveCreditCardOrderBusinessFaultFaultFaultMessage
+@WebFault(name = "SystemFault", targetNamespace = "http://milleni.com/technical/Fault")
+public class AccountServiceV1ChangeDealerSystemFaultFaultFaultMessage
     extends Exception
 {
 
@@ -19,14 +19,14 @@ public class AccountServiceV1RemoveCreditCardOrderBusinessFaultFaultFaultMessage
      * Java type that goes as soapenv:Fault detail element.
      * 
      */
-    private BusinessFault faultInfo;
+    private SystemFault faultInfo;
 
     /**
      * 
      * @param message
      * @param faultInfo
      */
-    public AccountServiceV1RemoveCreditCardOrderBusinessFaultFaultFaultMessage(String message, BusinessFault faultInfo) {
+    public AccountServiceV1ChangeDealerSystemFaultFaultFaultMessage(String message, SystemFault faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
     }
@@ -37,7 +37,7 @@ public class AccountServiceV1RemoveCreditCardOrderBusinessFaultFaultFaultMessage
      * @param faultInfo
      * @param cause
      */
-    public AccountServiceV1RemoveCreditCardOrderBusinessFaultFaultFaultMessage(String message, BusinessFault faultInfo, Throwable cause) {
+    public AccountServiceV1ChangeDealerSystemFaultFaultFaultMessage(String message, SystemFault faultInfo, Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }
@@ -45,9 +45,9 @@ public class AccountServiceV1RemoveCreditCardOrderBusinessFaultFaultFaultMessage
     /**
      * 
      * @return
-     *     returns fault bean: org.milleni.dunning.ws.client.crmaccountcoa.BusinessFault
+     *     returns fault bean: org.milleni.dunning.ws.client.crmaccountcoa.SystemFault
      */
-    public BusinessFault getFaultInfo() {
+    public SystemFault getFaultInfo() {
         return faultInfo;
     }
 

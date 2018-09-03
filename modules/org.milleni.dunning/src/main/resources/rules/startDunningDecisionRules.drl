@@ -125,23 +125,6 @@ end
 
 
 
-
-
-
-
-rule "Kurumsal CustomerType"
-salience 75
-when
- res : ExecutionResult(resultCode==0)	
- cus : Customer( customerType.getTypeId()==2)
-then
-	System.out.println("Kurumsal grooup");
-	res = setReturnVariables(res,"FL301_KurumsalSesDunningProcess",1,drools.getRule().getName());
-	update(res);
-end
-
-
-
 rule "Bireysel Customer"
 salience 74
 when
@@ -178,6 +161,17 @@ then
 	update(res);
 end
 
+
+rule "Kurumsal CustomerType"
+salience 30
+when
+ res : ExecutionResult(resultCode==0)	
+ cus : Customer( customerType.getTypeId()==2)
+then
+	System.out.println("Kurumsal grooup");
+	res = setReturnVariables(res,"FL301_KurumsalSesDunningProcess",1,drools.getRule().getName());
+	update(res);
+end
 /*
 rule "Sum all Invoices fire when less than 10"
 when

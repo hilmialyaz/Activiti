@@ -22,13 +22,13 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="ApplicationName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="BillingCustomerNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="CrmUserId" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid" minOccurs="0"/>
- *         &lt;element name="Document" type="{http://milleni.com/Bpm}DocumentInfo" minOccurs="0"/>
+ *         &lt;element name="Document" type="{/CustomerInfo/Service/v1}DocumentInfo" minOccurs="0"/>
  *         &lt;element name="Reason" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="ReasonId" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="SendSms" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="SendToBilling" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="SendToNetwork" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="SendToTT" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="SendToOperator" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlType;
     "sendSms",
     "sendToBilling",
     "sendToNetwork",
-    "sendToTT"
+    "sendToOperator"
 })
 public class AddDeactivationRequestToAccountRequestModel {
 
@@ -70,8 +70,8 @@ public class AddDeactivationRequestToAccountRequestModel {
     protected Boolean sendToBilling;
     @XmlElement(name = "SendToNetwork")
     protected Boolean sendToNetwork;
-    @XmlElement(name = "SendToTT")
-    protected Boolean sendToTT;
+    @XmlElement(name = "SendToOperator")
+    protected Boolean sendToOperator;
 
     /**
      * Gets the value of the applicationName property.
@@ -282,27 +282,27 @@ public class AddDeactivationRequestToAccountRequestModel {
     }
 
     /**
-     * Gets the value of the sendToTT property.
+     * Gets the value of the sendToOperator property.
      * 
      * @return
      *     possible object is
      *     {@link Boolean }
      *     
      */
-    public Boolean isSendToTT() {
-        return sendToTT;
+    public Boolean isSendToOperator() {
+        return sendToOperator;
     }
 
     /**
-     * Sets the value of the sendToTT property.
+     * Sets the value of the sendToOperator property.
      * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *     
      */
-    public void setSendToTT(Boolean value) {
-        this.sendToTT = value;
+    public void setSendToOperator(Boolean value) {
+        this.sendToOperator = value;
     }
 
 }

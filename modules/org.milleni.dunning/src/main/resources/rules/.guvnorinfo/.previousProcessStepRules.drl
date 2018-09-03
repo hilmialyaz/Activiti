@@ -1,6 +1,6 @@
-#Fri Nov 25 09:30:20 MSK 2016
+#Fri Jan 12 10:30:34 MSK 2018
 filename=previousProcessStepRules.drl
-revision=30
-lastmodified=Fri, 25 Nov 2016 08\:30\:19 MSK
+revision=33
+lastmodified=Fri, 12 Jan 2018 03\:00\:34 MSK
 repository=http\://192.168.2.138\:8085/guvnor/org.drools.guvnor.Guvnor/webdav/
 fullpath=http\://192.168.2.138\:8085/guvnor/org.drools.guvnor.Guvnor/webdav/packages/org.milleni.dunning.datamodel.processsteprules/previousProcessStepRules.drl

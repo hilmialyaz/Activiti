@@ -181,7 +181,7 @@ rule 'adim Deaktivasyon ise Ayin Son is gunune  at'
 		calendar.set(Calendar.DATE,maxDay);
 		System.out.println("maxDay"+maxDay);
 		
-		maxDay=maxDay-2;		
+		maxDay=maxDay-3;		
 		System.out.println("maxDay"+maxDay);
 		Calendar calendarNow = Calendar.getInstance();
 		int now = calendarNow.get(Calendar.DAY_OF_MONTH);

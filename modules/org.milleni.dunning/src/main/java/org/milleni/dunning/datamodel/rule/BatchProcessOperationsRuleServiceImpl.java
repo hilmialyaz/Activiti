@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.joda.time.LocalDate;
+import org.joda.time.MutableDateTime;
 import org.milleni.dunning.datamodel.dao.DunningPolicyRepository;
 import org.milleni.dunning.datamodel.dao.DunningProcessMasterRepository;
 import org.milleni.dunning.datamodel.model.Customer;
@@ -71,6 +74,24 @@ public class BatchProcessOperationsRuleServiceImpl extends AbstractRuleService i
 		if(processStatusDesc==null){
 			Long userSelectedProcessStep = (Long) execution.getVariable(Constants.userSelectedProcessStep);
 			DunningPolicy dunningPolicy = dunningPolicyRepository.findDunningPolicyByName(bpmProcessName,new Date());
+			if(customer.getCustomerType().getTypeName().equalsIgnoreCase(Constants.BIREYSEL)
+					&& customer.getRegisterNumber()!=null  && customer.getRegisterNumber().startsWith("9"))
+			{
+				dunningPolicy = dunningPolicyRepository.findDunningPolicyByName(Constants.yabanciDunning,new Date());
+				bpmProcessName= "FL201_BireyselAdslDunningProcess";
+				
+				if(customer.getActivationDate()!=null){
+					
+					MutableDateTime dateTime = new MutableDateTime();
+					dateTime.addMonths(-1);
+			        dateTime.setDayOfMonth(1);
+			        dateTime.setMillisOfDay(0);
+			        if(dateTime.isBefore(customer.getActivationDate().getTime())){
+			        	dunningPolicy = dunningPolicyRepository.findDunningPolicyByName(Constants.yeniAktivasyonYabanciDunning,new Date());
+			        }
+				}
+			}
+			
 			boolean policyHasStep = false;
 			List<ProcessSteps> processSteps =  dunningPolicyRepository.retrieveDunningProcessSteps(dunningPolicy.getPolicyId());
 			if(userSelectedProcessStep!=null){

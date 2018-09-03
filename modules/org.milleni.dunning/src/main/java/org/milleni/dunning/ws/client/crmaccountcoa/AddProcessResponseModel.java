@@ -8,18 +8,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for AddDeactivationRequestResponseModel complex type.
+ * <p>Java class for AddProcessResponseModel complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="AddDeactivationRequestResponseModel">
+ * &lt;complexType name="AddProcessResponseModel">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{http://schemas.datacontract.org/2004/07/ServiceCatalog.Model}BaseResponseModel">
  *       &lt;sequence>
  *         &lt;element name="ProcessId" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -27,10 +27,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AddDeactivationRequestResponseModel", propOrder = {
+@XmlType(name = "AddProcessResponseModel", propOrder = {
     "processId"
 })
-public class AddDeactivationRequestResponseModel {
+public class AddProcessResponseModel
+    extends BaseResponseModel
+{
 
     @XmlElement(name = "ProcessId", required = true)
     protected String processId;

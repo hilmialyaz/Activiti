@@ -1,29 +1,27 @@
 
 package org.milleni.dunning.ws.client.crmaccountcoa;
 
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ChangeBillingAddressRequestModel complex type.
+ * <p>Java class for ChangeAccountDealerRequestModel complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ChangeBillingAddressRequestModel">
+ * &lt;complexType name="ChangeAccountDealerRequestModel">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="ApplicationName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="BillingCustomerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="CrmUserId" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid" minOccurs="0"/>
- *         &lt;element name="IndependentPartId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="IpAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="DealerCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="DealerName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,14 +31,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ChangeBillingAddressRequestModel", propOrder = {
+@XmlType(name = "ChangeAccountDealerRequestModel", propOrder = {
     "applicationName",
     "billingCustomerId",
     "crmUserId",
-    "independentPartId",
-    "ipAddress"
+    "dealerCode",
+    "dealerName"
 })
-public class ChangeBillingAddressRequestModel {
+public class ChangeAccountDealerRequestModel {
 
     @XmlElement(name = "ApplicationName", required = true, nillable = true)
     protected String applicationName;
@@ -48,10 +46,10 @@ public class ChangeBillingAddressRequestModel {
     protected String billingCustomerId;
     @XmlElement(name = "CrmUserId")
     protected String crmUserId;
-    @XmlElement(name = "IndependentPartId")
-    protected int independentPartId;
-    @XmlElementRef(name = "IpAddress", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
-    protected JAXBElement<String> ipAddress;
+    @XmlElement(name = "DealerCode", required = true, nillable = true)
+    protected String dealerCode;
+    @XmlElement(name = "DealerName", required = true, nillable = true)
+    protected String dealerName;
 
     /**
      * Gets the value of the applicationName property.
@@ -126,43 +124,51 @@ public class ChangeBillingAddressRequestModel {
     }
 
     /**
-     * Gets the value of the independentPartId property.
-     * 
-     */
-    public int getIndependentPartId() {
-        return independentPartId;
-    }
-
-    /**
-     * Sets the value of the independentPartId property.
-     * 
-     */
-    public void setIndependentPartId(int value) {
-        this.independentPartId = value;
-    }
-
-    /**
-     * Gets the value of the ipAddress property.
+     * Gets the value of the dealerCode property.
      * 
      * @return
      *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     {@link String }
      *     
      */
-    public JAXBElement<String> getIpAddress() {
-        return ipAddress;
+    public String getDealerCode() {
+        return dealerCode;
     }
 
     /**
-     * Sets the value of the ipAddress property.
+     * Sets the value of the dealerCode property.
      * 
      * @param value
      *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     {@link String }
      *     
      */
-    public void setIpAddress(JAXBElement<String> value) {
-        this.ipAddress = ((JAXBElement<String> ) value);
+    public void setDealerCode(String value) {
+        this.dealerCode = value;
+    }
+
+    /**
+     * Gets the value of the dealerName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDealerName() {
+        return dealerName;
+    }
+
+    /**
+     * Sets the value of the dealerName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDealerName(String value) {
+        this.dealerName = value;
     }
 
 }

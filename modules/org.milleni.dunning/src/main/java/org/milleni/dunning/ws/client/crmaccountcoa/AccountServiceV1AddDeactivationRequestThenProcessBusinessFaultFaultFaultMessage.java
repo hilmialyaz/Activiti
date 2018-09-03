@@ -11,7 +11,7 @@ import javax.xml.ws.WebFault;
  * 
  */
 @WebFault(name = "BusinessFault", targetNamespace = "http://milleni.com/technical/Fault")
-public class AccountServiceV1UpdateContactInfoBusinessFaultFaultFaultMessage
+public class AccountServiceV1AddDeactivationRequestThenProcessBusinessFaultFaultFaultMessage
     extends Exception
 {
 
@@ -26,7 +26,7 @@ public class AccountServiceV1UpdateContactInfoBusinessFaultFaultFaultMessage
      * @param message
      * @param faultInfo
      */
-    public AccountServiceV1UpdateContactInfoBusinessFaultFaultFaultMessage(String message, BusinessFault faultInfo) {
+    public AccountServiceV1AddDeactivationRequestThenProcessBusinessFaultFaultFaultMessage(String message, BusinessFault faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
     }
@@ -37,7 +37,7 @@ public class AccountServiceV1UpdateContactInfoBusinessFaultFaultFaultMessage
      * @param faultInfo
      * @param cause
      */
-    public AccountServiceV1UpdateContactInfoBusinessFaultFaultFaultMessage(String message, BusinessFault faultInfo, Throwable cause) {
+    public AccountServiceV1AddDeactivationRequestThenProcessBusinessFaultFaultFaultMessage(String message, BusinessFault faultInfo, Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }

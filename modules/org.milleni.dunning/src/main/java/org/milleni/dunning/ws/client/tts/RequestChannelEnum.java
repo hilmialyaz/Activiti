@@ -14,13 +14,23 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;simpleType name="RequestChannelEnum">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *     &lt;enumeration value="NOTSET"/>
- *     &lt;enumeration value="CALLCENTER"/>
+ *     &lt;enumeration value="INBOUND"/>
  *     &lt;enumeration value="DEALER"/>
  *     &lt;enumeration value="EMAIL"/>
  *     &lt;enumeration value="FAX"/>
  *     &lt;enumeration value="LAWOFFICE"/>
  *     &lt;enumeration value="CHAT"/>
  *     &lt;enumeration value="WEBSITE"/>
+ *     &lt;enumeration value="BURSAGAZ"/>
+ *     &lt;enumeration value="KAYSERIGAZ"/>
+ *     &lt;enumeration value="SIKAYETVAR"/>
+ *     &lt;enumeration value="BTKONLINE"/>
+ *     &lt;enumeration value="ONCEMUSTERIM"/>
+ *     &lt;enumeration value="SOCIALMEDIA"/>
+ *     &lt;enumeration value="OFFICIALDOCUMENT"/>
+ *     &lt;enumeration value="INDIVIDUALDOCUMENT"/>
+ *     &lt;enumeration value="OUTBOUND"/>
+ *     &lt;enumeration value="BACKOFFICE"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -31,13 +41,23 @@ import javax.xml.bind.annotation.XmlType;
 public enum RequestChannelEnum {
 
     NOTSET,
-    CALLCENTER,
+    INBOUND,
     DEALER,
     EMAIL,
     FAX,
     LAWOFFICE,
     CHAT,
-    WEBSITE;
+    WEBSITE,
+    BURSAGAZ,
+    KAYSERIGAZ,
+    SIKAYETVAR,
+    BTKONLINE,
+    ONCEMUSTERIM,
+    SOCIALMEDIA,
+    OFFICIALDOCUMENT,
+    INDIVIDUALDOCUMENT,
+    OUTBOUND,
+    BACKOFFICE;
 
     public String value() {
         return name();

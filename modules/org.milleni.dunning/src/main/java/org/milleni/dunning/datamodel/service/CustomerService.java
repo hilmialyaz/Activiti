@@ -19,6 +19,7 @@ public interface CustomerService {
 	public Iterable<Customer> listCustomer(int page, int pageSize);
 	public long customerCount();
 	public Customer findOne(Long id);
+	public Customer findOneReadOnly(Long id);
 	public CustomerGroup getCustomerGroup(Long customerGroupId);
 	public List<Customer> findByExample(Customer customer,int start, int count) ;
 	public int findByExampleRowCount(Customer customer);
@@ -42,4 +43,6 @@ public interface CustomerService {
 	public void retrieveCustomerHasCdr(String guid,Long customerId) ;
 	public void updateCustomerInfoFromTecon(String guid,Long customerId,boolean contractDetails) ;
 	public Customer updateCustomerStatusFromTecon(String guid,Long customerId) ;
+	
+	public Customer updateCustomerStatusFromTeconCurrentTx(String guid, Long customerId);
 }
