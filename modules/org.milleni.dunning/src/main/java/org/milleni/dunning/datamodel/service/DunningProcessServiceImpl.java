@@ -293,13 +293,13 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 
 	public void paidAndFinishedProcessMaster(DelegateExecution execution) {
 		setDunningProcessMasterStatus(execution, Constants.PAID_AND_FINISHED);
-		
+
 		DunningProcessDetail detail = getCurrentProcessDetail(execution);
-		if (detail != null && (Constants.NOTIFICATION== detail.getStatus().getStatusKey() || Constants.INITIAL== detail.getStatus().getStatusKey())) {
+		if (detail != null && (Constants.NOTIFICATION == detail.getStatus().getStatusKey() || Constants.INITIAL == detail.getStatus().getStatusKey())) {
 			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.NOT_EXECUTED_4PAYMENT));
 			saveDunningProcessDetail(detail);
 		}
-		
+
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		Customer customer = customerService.updateCustomerStatusFromTeconCurrentTx("", customerId);
 
@@ -429,7 +429,7 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(status));
 			saveDunningProcessDetail(detail);
 		}
- 	}
+	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void setDetailNotification(DelegateExecution execution) {

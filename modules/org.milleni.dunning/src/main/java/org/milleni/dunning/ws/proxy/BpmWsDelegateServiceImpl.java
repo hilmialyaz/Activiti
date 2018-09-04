@@ -301,8 +301,11 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 
 	public org.milleni.dunning.ws.client.customerstatus.ServiceResponse wsChangeStatus(String processId, STATUS status, STATUSREASON reason,
 			Long customerId) {
+		/*
 		org.milleni.dunning.ws.client.customerstatus.ServiceResponse response = commonProxyService.changeCustomerStatus(processId, customerId, status, reason);
 		return response;
+		*/
+		return null;
 	}
 
 	public void oloThkIptal(DelegateExecution execution) {
@@ -704,14 +707,16 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	public void activateCrmAccount(Long customerId, DunningProcessDetail detail) {
 		try {
 			commonProxyService.activateCrmAccount(customerId);
-			setDpDetailSuccess(detail);
+			//setDpDetailSuccess(detail);
 		} catch (Exception ex) {
+			/*
 			 org.milleni.dunning.ws.client.customerstatus.ServiceResponse  resp = billingActivateCustomer(customerId);
 			 if(resp.getResultCode()==-1)
 				 setStatusAfterFault(detail, ex);
 			 else{
 				 setStatusAfterFault(detail, ex);
 			 }
+			 */
 		}
 	}
 
