@@ -252,7 +252,7 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 		} catch (Exception e) {
 			return "105|" + e.getMessage().toString();
 		}	
-		return "basarili";
+		return null;
 	}
 
 	public org.milleni.dunning.ws.client.customerstatus.ServiceResponse changeCustomerStatus(String guid, Long customerId, STATUS status, STATUSREASON reason) {
@@ -314,10 +314,9 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 
 		SuspendAccountRequestModel request = new SuspendAccountRequestModel();
 		org.milleni.dunning.ws.client.crm.ObjectFactory fact = new org.milleni.dunning.ws.client.crm.ObjectFactory();
-		JAXBElement<String> application = fact.createDeactivateAccountRequestModelApplication("Dunning");
-		JAXBElement<String> billingCustomerId = fact.createDeactivateAccountRequestModelBillingCustomerId(String.valueOf(customerId));
-		JAXBElement<String> reasonDef = fact.createDeactivateAccountRequestModelStatusReasonDef("Borctan Suspend");
-
+		JAXBElement<String> application = fact.createSuspendAccountRequestModelApplication("Dunning");
+		JAXBElement<String> billingCustomerId = fact.createSuspendAccountRequestModelBillingCustomerId(String.valueOf(customerId));
+		JAXBElement<String> reasonDef = fact.createSuspendAccountRequestModelStatusReasonDef("Borctan Suspend");
 		request.setApplication(application);
 		request.setBillingCustomerId(billingCustomerId);
 		request.setStatusReasonID(904l);
@@ -325,22 +324,7 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 		return crmCustomerService.suspendAccount(request);
 	}
 
-	public DeactivateAccountResponseModel deactivateCrmAccount(Long customerId) throws CustomerInfoServiceV1DeactivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1DeactivateAccountSystemFaultFaultFaultMessage {
-		((BindingProvider) crmCustomerService).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, dunningProperties.getProperty(Constants.WS_CRM_ACCOUNT_ENDPOINT));
-		DeactivateAccountRequestModel request = new DeactivateAccountRequestModel();
-
-		org.milleni.dunning.ws.client.crm.ObjectFactory fact = new org.milleni.dunning.ws.client.crm.ObjectFactory();
-		JAXBElement<String> application = fact.createDeactivateAccountRequestModelApplication("Dunning");
-		JAXBElement<String> billingCustomerId = fact.createDeactivateAccountRequestModelBillingCustomerId(String.valueOf(customerId));
-		JAXBElement<String> reasonDef = fact.createDeactivateAccountRequestModelStatusReasonDef("Borçtan Deaktivasyon");
-
-		request.setApplication(application);
-		request.setBillingCustomerId(billingCustomerId);
-		request.setStatusReasonID(905l);
-		request.setStatusReasonDef(reasonDef);
-		request.setWillBeSentToTT(true);
-		return crmCustomerService.deactivateAccount(request);
-	}
+	
 	
 	public AddProcessResponseModel addDeactivationRequest(Long customerId,String reason) throws Exception  {
 		((BindingProvider) crmAccountService).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, dunningProperties.getProperty(Constants.WS_COA_ENDPOINT));
@@ -370,9 +354,9 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 
 		ActivateAccountRequestModel request = new ActivateAccountRequestModel();
 		org.milleni.dunning.ws.client.crm.ObjectFactory fact = new org.milleni.dunning.ws.client.crm.ObjectFactory();
-		JAXBElement<String> application = fact.createDeactivateAccountRequestModelApplication("Dunning");
-		JAXBElement<String> billingCustomerId = fact.createDeactivateAccountRequestModelBillingCustomerId(String.valueOf(customerId));
-		JAXBElement<String> reasonDef = fact.createDeactivateAccountRequestModelStatusReasonDef("Borctan Aktivasyon");
+		JAXBElement<String> application = fact.createActivateAccountRequestModelApplication("Dunning");
+		JAXBElement<String> billingCustomerId = fact.createActivateAccountRequestModelBillingCustomerId(String.valueOf(customerId));
+		JAXBElement<String> reasonDef = fact.createActivateAccountRequestModelStatusReasonDef("Borctan Aktivasyon");
 
 		request.setApplication(application);
 		request.setBillingCustomerId(billingCustomerId);
@@ -381,5 +365,25 @@ public class CommonProxyServiceImpl implements CommonProxySerivce {
 
 		return crmCustomerService.activateAccount(request);
 	}
+	
+	
+	public void activateCrmAccountOneWay(Long customerId) {
+		((BindingProvider) crmCustomerService).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, dunningProperties.getProperty(Constants.WS_CRM_ACCOUNT_ENDPOINT));
+
+		ActivateAccountRequestModel request = new ActivateAccountRequestModel();
+		org.milleni.dunning.ws.client.crm.ObjectFactory fact = new org.milleni.dunning.ws.client.crm.ObjectFactory();
+		JAXBElement<String> application = fact.createActivateAccountRequestModelApplication("Dunning");
+		JAXBElement<String> billingCustomerId = fact.createActivateAccountRequestModelBillingCustomerId(String.valueOf(customerId));
+		JAXBElement<String> reasonDef = fact.createActivateAccountRequestModelStatusReasonDef("Borctan Aktivasyon");
+
+		request.setApplication(application);
+		request.setBillingCustomerId(billingCustomerId);
+		request.setStatusReasonID(903l);
+		request.setStatusReasonDef(reasonDef);
+
+		crmCustomerService.activateAccountOneWay(request);
+	}
+
+	
 
 }

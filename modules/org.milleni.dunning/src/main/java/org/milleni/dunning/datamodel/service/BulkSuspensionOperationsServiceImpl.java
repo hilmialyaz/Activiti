@@ -84,10 +84,11 @@ public class BulkSuspensionOperationsServiceImpl implements BulkSuspensionOperat
 				currentDetailId = dpDetail.getProcessDetailId();
 				
 				try {
-				boolean customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimit(customer.getCustomerId(), true);
+				boolean customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimitNewTx(customer.getCustomerId(), true);
 				if (customerHasUnpaidBill) {
 					LOGGER.info("pid:"+execution.getId()+"|m:bulkSuspension|suspend|customerId:"+customer.getCustomerId());
 					bpmWsDelegateService.suspendCrmAccount(customer.getCustomerId() ,dpMaster, dpDetail);
+					LOGGER.info("pid:"+execution.getId()+"|m:bulkSuspension|suspend edildi.|customerId:"+customer.getCustomerId());
 					/*					
 				    Map<String,Object> variables = new HashMap<String,Object>();
 				    variables.put(Constants.customerId,customer.getCustomerId());	
@@ -105,7 +106,7 @@ public class BulkSuspensionOperationsServiceImpl implements BulkSuspensionOperat
 			}
 		}
 		
-		LOGGER.info("pid:"+execution.getId()+"|m:bulkSuspension");
+		LOGGER.info("process bitti. pid:"+execution.getId()+"|m:bulkSuspension");
 	}
 
 }

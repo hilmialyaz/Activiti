@@ -136,7 +136,7 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 		}
 
 		if (processStatusSuccess) {
-			boolean customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimit(customer.getCustomerId(), true);
+			boolean customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimitNewTx(customer.getCustomerId(), true);
 			dunningProcess.setCurrentDebit(invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customer.getCustomerId()));
 			if (!customerHasUnpaidBill) {
 				processStatusSuccess = false;
@@ -315,8 +315,8 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 	}
 
 	public boolean activateIfSuspend(Long customerId) {
-		Customer customer = customerService.updateCustomerStatusFromTecon("", customerId);
-		if (Constants.SUSPEND.equalsIgnoreCase(customer.getStatus())) {
+//		Customer customer = customerService.updateCustomerStatusFromTecon("", customerId);
+//		if (Constants.SUSPEND.equalsIgnoreCase(customer.getStatus())) {
 			bpmWsDelegateService.activateCrmAccount(customerId, null);
 			// if(customer.getContractType()!=null &&
 			// customer.getContractType().indexOf("ADSL")>0 ){
@@ -326,8 +326,8 @@ public class DunningProcessServiceImpl implements DunningProcessService {
 			// }
 			// }
 			return true;
-		}
-		return false;
+//		}
+//		return false;
 	}
 
 	public void manualyFinishedProcessMaster(DelegateExecution execution) {

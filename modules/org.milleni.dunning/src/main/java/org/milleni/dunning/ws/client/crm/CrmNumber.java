@@ -6,7 +6,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -24,6 +26,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="NetworkType" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="Number" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="NumberType" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="ValidFrom" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="ValidTo" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,7 +43,10 @@ import javax.xml.bind.annotation.XmlType;
     "isAddToPhonebook",
     "networkType",
     "number",
-    "numberType"
+    "numberType",
+    "status",
+    "validFrom",
+    "validTo"
 })
 public class CrmNumber {
 
@@ -52,6 +60,14 @@ public class CrmNumber {
     protected JAXBElement<String> number;
     @XmlElement(name = "NumberType")
     protected Integer numberType;
+    @XmlElement(name = "Status")
+    protected Integer status;
+    @XmlElement(name = "ValidFrom")
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar validFrom;
+    @XmlElement(name = "ValidTo")
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar validTo;
 
     /**
      * Gets the value of the hasFax property.
@@ -171,6 +187,78 @@ public class CrmNumber {
      */
     public void setNumberType(Integer value) {
         this.numberType = value;
+    }
+
+    /**
+     * Gets the value of the status property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the value of the status property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setStatus(Integer value) {
+        this.status = value;
+    }
+
+    /**
+     * Gets the value of the validFrom property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getValidFrom() {
+        return validFrom;
+    }
+
+    /**
+     * Sets the value of the validFrom property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setValidFrom(XMLGregorianCalendar value) {
+        this.validFrom = value;
+    }
+
+    /**
+     * Gets the value of the validTo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getValidTo() {
+        return validTo;
+    }
+
+    /**
+     * Sets the value of the validTo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setValidTo(XMLGregorianCalendar value) {
+        this.validTo = value;
     }
 
 }

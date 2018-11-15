@@ -26,12 +26,16 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="Code" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Contacts" type="{http://milleni.com/Crm}ArrayOfCrmContact" minOccurs="0"/>
  *         &lt;element name="CustomerType" type="{http://milleni.com/Common/Customer}CustomerTypeEnum" minOccurs="0"/>
+ *         &lt;element name="ExemptionNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="FatherName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="FullName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Id" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid"/>
+ *         &lt;element name="IsExempted" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="MotherMaidenName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Nationality" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="PassportNo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Pools" type="{http://milleni.com/Crm}ArrayOfCrmPool" minOccurs="0"/>
  *         &lt;element name="RegistrationNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Sector" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Sex" type="{http://milleni.com/Common/Customer}SexEnum" minOccurs="0"/>
@@ -56,12 +60,16 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "code",
     "contacts",
     "customerType",
+    "exemptionNumber",
     "fatherName",
     "fullName",
     "id",
+    "isExempted",
     "motherMaidenName",
     "name",
     "nationality",
+    "passportNo",
+    "pools",
     "registrationNumber",
     "sector",
     "sex",
@@ -85,18 +93,26 @@ public class Customer {
     protected JAXBElement<ArrayOfCrmContact> contacts;
     @XmlElement(name = "CustomerType")
     protected CustomerTypeEnum customerType;
+    @XmlElementRef(name = "ExemptionNumber", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<String> exemptionNumber;
     @XmlElementRef(name = "FatherName", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> fatherName;
     @XmlElementRef(name = "FullName", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> fullName;
     @XmlElement(name = "Id", required = true)
     protected String id;
+    @XmlElement(name = "IsExempted")
+    protected Boolean isExempted;
     @XmlElementRef(name = "MotherMaidenName", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> motherMaidenName;
     @XmlElementRef(name = "Name", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> name;
     @XmlElementRef(name = "Nationality", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> nationality;
+    @XmlElementRef(name = "PassportNo", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<String> passportNo;
+    @XmlElementRef(name = "Pools", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<ArrayOfCrmPool> pools;
     @XmlElementRef(name = "RegistrationNumber", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> registrationNumber;
     @XmlElementRef(name = "Sector", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
@@ -237,6 +253,30 @@ public class Customer {
     }
 
     /**
+     * Gets the value of the exemptionNumber property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getExemptionNumber() {
+        return exemptionNumber;
+    }
+
+    /**
+     * Sets the value of the exemptionNumber property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setExemptionNumber(JAXBElement<String> value) {
+        this.exemptionNumber = ((JAXBElement<String> ) value);
+    }
+
+    /**
      * Gets the value of the fatherName property.
      * 
      * @return
@@ -309,6 +349,30 @@ public class Customer {
     }
 
     /**
+     * Gets the value of the isExempted property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIsExempted() {
+        return isExempted;
+    }
+
+    /**
+     * Sets the value of the isExempted property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIsExempted(Boolean value) {
+        this.isExempted = value;
+    }
+
+    /**
      * Gets the value of the motherMaidenName property.
      * 
      * @return
@@ -378,6 +442,54 @@ public class Customer {
      */
     public void setNationality(JAXBElement<String> value) {
         this.nationality = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the passportNo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getPassportNo() {
+        return passportNo;
+    }
+
+    /**
+     * Sets the value of the passportNo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setPassportNo(JAXBElement<String> value) {
+        this.passportNo = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the pools property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link ArrayOfCrmPool }{@code >}
+     *     
+     */
+    public JAXBElement<ArrayOfCrmPool> getPools() {
+        return pools;
+    }
+
+    /**
+     * Sets the value of the pools property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link ArrayOfCrmPool }{@code >}
+     *     
+     */
+    public void setPools(JAXBElement<ArrayOfCrmPool> value) {
+        this.pools = ((JAXBElement<ArrayOfCrmPool> ) value);
     }
 
     /**

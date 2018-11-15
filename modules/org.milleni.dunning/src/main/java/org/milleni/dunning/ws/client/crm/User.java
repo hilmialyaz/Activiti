@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="FullName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Id" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid"/>
  *         &lt;element name="Password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="QueryLimit" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="UserName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlType;
     "fullName",
     "id",
     "password",
+    "queryLimit",
     "userName"
 })
 public class User {
@@ -54,6 +56,8 @@ public class User {
     protected String id;
     @XmlElementRef(name = "Password", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> password;
+    @XmlElementRef(name = "QueryLimit", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<Integer> queryLimit;
     @XmlElementRef(name = "UserName", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> userName;
 
@@ -175,6 +179,30 @@ public class User {
      */
     public void setPassword(JAXBElement<String> value) {
         this.password = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the queryLimit property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link Integer }{@code >}
+     *     
+     */
+    public JAXBElement<Integer> getQueryLimit() {
+        return queryLimit;
+    }
+
+    /**
+     * Sets the value of the queryLimit property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link Integer }{@code >}
+     *     
+     */
+    public void setQueryLimit(JAXBElement<Integer> value) {
+        this.queryLimit = ((JAXBElement<Integer> ) value);
     }
 
     /**

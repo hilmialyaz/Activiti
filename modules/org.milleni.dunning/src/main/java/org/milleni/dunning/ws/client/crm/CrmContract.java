@@ -33,9 +33,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="Products" type="{http://milleni.com/Crm}ArrayOfCrmProduct" minOccurs="0"/>
  *         &lt;element name="SalesPerson" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="SalesPersonIdentityId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="SalesPersonOrganizationId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="StatusChangeDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="StatusReason" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="ValidTo" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -58,9 +60,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "products",
     "salesPerson",
     "salesPersonIdentityId",
+    "salesPersonOrganizationId",
     "status",
     "statusChangeDate",
-    "statusReason"
+    "statusReason",
+    "validTo"
 })
 public class CrmContract {
 
@@ -89,6 +93,8 @@ public class CrmContract {
     protected JAXBElement<String> salesPerson;
     @XmlElementRef(name = "SalesPersonIdentityId", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> salesPersonIdentityId;
+    @XmlElementRef(name = "SalesPersonOrganizationId", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<String> salesPersonOrganizationId;
     @XmlElement(name = "Status")
     protected Integer status;
     @XmlElement(name = "StatusChangeDate")
@@ -96,6 +102,8 @@ public class CrmContract {
     protected XMLGregorianCalendar statusChangeDate;
     @XmlElementRef(name = "StatusReason", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> statusReason;
+    @XmlElementRef(name = "ValidTo", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<XMLGregorianCalendar> validTo;
 
     /**
      * Gets the value of the billingContractNumber property.
@@ -386,6 +394,30 @@ public class CrmContract {
     }
 
     /**
+     * Gets the value of the salesPersonOrganizationId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getSalesPersonOrganizationId() {
+        return salesPersonOrganizationId;
+    }
+
+    /**
+     * Sets the value of the salesPersonOrganizationId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setSalesPersonOrganizationId(JAXBElement<String> value) {
+        this.salesPersonOrganizationId = ((JAXBElement<String> ) value);
+    }
+
+    /**
      * Gets the value of the status property.
      * 
      * @return
@@ -455,6 +487,30 @@ public class CrmContract {
      */
     public void setStatusReason(JAXBElement<String> value) {
         this.statusReason = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the validTo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public JAXBElement<XMLGregorianCalendar> getValidTo() {
+        return validTo;
+    }
+
+    /**
+     * Sets the value of the validTo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public void setValidTo(JAXBElement<XMLGregorianCalendar> value) {
+        this.validTo = ((JAXBElement<XMLGregorianCalendar> ) value);
     }
 
 }

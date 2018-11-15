@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -26,12 +27,17 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="BillingCustomerNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Contracts" type="{http://milleni.com/Crm}ArrayOfCrmContract" minOccurs="0"/>
  *         &lt;element name="Id" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid"/>
+ *         &lt;element name="InstallmentAddress" type="{http://milleni.com/Crm}CrmAddress" minOccurs="0"/>
+ *         &lt;element name="Pools" type="{http://milleni.com/Crm}ArrayOfCrmPool" minOccurs="0"/>
  *         &lt;element name="ReturnAccount" type="{http://milleni.com/Crm}CrmReturnAccount" minOccurs="0"/>
  *         &lt;element name="ShipmentAddress" type="{http://milleni.com/Crm}CrmAddress" minOccurs="0"/>
  *         &lt;element name="SoftInvoice" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="SoftInvoiceEmail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="StatusChangeDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="TTCustomerNo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="ValidFrom" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="ValidTo" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -49,12 +55,17 @@ import javax.xml.bind.annotation.XmlType;
     "billingCustomerNumber",
     "contracts",
     "id",
+    "installmentAddress",
+    "pools",
     "returnAccount",
     "shipmentAddress",
     "softInvoice",
     "softInvoiceEmail",
     "status",
-    "ttCustomerNo"
+    "statusChangeDate",
+    "ttCustomerNo",
+    "validFrom",
+    "validTo"
 })
 public class CrmAccount {
 
@@ -72,6 +83,10 @@ public class CrmAccount {
     protected JAXBElement<ArrayOfCrmContract> contracts;
     @XmlElement(name = "Id", required = true)
     protected String id;
+    @XmlElementRef(name = "InstallmentAddress", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<CrmAddress> installmentAddress;
+    @XmlElementRef(name = "Pools", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<ArrayOfCrmPool> pools;
     @XmlElementRef(name = "ReturnAccount", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<CrmReturnAccount> returnAccount;
     @XmlElementRef(name = "ShipmentAddress", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
@@ -82,8 +97,14 @@ public class CrmAccount {
     protected JAXBElement<String> softInvoiceEmail;
     @XmlElement(name = "Status")
     protected Integer status;
+    @XmlElementRef(name = "StatusChangeDate", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<XMLGregorianCalendar> statusChangeDate;
     @XmlElementRef(name = "TTCustomerNo", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> ttCustomerNo;
+    @XmlElementRef(name = "ValidFrom", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<XMLGregorianCalendar> validFrom;
+    @XmlElementRef(name = "ValidTo", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<XMLGregorianCalendar> validTo;
 
     /**
      * Gets the value of the accountCode property.
@@ -254,6 +275,54 @@ public class CrmAccount {
     }
 
     /**
+     * Gets the value of the installmentAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link CrmAddress }{@code >}
+     *     
+     */
+    public JAXBElement<CrmAddress> getInstallmentAddress() {
+        return installmentAddress;
+    }
+
+    /**
+     * Sets the value of the installmentAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link CrmAddress }{@code >}
+     *     
+     */
+    public void setInstallmentAddress(JAXBElement<CrmAddress> value) {
+        this.installmentAddress = ((JAXBElement<CrmAddress> ) value);
+    }
+
+    /**
+     * Gets the value of the pools property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link ArrayOfCrmPool }{@code >}
+     *     
+     */
+    public JAXBElement<ArrayOfCrmPool> getPools() {
+        return pools;
+    }
+
+    /**
+     * Sets the value of the pools property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link ArrayOfCrmPool }{@code >}
+     *     
+     */
+    public void setPools(JAXBElement<ArrayOfCrmPool> value) {
+        this.pools = ((JAXBElement<ArrayOfCrmPool> ) value);
+    }
+
+    /**
      * Gets the value of the returnAccount property.
      * 
      * @return
@@ -374,6 +443,30 @@ public class CrmAccount {
     }
 
     /**
+     * Gets the value of the statusChangeDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public JAXBElement<XMLGregorianCalendar> getStatusChangeDate() {
+        return statusChangeDate;
+    }
+
+    /**
+     * Sets the value of the statusChangeDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public void setStatusChangeDate(JAXBElement<XMLGregorianCalendar> value) {
+        this.statusChangeDate = ((JAXBElement<XMLGregorianCalendar> ) value);
+    }
+
+    /**
      * Gets the value of the ttCustomerNo property.
      * 
      * @return
@@ -395,6 +488,54 @@ public class CrmAccount {
      */
     public void setTTCustomerNo(JAXBElement<String> value) {
         this.ttCustomerNo = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the validFrom property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public JAXBElement<XMLGregorianCalendar> getValidFrom() {
+        return validFrom;
+    }
+
+    /**
+     * Sets the value of the validFrom property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public void setValidFrom(JAXBElement<XMLGregorianCalendar> value) {
+        this.validFrom = ((JAXBElement<XMLGregorianCalendar> ) value);
+    }
+
+    /**
+     * Gets the value of the validTo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public JAXBElement<XMLGregorianCalendar> getValidTo() {
+        return validTo;
+    }
+
+    /**
+     * Sets the value of the validTo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public void setValidTo(JAXBElement<XMLGregorianCalendar> value) {
+        this.validTo = ((JAXBElement<XMLGregorianCalendar> ) value);
     }
 
 }

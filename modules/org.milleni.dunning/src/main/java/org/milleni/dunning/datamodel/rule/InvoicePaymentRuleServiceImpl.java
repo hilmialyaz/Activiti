@@ -69,13 +69,13 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 	@Resource(name = "dunningPropertyPlaceholder")
 	private Properties dunningProperties;
 
-	@Transactional(readOnly = true, noRollbackFor = { BpmnError.class })
+	@Transactional(propagation = Propagation.REQUIRES_NEW, timeout=20,noRollbackFor = { BpmnError.class })
 	public void checkInvoicePaymentStatus(DelegateExecution execution) throws Exception {
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		
-		boolean customerHasUnpaidBill = customerHasUnpaidBillInLimit(customerId,true);
+		boolean customerHasUnpaidBill = customerHasUnpaidBillInLimitWithoutTx(customerId,true);
 		if(!customerHasUnpaidBill)
-			throw new BpmnError(Constants.PAYMENT_RECEIVED, "Fatura Odemesi Gerceklesti.");
+			throw new BpmnError(Constants.PAYMENT_RECEIVED, "Fatura Odemesi Gerceklesti..");
 	}
 	
 	
@@ -102,11 +102,12 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 		bpmWsDelegateService.retrieveSapPaymentStatus(customerId);
 	}
 	
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRES_NEW, timeout=20)
 	public boolean customerHasUnpaidBillInLimitNewTx(Long customerId,boolean checkSap) throws Exception{
-		return customerHasUnpaidBillInLimit(customerId, checkSap);
+		return customerHasUnpaidBillInLimitWithoutTx(customerId, checkSap);
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRES_NEW, timeout=20)
 	public boolean customerHasUnpaidBillInLimit(Long customerId,boolean checkSap) throws Exception{
 		if(checkSap) bpmWsDelegateService.retrieveSapPaymentStatus(customerId);
 		Double invoiceAmount = invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId);
@@ -116,48 +117,21 @@ public class InvoicePaymentRuleServiceImpl extends AbstractRuleService implement
 		Long maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_INVOICE_LIMIT));
 		if(invoiceAmount<maxInvoiceLimit)
 			return false;
-		/*
-		Customer customer= customerService.updateCustomerStatusFromTecon("", customerId);
 		
-		if(Constants.AKTIF.equalsIgnoreCase(customer.getStatus())){
-			if(invoiceAmount>maxInvoiceLimit){
-				List<CustomerInvoices> invoiceList = invoiceRepository.getCustomerUnpaidInvoices(customerId);
-				if(invoiceList!=null && invoiceList.size()==1){
-					List<DunningProcessMaster> runningInctance = dunningProcessMasterRepository.findDunningProcessMastersByStatus(customerId, Constants.RUNNING);
-					if(runningInctance!=null && runningInctance.size()>0){
-						DunningProcessMaster dpm = runningInctance.get(0);
-						if(dpm.getDunningInvoiceId()!=null && dpm.getDunningInvoiceId().getInvoiceId()!=invoiceList.get(0).getInvoiceId())
-							return false;						
-					}
-				}			
-				return true;
-			}else{
-				return false;
-			}
-		}
-		if(Constants.SUSPEND.equalsIgnoreCase(customer.getStatus())){
-			List<CustomerInvoices> invoiceList = invoiceRepository.getCustomerUnpaidInvoices(customerId);
-			if(invoiceList!=null && invoiceList.size()==1){
-				CustomerInvoices inv = invoiceList.get(0);
-				Long maxSuspensionInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_ADSL_SUSPENSION_INVOICE_LIMIT));
-				if(invoiceAmount<maxSuspensionInvoiceLimit){
-					return false;
-				}
-				/*
-				else{
-					
-					Date now = new Date();
-					if(inv.getInvoiceDueDate()!=null && (now.getTime()-inv.getInvoiceDueDate().getTime())<(1000 * 60 * 60 * 24 * 10)){
-						return false;
-					}
-				}
-						
-			}else if(invoiceList==null || invoiceList.size()==0){
-				return false;
-			}
-			
-		}
-		*/
+		return true;
+	}
+	
+	
+	public boolean customerHasUnpaidBillInLimitWithoutTx(Long customerId,boolean checkSap) throws Exception{
+		if(checkSap) bpmWsDelegateService.retrieveSapPaymentStatus(customerId);
+		Double invoiceAmount = invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId);
+		if(invoiceAmount==null || invoiceAmount==0)
+			return false;
+		
+		Long maxInvoiceLimit = Long.parseLong(dunningProperties.getProperty(Constants.MAX_INVOICE_LIMIT));
+		if(invoiceAmount<maxInvoiceLimit)
+			return false;
+		
 		return true;
 	}
 	

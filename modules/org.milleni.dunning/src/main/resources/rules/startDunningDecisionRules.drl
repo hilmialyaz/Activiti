@@ -65,11 +65,7 @@ rule "Dunninge Girmemesi Gerekler"
 salience 999
 when
  res : ExecutionResult(resultCode==0)	
- cus : Customer(registerNumber !=null &&  registerNumber  in ("8230328877" ,"7600353358","8370178349","2640028465",
- 							"17074188770","11996330170","35536114648",
- 							"8370178349","8760047464","8760578179" ,
- 							"11999330016","35228112082","12376050510","43936493584","12002329942",
- 							"12743437562","15071280442","31843791770","32506884792","10204413780","3010426833","3800496982")  ) 
+ cus : Customer(registerNumber !=null &&  registerNumber  in ("25400124200","31591629264")  ) 
 then
 	System.out.println("Dunninge Girmemesi Gerekler");
 	res = setReturnVariables(res,"FL99_MustNotInDunningProcess",1,drools.getRule().getName());

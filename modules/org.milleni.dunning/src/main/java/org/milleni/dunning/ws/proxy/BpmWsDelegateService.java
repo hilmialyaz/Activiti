@@ -35,7 +35,7 @@ public interface BpmWsDelegateService {
 	public void ttCrmOperations(DelegateExecution execution, TTSTATUS status);	 
 	public void crmSuspendCustomer(DelegateExecution execution);
 	public void crmDeactivateCustomer(DelegateExecution execution) throws Exception;
-	public void sendMessage(Long customerId , DunningProcessDetail detail);
+	public void sendMessage(Long customerId, DunningProcessDetail detail,boolean skipIfFailed);
 	public void sendMessageWithStepName(DunningProcessDetail dpDetail);
 	
 	public void sendHatirlatmaCoaAnnounce(Long customerId , DunningProcessDetail detail); 

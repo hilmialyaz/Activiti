@@ -36,6 +36,7 @@ public interface CustomerInvoicesRepository extends BaseRepository<CustomerInvoi
 	  Double getCustomerTotalInvoiceAmount(Long customerId);
 	  
 	  //@Query("SELECT ISNULL(sum(ci.invoiceAmount),0)  FROM CustomerInvoices ci , Customer cu where cu=ci.customerId and cu.customerId=?1 and ci.paymentStatus='N' and ci.invoiceDueDate<trunc(sysdate)")
+	  @Transactional(readOnly=true , timeout = 20)
 	  @Query("SELECT  isnull(ROUND(sum(ci.invoiceAmount), 2, 0),0)  FROM CustomerInvoices ci where ci.customerId.customerId=?1 and ci.paymentStatus='N' and CONVERT(DATE,ci.invoiceDueDate)<CONVERT(DATE, GETDATE())")
 	  Double getCustomerUnpaidTotalInvoiceAmount(Long customerId);
 

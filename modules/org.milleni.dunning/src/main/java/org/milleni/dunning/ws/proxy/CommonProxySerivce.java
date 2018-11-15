@@ -49,8 +49,8 @@ public interface CommonProxySerivce {
 	public boolean retrieveCustomerHasCdr(String guid,Long customerId);
 	
 	public SuspendAccountResponseModel suspendCrmAccount(Long customerId) throws CustomerInfoServiceV1SuspendAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1SuspendAccountSystemFaultFaultFaultMessage ;
-	public DeactivateAccountResponseModel deactivateCrmAccount(Long customerId) throws CustomerInfoServiceV1DeactivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1DeactivateAccountSystemFaultFaultFaultMessage ;
 	public AddProcessResponseModel addDeactivationRequest(Long customerId,String reason) throws Exception;
 	public ActivateAccountResponseModel activateCrmAccount(Long customerId) throws CustomerInfoServiceV1ActivateAccountBusinessFaultFaultFaultMessage, CustomerInfoServiceV1ActivateAccountSystemFaultFaultFaultMessage ;
 	public ServiceResponse createTickler(Long customerId, String customerName,boolean isIndividual, String sMessage) ;
+	public void activateCrmAccountOneWay(Long customerId);
 }

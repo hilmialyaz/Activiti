@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="Description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="IdentificationNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="SerialNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Username" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -31,18 +32,45 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReserveStockItemRequestModel", propOrder = {
+    "description",
     "identificationNumber",
     "serialNumber",
     "username"
 })
 public class ReserveStockItemRequestModel {
 
+    @XmlElementRef(name = "Description", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> description;
     @XmlElementRef(name = "IdentificationNumber", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> identificationNumber;
     @XmlElementRef(name = "SerialNumber", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> serialNumber;
     @XmlElementRef(name = "Username", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> username;
+
+    /**
+     * Gets the value of the description property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets the value of the description property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setDescription(JAXBElement<String> value) {
+        this.description = ((JAXBElement<String> ) value);
+    }
 
     /**
      * Gets the value of the identificationNumber property.

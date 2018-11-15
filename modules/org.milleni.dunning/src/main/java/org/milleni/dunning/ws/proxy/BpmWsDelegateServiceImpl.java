@@ -167,7 +167,7 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	}
 
 	public void sendIptalBildirimSms(DelegateExecution execution) {
-		sendSms(execution, dunningProperties.getProperty(Constants.SMS_IPTAL));
+		sendSms(execution, dunningProperties.getProperty(Constants.SMS_IPTAL),true);
 	}
 	
 	public void sendOdemeBildirimSms(DelegateExecution execution) {
@@ -178,11 +178,11 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		//sendSms(execution, dunningProperties.getProperty(Constants.SMS_ODEMEGELMEDI));
 	}
 
-	public void sendSms(DelegateExecution execution, String message) {
+	public void sendSms(DelegateExecution execution, String message,boolean skipIfFail) {
 		DunningProcessDetail detail = dunningProcessService.getCurrentProcessDetail(execution);
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		Customer customer = customerService.findOne(customerId);
-		sendMessage(customerId, detail);
+		sendMessage(customerId, detail,skipIfFail);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -191,12 +191,12 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 			return;
 
 		if (dpDetail.getProcessId() != null && dpDetail.getProcessId().getCustomerId() != null && dpDetail.getProcessId().getCustomerId().getCustomerId() != null)
-			sendMessage(dpDetail.getProcessId().getCustomerId().getCustomerId(), dpDetail);
+			sendMessage(dpDetail.getProcessId().getCustomerId().getCustomerId(), dpDetail,false);
 	}
 	
 	public static final String MSISDN_FORMAT_REGEXP = "5[0-9]{9}";
 
-	public void sendMessage(Long customerId, DunningProcessDetail detail) {
+	public void sendMessage(Long customerId, DunningProcessDetail detail,boolean skipIfFailed) {
 		Customer customer = customerService.findOne(customerId);
 		String dpdStepName = detail.getProcessStepId().getStepName();
 		if(Constants.STEP_KUR_SMS_IHTAR.equals(dpdStepName)){
@@ -209,20 +209,15 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		String debit = invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId).toString();
 		String response = commonProxyService.sendSms(customerId,debit,dpdStepName);
 		
-		if (response != null && detail != null) {// 103|Erisim izniniz yok
-													// hatası gelebilir.
-			int pipeIndex = response.indexOf("|");
-			if (pipeIndex > 0) {// hata var logla
-				String key = response.substring(0, pipeIndex);
-				String logValue = response.replaceFirst(key + "|", "");
-				detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.ERROR));
-				//addReturnLog(detail, key, logValue, Constants.STEP_SMS);
-			} else {
-				//addReturnLog(detail, "", "", Constants.STEP_SMS);
-				detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.SUCCESS));
-			}
-			dunningProcessService.saveDunningProcessDetail(detail);
+		if (!skipIfFailed && response != null && detail != null) {// 103|Erisim izniniz yok
+								
+			if(response.length()>100) response = response.substring(0,100);
+			detail.setBackendStatusDesc(response);
+			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.ERROR));			
+		}else{
+			detail.setStatus(dunningProcessDetailRepository.getDunningProcessDetailStatus(Constants.SUCCESS));
 		}
+		dunningProcessService.saveDunningProcessDetail(detail);
 	}
 
 	public String getCustomerValidMsisdn(Customer customer) {
@@ -281,6 +276,7 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	}
 
 	public void changeCustomerStatus(DelegateExecution execution, STATUS status, STATUSREASON reason) {
+		/*
 		Long customerId = (Long) execution.getVariable(Constants.customerId);
 		Customer customer = customerService.findOne(customerId);
 		org.milleni.dunning.ws.client.customerstatus.ServiceResponse response = wsChangeStatus(
@@ -297,6 +293,7 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 				dunningProcessService.saveDunningProcessDetail(detail);
 			}
 		}
+		*/
 	}
 
 	public org.milleni.dunning.ws.client.customerstatus.ServiceResponse wsChangeStatus(String processId, STATUS status, STATUSREASON reason,
@@ -597,7 +594,8 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 		processSignalService.signalCustomerProcessIfPaymentReceived(customerId);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED ,timeout=60)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void retrieveSapPaymentStatus(Long customerId) throws Exception {
 		Customer customer = customerService.findOne(customerId);
 		ArrayOfAcikKalem acikKalemler = commonProxyService.retrieveAcikkalemPaymentInfo(customerId);
@@ -640,8 +638,9 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void suspendCrmAccount(Long customerId, DunningProcessMaster dpMaster ,DunningProcessDetail detail) {
 		try {
-			
+			LOGGER.info("suspendCrmAccount start customerId:"+customerId);
 			Customer customer = customerService.findOne(customerId);
+			LOGGER.info("suspendCrmAccount customerselected customerId:"+customerId);
 			if(Constants.DEAKTIF.equalsIgnoreCase(customer.getStatus())){
 				throw new BpmnError(Constants.DEAKTIF);
 			}
@@ -649,9 +648,9 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 			if(dpMaster==null || !Constants.RUNNING.equalsIgnoreCase(dpMaster.getStatus().getId())){
 				throw new BpmnError(Constants.DUNNING_PROCESS_MASTER_NOT_FOUND);
 			}
-			
+			LOGGER.info("suspendCrmAccount getCustomerUnpaidTotalInvoiceAmount started customerId:"+customerId);
 			Double invoiceAmount = invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId);
-
+			LOGGER.info("suspendCrmAccount getCustomerUnpaidTotalInvoiceAmount ended customerId:"+customerId);
 			boolean checkLimit =true;
 			
 			if(dpMaster!=null && dpMaster.getDunningPolicyId()!=null && Constants.yeniAktivasyonYabanciDunning.equals(dpMaster.getDunningPolicyId().getPolicyName())){
@@ -672,13 +671,18 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 				if (checkLimit && ( invoiceAmount == null || invoiceAmount < maxInvoiceLimit ))
 					throw new BpmnError(Constants.SUSPENSION_POSTPONE_DESC);
 			}
-			
+			LOGGER.info("suspendCrmAccount suspendCrmAccount started customerId:"+customerId);
 			commonProxyService.suspendCrmAccount(customerId);
+			LOGGER.info("suspendCrmAccount suspendCrmAccount ended customerId:"+customerId);
 			setDpDetailSuccess(detail);
 			try{
+				LOGGER.info("suspendCrmAccount getCustomerUnpaidTotalInvoiceAmount started customerId:"+customerId);
 				String debit = invoiceRepository.getCustomerUnpaidTotalInvoiceAmount(customerId).toString();
+				LOGGER.info("suspendCrmAccount getCustomerUnpaidTotalInvoiceAmount ended customerId:"+customerId);
 				String dpdStepName = detail.getProcessStepId().getStepName();
+				LOGGER.info("suspendCrmAccount sendSms started customerId:"+customerId);
 				commonProxyService.sendSms(customerId, debit , dpdStepName  );
+				LOGGER.info("suspendCrmAccount sendSms ended customerId:"+customerId);
 			}catch(Exception ee){}
 			
 		} catch (Exception ex) {
@@ -701,12 +705,12 @@ public class BpmWsDelegateServiceImpl implements BpmWsDelegateService {
 				setStatusAfterFault(detail, ex);
 			}
 		}
+		LOGGER.info("suspendCrmAccount start customerId:"+customerId);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void activateCrmAccount(Long customerId, DunningProcessDetail detail) {
 		try {
-			commonProxyService.activateCrmAccount(customerId);
+			commonProxyService.activateCrmAccountOneWay(customerId);
 			//setDpDetailSuccess(detail);
 		} catch (Exception ex) {
 			/*

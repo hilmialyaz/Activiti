@@ -30,6 +30,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="ExchangeType" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="HasStaticIpRequest" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="Id" type="{http://schemas.microsoft.com/2003/10/Serialization/}guid"/>
+ *         &lt;element name="InstallmentAddress" type="{http://milleni.com/Crm}CrmAddress" minOccurs="0"/>
  *         &lt;element name="InternetProfile" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="MProductType" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="MacAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -39,6 +40,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="PcOfferId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="ProductType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="SerialNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="ShipmentAddress" type="{http://milleni.com/Crm}CrmAddress" minOccurs="0"/>
  *         &lt;element name="StaticIp" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StaticIpProductId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -70,6 +72,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "exchangeType",
     "hasStaticIpRequest",
     "id",
+    "installmentAddress",
     "internetProfile",
     "mProductType",
     "macAddress",
@@ -79,6 +82,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "pcOfferId",
     "productType",
     "serialNumber",
+    "shipmentAddress",
     "staticIp",
     "staticIpProductId",
     "status",
@@ -113,6 +117,8 @@ public class CrmProduct {
     protected Boolean hasStaticIpRequest;
     @XmlElement(name = "Id", required = true)
     protected String id;
+    @XmlElementRef(name = "InstallmentAddress", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<CrmAddress> installmentAddress;
     @XmlElementRef(name = "InternetProfile", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> internetProfile;
     @XmlElement(name = "MProductType")
@@ -131,6 +137,8 @@ public class CrmProduct {
     protected JAXBElement<String> productType;
     @XmlElementRef(name = "SerialNumber", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> serialNumber;
+    @XmlElementRef(name = "ShipmentAddress", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
+    protected JAXBElement<CrmAddress> shipmentAddress;
     @XmlElementRef(name = "StaticIp", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
     protected JAXBElement<String> staticIp;
     @XmlElementRef(name = "StaticIpProductId", namespace = "http://milleni.com/Crm", type = JAXBElement.class)
@@ -395,6 +403,30 @@ public class CrmProduct {
     }
 
     /**
+     * Gets the value of the installmentAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link CrmAddress }{@code >}
+     *     
+     */
+    public JAXBElement<CrmAddress> getInstallmentAddress() {
+        return installmentAddress;
+    }
+
+    /**
+     * Sets the value of the installmentAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link CrmAddress }{@code >}
+     *     
+     */
+    public void setInstallmentAddress(JAXBElement<CrmAddress> value) {
+        this.installmentAddress = ((JAXBElement<CrmAddress> ) value);
+    }
+
+    /**
      * Gets the value of the internetProfile property.
      * 
      * @return
@@ -608,6 +640,30 @@ public class CrmProduct {
      */
     public void setSerialNumber(JAXBElement<String> value) {
         this.serialNumber = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the shipmentAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link CrmAddress }{@code >}
+     *     
+     */
+    public JAXBElement<CrmAddress> getShipmentAddress() {
+        return shipmentAddress;
+    }
+
+    /**
+     * Sets the value of the shipmentAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link CrmAddress }{@code >}
+     *     
+     */
+    public void setShipmentAddress(JAXBElement<CrmAddress> value) {
+        this.shipmentAddress = ((JAXBElement<CrmAddress> ) value);
     }
 
     /**

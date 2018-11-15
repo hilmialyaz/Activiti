@@ -10,6 +10,7 @@ import org.milleni.dunning.datamodel.model.CustomerInvoices;
 import org.milleni.dunning.datamodel.model.CustomerType;
 import org.milleni.dunning.datamodel.model.DunningProcessMaster;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface CustomerService {
 	public Iterable<Customer> listCustomer();
@@ -18,7 +19,11 @@ public interface CustomerService {
 	public List<DunningProcessMaster> listCustomerDunningProcesses(Long customerId);
 	public Iterable<Customer> listCustomer(int page, int pageSize);
 	public long customerCount();
+	
+	@Transactional(readOnly=true , timeout = 20)
 	public Customer findOne(Long id);
+	
+	@Transactional(readOnly=true , timeout = 20)
 	public Customer findOneReadOnly(Long id);
 	public CustomerGroup getCustomerGroup(Long customerGroupId);
 	public List<Customer> findByExample(Customer customer,int start, int count) ;

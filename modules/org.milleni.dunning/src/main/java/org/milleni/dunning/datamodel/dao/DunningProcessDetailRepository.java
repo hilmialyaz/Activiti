@@ -41,10 +41,10 @@ public interface DunningProcessDetailRepository extends BaseRepository<DunningPr
 	  
 	  //running olup stepi N (notifikasyon ) olanlari getirir
 	  //@Query("select dpd , dpm , cust from DunningProcessDetail dpd , DunningProcessMaster dpm, ProcessSteps ps, Customer cust  where dpd.processId=dpm and dpm.status='R' and dpm.customerId=cust and dpd.status='N' and ps=dpd.processStepId and ps.stepName like %?1% and rownum<?2 order by dpd.createDate")
-	  @Query("select dpd , dpm , cust from DunningProcessDetail dpd , DunningProcessMaster dpm, ProcessSteps ps, Customer cust  where dpd.processId=dpm and dpm.status='R' and dpm.customerId=cust and (dpd.status='N' or (dpd.status='R' and DATEDIFF(MINUTE,dpd.statusDate,GETDATE())>120 )) and ps=dpd.processStepId and ps.stepName like %?1%  order by dpd.currentDebit desc")
+	  @Query("select dpd , dpm , cust from DunningProcessDetail dpd , DunningProcessMaster dpm, ProcessSteps ps, Customer cust  where dpd.processId=dpm and dpm.status='R' and dpm.customerId=cust and (dpd.status='N' or (dpd.status='R' and DATEDIFF(MINUTE,dpd.statusDate,GETDATE())>120 )) and ps=dpd.processStepId and ps.stepName like %?1%  order by dpd.createDate")
 	  List<Object[]> findNotificationStateDunningProcessDetail(String stepName,Pageable page);
 	  
-	  @Query("select dpd , dpm , cust from DunningProcessDetail dpd , DunningProcessMaster dpm, ProcessSteps ps, Customer cust  where dpd.processId=dpm and dpm.status='R' and dpm.customerId=cust and (dpd.status='N' or (dpd.status='R' and DATEDIFF(MINUTE,dpd.statusDate,GETDATE())>120 )) and ps=dpd.processStepId and ps.stepName in (?1)  order by dpd.currentDebit desc")
+	  @Query("select dpd , dpm , cust from DunningProcessDetail dpd , DunningProcessMaster dpm, ProcessSteps ps, Customer cust  where dpd.processId=dpm and dpm.status='R' and dpm.customerId=cust and (dpd.status='N' or (dpd.status='R' and DATEDIFF(MINUTE,dpd.statusDate,GETDATE())>120 )) and ps=dpd.processStepId and ps.stepName in (?1)  order by dpd.createDate")
 	  List<Object[]> findNotificationStateDunningProcessDetail(List<String> stepNameList,Pageable page);
 	  
 	  

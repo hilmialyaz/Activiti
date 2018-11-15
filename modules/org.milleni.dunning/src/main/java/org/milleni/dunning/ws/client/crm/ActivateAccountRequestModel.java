@@ -21,11 +21,11 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="Application" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="BillingCustomerId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="Document" type="{http://milleni.com/Bpm}DocumentInfo" minOccurs="0"/>
+ *         &lt;element name="Document" type="{/CustomerInfo/Service/v1}DocumentInfo" minOccurs="0"/>
  *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StatusReasonDef" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StatusReasonID" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="WillBeSentToTT" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="UserName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
     "status",
     "statusReasonDef",
     "statusReasonID",
-    "willBeSentToTT"
+    "userName"
 })
 public class ActivateAccountRequestModel {
 
@@ -58,8 +58,8 @@ public class ActivateAccountRequestModel {
     protected JAXBElement<String> statusReasonDef;
     @XmlElement(name = "StatusReasonID")
     protected Long statusReasonID;
-    @XmlElement(name = "WillBeSentToTT")
-    protected Boolean willBeSentToTT;
+    @XmlElementRef(name = "UserName", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> userName;
 
     /**
      * Gets the value of the application property.
@@ -206,27 +206,27 @@ public class ActivateAccountRequestModel {
     }
 
     /**
-     * Gets the value of the willBeSentToTT property.
+     * Gets the value of the userName property.
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
      *     
      */
-    public Boolean isWillBeSentToTT() {
-        return willBeSentToTT;
+    public JAXBElement<String> getUserName() {
+        return userName;
     }
 
     /**
-     * Sets the value of the willBeSentToTT property.
+     * Sets the value of the userName property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
      *     
      */
-    public void setWillBeSentToTT(Boolean value) {
-        this.willBeSentToTT = value;
+    public void setUserName(JAXBElement<String> value) {
+        this.userName = ((JAXBElement<String> ) value);
     }
 
 }

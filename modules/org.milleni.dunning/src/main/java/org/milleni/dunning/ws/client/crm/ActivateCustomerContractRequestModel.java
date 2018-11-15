@@ -20,10 +20,12 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="Application" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="BillingContractNo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="ContractCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StatusReasonDef" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StatusReasonID" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
+ *         &lt;element name="UserName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,15 +37,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ActivateCustomerContractRequestModel", propOrder = {
     "application",
+    "billingContractNo",
     "contractCode",
     "status",
     "statusReasonDef",
-    "statusReasonID"
+    "statusReasonID",
+    "userName"
 })
 public class ActivateCustomerContractRequestModel {
 
     @XmlElementRef(name = "Application", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> application;
+    @XmlElementRef(name = "BillingContractNo", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> billingContractNo;
     @XmlElementRef(name = "ContractCode", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> contractCode;
     @XmlElementRef(name = "Status", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
@@ -52,6 +58,8 @@ public class ActivateCustomerContractRequestModel {
     protected JAXBElement<String> statusReasonDef;
     @XmlElement(name = "StatusReasonID")
     protected Long statusReasonID;
+    @XmlElementRef(name = "UserName", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> userName;
 
     /**
      * Gets the value of the application property.
@@ -75,6 +83,30 @@ public class ActivateCustomerContractRequestModel {
      */
     public void setApplication(JAXBElement<String> value) {
         this.application = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the billingContractNo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getBillingContractNo() {
+        return billingContractNo;
+    }
+
+    /**
+     * Sets the value of the billingContractNo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setBillingContractNo(JAXBElement<String> value) {
+        this.billingContractNo = ((JAXBElement<String> ) value);
     }
 
     /**
@@ -171,6 +203,30 @@ public class ActivateCustomerContractRequestModel {
      */
     public void setStatusReasonID(Long value) {
         this.statusReasonID = value;
+    }
+
+    /**
+     * Gets the value of the userName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getUserName() {
+        return userName;
+    }
+
+    /**
+     * Sets the value of the userName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setUserName(JAXBElement<String> value) {
+        this.userName = ((JAXBElement<String> ) value);
     }
 
 }

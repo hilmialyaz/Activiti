@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="MacAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="SerialNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -29,12 +30,39 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QueryStockItemOuidRequestModel", propOrder = {
+    "macAddress",
     "serialNumber"
 })
 public class QueryStockItemOuidRequestModel {
 
+    @XmlElementRef(name = "MacAddress", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
+    protected JAXBElement<String> macAddress;
     @XmlElementRef(name = "SerialNumber", namespace = "/CustomerInfo/Service/v1", type = JAXBElement.class)
     protected JAXBElement<String> serialNumber;
+
+    /**
+     * Gets the value of the macAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getMacAddress() {
+        return macAddress;
+    }
+
+    /**
+     * Sets the value of the macAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setMacAddress(JAXBElement<String> value) {
+        this.macAddress = ((JAXBElement<String> ) value);
+    }
 
     /**
      * Gets the value of the serialNumber property.

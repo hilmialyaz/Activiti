@@ -129,7 +129,7 @@ public class HobimDataServiceImpl implements HobimDataService {
 				customer = (Customer) obj[2];
 				currentDetailId = dpDetail.getProcessDetailId();
 				
-				boolean customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimit(customer.getCustomerId(), true);
+				boolean customerHasUnpaidBill = invoicePaymentRuleService.customerHasUnpaidBillInLimitNewTx(customer.getCustomerId(), true);
 				if (customerHasUnpaidBill){
 					feedLetterData(customer, dpDetail);
 					feedDetails.add(dpDetail.getProcessDetailId());
